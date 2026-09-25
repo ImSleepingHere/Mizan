@@ -1,0 +1,21 @@
+{
+  "epochs_completed": 2,
+  "selected_epoch": 2,
+  "validation_loss": 0.02576288909296333,
+  "training_seconds": 755.67,
+  "peak_gpu_allocated_gib": 6.493,
+  "train_examples": 480,
+  "validation_examples": 60,
+  "optimizer_steps": 120,
+  "seed": 4101,
+  "learning_rate": 0.0001,
+  "lora_rank": 8,
+  "lora_alpha": 16,
+  "targets": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj"
+  ],
+  "trainable_parameters": 7667712
+}

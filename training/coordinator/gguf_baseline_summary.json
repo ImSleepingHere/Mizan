@@ -1,0 +1,13 @@
+{
+  "label": "gguf_baseline",
+  "count": 120,
+  "seconds": 68.58,
+  "metrics": {
+    "valid": 102,
+    "routing_correct": 71,
+    "disposition_correct": 86,
+    "pass": 68,
+    "premature_finalization": 10
+  },
+  "thinking_leaked": 0
+}

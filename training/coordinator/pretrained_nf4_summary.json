@@ -1,0 +1,13 @@
+{
+  "label": "pretrained_nf4",
+  "count": 120,
+  "seconds": 117.19,
+  "metrics": {
+    "valid": 105,
+    "routing_correct": 77,
+    "disposition_correct": 91,
+    "pass": 73,
+    "premature_finalization": 9
+  },
+  "peak_gpu_allocated_gib": 6.754
+}

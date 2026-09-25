@@ -1,0 +1,1682 @@
+[
+  {
+    "id": "test-final_changed-006",
+    "kind": "final_changed",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_changed-003",
+    "kind": "final_changed",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_final-004",
+    "kind": "injected_final",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_done-002",
+    "kind": "student_done",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_schedule-000",
+    "kind": "need_schedule",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 2,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_student-003",
+    "kind": "need_student",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_schedule-002",
+    "kind": "need_schedule",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_unchanged-005",
+    "kind": "final_unchanged",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-stale_impact-002",
+    "kind": "stale_impact",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_done-001",
+    "kind": "workforce_done",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_done-006",
+    "kind": "workforce_done",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-initial-003",
+    "kind": "initial",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_changed-002",
+    "kind": "final_changed",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 30,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_done-004",
+    "kind": "workforce_done",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_first-000",
+    "kind": "student_first",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_impact-003",
+    "kind": "need_impact",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-stale_impact-003",
+    "kind": "stale_impact",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"recommend\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-student_done-000",
+    "kind": "student_done",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_impact-006",
+    "kind": "need_impact",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_first-003",
+    "kind": "workforce_first",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-stale_impact-000",
+    "kind": "stale_impact",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_done-002",
+    "kind": "workforce_done",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_changed-001",
+    "kind": "final_changed",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_final-001",
+    "kind": "injected_final",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 1,\n  \"disposition\": \"recommend\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_unchanged-002",
+    "kind": "final_unchanged",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 5,\n  \"disposition\": \"recommend\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_unchanged-000",
+    "kind": "final_unchanged",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_workforce-006",
+    "kind": "need_workforce",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"workforce\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-initial-005",
+    "kind": "initial",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_first-002",
+    "kind": "student_first",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-initial-002",
+    "kind": "initial",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-rejected-005",
+    "kind": "rejected",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 1,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_impact-007",
+    "kind": "need_impact",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_missing-007",
+    "kind": "injected_missing",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-stale_impact-004",
+    "kind": "stale_impact",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"recommend\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-student_first-004",
+    "kind": "student_first",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_workforce-007",
+    "kind": "need_workforce",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-rejected-001",
+    "kind": "rejected",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 12,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_schedule-001",
+    "kind": "need_schedule",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_workforce-005",
+    "kind": "need_workforce",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"workforce\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-stale_impact-006",
+    "kind": "stale_impact",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-injected_missing-004",
+    "kind": "injected_missing",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-need_student-005",
+    "kind": "need_student",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_done-006",
+    "kind": "student_done",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_missing-001",
+    "kind": "injected_missing",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-rejected-007",
+    "kind": "rejected",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_done-005",
+    "kind": "workforce_done",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_final-006",
+    "kind": "injected_final",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_changed-000",
+    "kind": "final_changed",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 20,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_unchanged-001",
+    "kind": "final_unchanged",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_done-003",
+    "kind": "student_done",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"workforce\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_done-004",
+    "kind": "student_done",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 1,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_done-000",
+    "kind": "workforce_done",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_unchanged-003",
+    "kind": "final_unchanged",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_unchanged-007",
+    "kind": "final_unchanged",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_first-001",
+    "kind": "student_first",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_student-000",
+    "kind": "need_student",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 8,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_schedule-006",
+    "kind": "need_schedule",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 15,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-initial-006",
+    "kind": "initial",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-rejected-004",
+    "kind": "rejected",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_first-005",
+    "kind": "workforce_first",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_missing-002",
+    "kind": "injected_missing",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-final_unchanged-004",
+    "kind": "final_unchanged",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_first-004",
+    "kind": "workforce_first",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-initial-004",
+    "kind": "initial",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_first-006",
+    "kind": "workforce_first",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_missing-006",
+    "kind": "injected_missing",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_student-007",
+    "kind": "need_student",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_impact-004",
+    "kind": "need_impact",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_first-001",
+    "kind": "workforce_first",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_first-002",
+    "kind": "workforce_first",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_unchanged-006",
+    "kind": "final_unchanged",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 5,\n  \"disposition\": \"recommend\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_final-007",
+    "kind": "injected_final",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-rejected-002",
+    "kind": "rejected",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 1,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_workforce-004",
+    "kind": "need_workforce",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"workforce\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_done-005",
+    "kind": "student_done",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_impact-005",
+    "kind": "need_impact",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_missing-000",
+    "kind": "injected_missing",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-student_done-001",
+    "kind": "student_done",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_impact-001",
+    "kind": "need_impact",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_schedule-005",
+    "kind": "need_schedule",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-initial-001",
+    "kind": "initial",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_first-007",
+    "kind": "workforce_first",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_done-003",
+    "kind": "workforce_done",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_final-005",
+    "kind": "injected_final",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 5,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_missing-005",
+    "kind": "injected_missing",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 5,\n  \"disposition\": \"recommend\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-injected_missing-003",
+    "kind": "injected_missing",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-need_student-006",
+    "kind": "need_student",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-initial-007",
+    "kind": "initial",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-rejected-003",
+    "kind": "rejected",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_final-002",
+    "kind": "injected_final",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 8,\n  \"disposition\": \"recommend\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_changed-004",
+    "kind": "final_changed",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_impact-002",
+    "kind": "need_impact",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_student-002",
+    "kind": "need_student",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 30,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_schedule-003",
+    "kind": "need_schedule",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_student-001",
+    "kind": "need_student",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_schedule-004",
+    "kind": "need_schedule",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"scheduling\",\n  \"max_changes\": 1,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_workforce-003",
+    "kind": "need_workforce",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"workforce\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_schedule-007",
+    "kind": "need_schedule",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_first-007",
+    "kind": "student_first",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_final-003",
+    "kind": "injected_final",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_workforce-000",
+    "kind": "need_workforce",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 5,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_first-005",
+    "kind": "student_first",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-rejected-006",
+    "kind": "rejected",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 12,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_first-006",
+    "kind": "student_first",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-stale_impact-005",
+    "kind": "stale_impact",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-rejected-000",
+    "kind": "rejected",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_changed-007",
+    "kind": "final_changed",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 2,\n  \"disposition\": \"recommend\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_impact-000",
+    "kind": "need_impact",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_done-007",
+    "kind": "student_done",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-stale_impact-001",
+    "kind": "stale_impact",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"recommend\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": true
+    }
+  },
+  {
+    "id": "test-stale_impact-007",
+    "kind": "stale_impact",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"impact\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-student_first-003",
+    "kind": "student_first",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_done-007",
+    "kind": "workforce_done",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_workforce-001",
+    "kind": "need_workforce",
+    "language": "ar",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"workforce\",\n  \"max_changes\": 30,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-injected_final-000",
+    "kind": "injected_final",
+    "language": "en",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 30,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_student-004",
+    "kind": "need_student",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-final_changed-005",
+    "kind": "final_changed",
+    "language": "ar",
+    "output": "{\n  \"action\": \"finalize\",\n  \"agent\": \"coordinator\",\n  \"max_changes\": 0,\n  \"disposition\": \"no_change\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": false,
+      "routing_correct": false,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-workforce_first-000",
+    "kind": "workforce_first",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": false,
+      "disposition_correct": true,
+      "pass": false,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-need_workforce-002",
+    "kind": "need_workforce",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"workforce\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  },
+  {
+    "id": "test-initial-000",
+    "kind": "initial",
+    "language": "en",
+    "output": "{\n  \"action\": \"delegate\",\n  \"agent\": \"student\",\n  \"max_changes\": 0,\n  \"disposition\": \"needs_review\"\n}",
+    "thinking_leaked": false,
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    }
+  }
+]

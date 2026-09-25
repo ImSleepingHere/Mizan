@@ -1,5 +1,17 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+node_modules/
+.runtime/
+.models/
+.pnpm-store/
+frontend/dist/
+*.tsbuildinfo
+data/
+work/
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
 *.py[cod]
 *$py.class
 
@@ -179,3 +191,9 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+.training-venv/
+training/coordinator/base/
+training/coordinator/checkpoints/
+training/coordinator/cache/
+training/coordinator/tmp/

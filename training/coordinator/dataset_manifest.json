@@ -1,0 +1,19 @@
+{
+  "splits": {
+    "train": {
+      "count": 480,
+      "sha256": "e6ef443365372689eec6faa8c75780799a4190af86f18c98811cfb77fc4b5945"
+    },
+    "validation": {
+      "count": 60,
+      "sha256": "232ce1a1f1ef144e601b6f4d81a5006fb40b728414fec5ecb8f1e215205abc82"
+    },
+    "test": {
+      "count": 120,
+      "sha256": "f159535fb5a7e6595f43a3adb3e644f5349a3189b49e187f2c4128d0518c9f88"
+    }
+  },
+  "synthetic": true,
+  "test_policy": "Frozen before training. No selection or prompt tuning against test outcomes. Multiple valid routing choices accepted.",
+  "seed": 4101
+}

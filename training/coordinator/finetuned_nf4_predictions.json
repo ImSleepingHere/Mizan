@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "test-final_changed-006",
+    "kind": "final_changed",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":1,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.125,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_changed-003",
+    "kind": "final_changed",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"impact\",\"max_changes\":12,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.125,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_final-004",
+    "kind": "injected_final",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":1,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.125,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_done-002",
+    "kind": "student_done",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.125,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_schedule-000",
+    "kind": "need_schedule",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.969000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_student-003",
+    "kind": "need_student",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":20,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.969000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_schedule-002",
+    "kind": "need_schedule",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.969000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_unchanged-005",
+    "kind": "final_unchanged",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":0,\"disposition\":\"no_change\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.969000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-stale_impact-002",
+    "kind": "stale_impact",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.844000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_done-001",
+    "kind": "workforce_done",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.844000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_done-006",
+    "kind": "workforce_done",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.844000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-initial-003",
+    "kind": "initial",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":20,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.844000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_changed-002",
+    "kind": "final_changed",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.890000000130385,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_done-004",
+    "kind": "workforce_done",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.890000000130385,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_first-000",
+    "kind": "student_first",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":8,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.890000000130385,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_impact-003",
+    "kind": "need_impact",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.890000000130385,
+    "batch_size": 4
+  },
+  {
+    "id": "test-stale_impact-003",
+    "kind": "stale_impact",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.172000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_done-000",
+    "kind": "student_done",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.172000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_impact-006",
+    "kind": "need_impact",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.172000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_first-003",
+    "kind": "workforce_first",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":8,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.172000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-stale_impact-000",
+    "kind": "stale_impact",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.875,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_done-002",
+    "kind": "workforce_done",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":8,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.875,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_changed-001",
+    "kind": "final_changed",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":8,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.875,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_final-001",
+    "kind": "injected_final",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":1,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.875,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_unchanged-002",
+    "kind": "final_unchanged",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":5,\"disposition\":\"no_change\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.9839999999385327,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_unchanged-000",
+    "kind": "final_unchanged",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":2,\"disposition\":\"no_change\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.9839999999385327,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_workforce-006",
+    "kind": "need_workforce",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.9839999999385327,
+    "batch_size": 4
+  },
+  {
+    "id": "test-initial-005",
+    "kind": "initial",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.9839999999385327,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_first-002",
+    "kind": "student_first",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.9060000001918525,
+    "batch_size": 4
+  },
+  {
+    "id": "test-initial-002",
+    "kind": "initial",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.9060000001918525,
+    "batch_size": 4
+  },
+  {
+    "id": "test-rejected-005",
+    "kind": "rejected",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.9060000001918525,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_impact-007",
+    "kind": "need_impact",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":8,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.9060000001918525,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_missing-007",
+    "kind": "injected_missing",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":8,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.8909999998286366,
+    "batch_size": 4
+  },
+  {
+    "id": "test-stale_impact-004",
+    "kind": "stale_impact",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.8909999998286366,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_first-004",
+    "kind": "student_first",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.8909999998286366,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_workforce-007",
+    "kind": "need_workforce",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.8909999998286366,
+    "batch_size": 4
+  },
+  {
+    "id": "test-rejected-001",
+    "kind": "rejected",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.1880000000819564,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_schedule-001",
+    "kind": "need_schedule",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.1880000000819564,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_workforce-005",
+    "kind": "need_workforce",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.1880000000819564,
+    "batch_size": 4
+  },
+  {
+    "id": "test-stale_impact-006",
+    "kind": "stale_impact",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.1880000000819564,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_missing-004",
+    "kind": "injected_missing",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.5,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_student-005",
+    "kind": "need_student",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.5,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_done-006",
+    "kind": "student_done",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.5,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_missing-001",
+    "kind": "injected_missing",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.5,
+    "batch_size": 4
+  },
+  {
+    "id": "test-rejected-007",
+    "kind": "rejected",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.6089999999385327,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_done-005",
+    "kind": "workforce_done",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.6089999999385327,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_final-006",
+    "kind": "injected_final",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":3,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.6089999999385327,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_changed-000",
+    "kind": "final_changed",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":20,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.6089999999385327,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_unchanged-001",
+    "kind": "final_unchanged",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"impact\",\"max_changes\":3,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.640000000130385,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_done-003",
+    "kind": "student_done",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":20,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.640000000130385,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_done-004",
+    "kind": "student_done",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.640000000130385,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_done-000",
+    "kind": "workforce_done",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.640000000130385,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_unchanged-003",
+    "kind": "final_unchanged",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":20,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.859999999869615,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_unchanged-007",
+    "kind": "final_unchanged",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":0,\"disposition\":\"no_change\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.859999999869615,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_first-001",
+    "kind": "student_first",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.859999999869615,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_student-000",
+    "kind": "need_student",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":8,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.859999999869615,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_schedule-006",
+    "kind": "need_schedule",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.030999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-initial-006",
+    "kind": "initial",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.030999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-rejected-004",
+    "kind": "rejected",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.030999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_first-005",
+    "kind": "workforce_first",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.030999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_missing-002",
+    "kind": "injected_missing",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.922000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_unchanged-004",
+    "kind": "final_unchanged",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":1,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.922000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_first-004",
+    "kind": "workforce_first",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.922000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-initial-004",
+    "kind": "initial",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.922000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_first-006",
+    "kind": "workforce_first",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.8120000001508743,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_missing-006",
+    "kind": "injected_missing",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.8120000001508743,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_student-007",
+    "kind": "need_student",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":8,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.8120000001508743,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_impact-004",
+    "kind": "need_impact",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.8120000001508743,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_first-001",
+    "kind": "workforce_first",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.7659999998286366,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_first-002",
+    "kind": "workforce_first",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.7659999998286366,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_unchanged-006",
+    "kind": "final_unchanged",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":5,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.7659999998286366,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_final-007",
+    "kind": "injected_final",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":2,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.7659999998286366,
+    "batch_size": 4
+  },
+  {
+    "id": "test-rejected-002",
+    "kind": "rejected",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.594000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_workforce-004",
+    "kind": "need_workforce",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.594000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_done-005",
+    "kind": "student_done",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.594000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_impact-005",
+    "kind": "need_impact",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.594000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_missing-000",
+    "kind": "injected_missing",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.577999999979511,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_done-001",
+    "kind": "student_done",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.577999999979511,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_impact-001",
+    "kind": "need_impact",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.577999999979511,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_schedule-005",
+    "kind": "need_schedule",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.577999999979511,
+    "batch_size": 4
+  },
+  {
+    "id": "test-initial-001",
+    "kind": "initial",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.6090000001713634,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_first-007",
+    "kind": "workforce_first",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.6090000001713634,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_done-003",
+    "kind": "workforce_done",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.6090000001713634,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_final-005",
+    "kind": "injected_final",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":5,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.6090000001713634,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_missing-005",
+    "kind": "injected_missing",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.625,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_missing-003",
+    "kind": "injected_missing",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.625,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_student-006",
+    "kind": "need_student",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.625,
+    "batch_size": 4
+  },
+  {
+    "id": "test-initial-007",
+    "kind": "initial",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":8,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.625,
+    "batch_size": 4
+  },
+  {
+    "id": "test-rejected-003",
+    "kind": "rejected",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.047000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_final-002",
+    "kind": "injected_final",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":8,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.047000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_changed-004",
+    "kind": "final_changed",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"impact\",\"max_changes\":1,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.047000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_impact-002",
+    "kind": "need_impact",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.047000000020489,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_student-002",
+    "kind": "need_student",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.0,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_schedule-003",
+    "kind": "need_schedule",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.0,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_student-001",
+    "kind": "need_student",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.0,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_schedule-004",
+    "kind": "need_schedule",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.0,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_workforce-003",
+    "kind": "need_workforce",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.077999999979511,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_schedule-007",
+    "kind": "need_schedule",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":3,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.077999999979511,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_first-007",
+    "kind": "student_first",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":20,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.077999999979511,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_final-003",
+    "kind": "injected_final",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":12,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.077999999979511,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_workforce-000",
+    "kind": "need_workforce",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.094000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_first-005",
+    "kind": "student_first",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.094000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-rejected-006",
+    "kind": "rejected",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.094000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_first-006",
+    "kind": "student_first",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.094000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-stale_impact-005",
+    "kind": "stale_impact",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.859999999869615,
+    "batch_size": 4
+  },
+  {
+    "id": "test-rejected-000",
+    "kind": "rejected",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.859999999869615,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_changed-007",
+    "kind": "final_changed",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"impact\",\"max_changes\":2,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.859999999869615,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_impact-000",
+    "kind": "need_impact",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.859999999869615,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_done-007",
+    "kind": "student_done",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"scheduling\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.780999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-stale_impact-001",
+    "kind": "stale_impact",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.780999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-stale_impact-007",
+    "kind": "stale_impact",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"impact\",\"max_changes\":2,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.780999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-student_first-003",
+    "kind": "student_first",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":12,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.780999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_done-007",
+    "kind": "workforce_done",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.094000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_workforce-001",
+    "kind": "need_workforce",
+    "language": "ar",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":30,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.094000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-injected_final-000",
+    "kind": "injected_final",
+    "language": "en",
+    "output": "{\"action\":\"finalize\",\"agent\":\"student\",\"max_changes\":30,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.094000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_student-004",
+    "kind": "need_student",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":0,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 3.094000000040978,
+    "batch_size": 4
+  },
+  {
+    "id": "test-final_changed-005",
+    "kind": "final_changed",
+    "language": "ar",
+    "output": "{\"action\":\"finalize\",\"agent\":\"impact\",\"max_changes\":2,\"disposition\":\"recommend\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.905999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-workforce_first-000",
+    "kind": "workforce_first",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":5,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.905999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-need_workforce-002",
+    "kind": "need_workforce",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"workforce\",\"max_changes\":8,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.905999999959022,
+    "batch_size": 4
+  },
+  {
+    "id": "test-initial-000",
+    "kind": "initial",
+    "language": "en",
+    "output": "{\"action\":\"delegate\",\"agent\":\"student\",\"max_changes\":1,\"disposition\":\"needs_review\"}",
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": true,
+      "pass": true,
+      "premature_finalization": false
+    },
+    "batch_seconds": 2.905999999959022,
+    "batch_size": 4
+  }
+]

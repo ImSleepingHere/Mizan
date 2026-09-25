@@ -1,0 +1,13 @@
+{
+  "label": "finetuned_nf4",
+  "count": 120,
+  "seconds": 86.34,
+  "metrics": {
+    "valid": 120,
+    "routing_correct": 120,
+    "disposition_correct": 116,
+    "pass": 116,
+    "premature_finalization": 0
+  },
+  "peak_gpu_allocated_gib": 6.754
+}

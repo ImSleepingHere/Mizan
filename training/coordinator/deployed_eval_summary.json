@@ -1,0 +1,26 @@
+{
+  "pretrained": {
+    "mode": "pretrained",
+    "count": 120,
+    "seconds": 77.6,
+    "metrics": {
+      "valid": 120,
+      "routing_correct": 112,
+      "disposition_correct": 83,
+      "pass": 75,
+      "premature_finalization": 0
+    }
+  },
+  "fine-tuned": {
+    "mode": "fine-tuned",
+    "count": 120,
+    "seconds": 47.1,
+    "metrics": {
+      "valid": 120,
+      "routing_correct": 117,
+      "disposition_correct": 114,
+      "pass": 111,
+      "premature_finalization": 0
+    }
+  }
+}
