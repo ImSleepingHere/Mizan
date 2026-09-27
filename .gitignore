@@ -2,7 +2,9 @@
 __pycache__/
 node_modules/
 .runtime/
-.models/
+.models/*
+!.models/mizan-coordinator-lora.gguf
+!.models/QWEN3-LICENSE
 .pnpm-store/
 frontend/dist/
 *.tsbuildinfo
