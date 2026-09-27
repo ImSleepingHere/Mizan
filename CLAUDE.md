@@ -5,7 +5,7 @@ Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tool
 
 ## Layout
 - `backend/` FastAPI app (`backend.main:app`), SQLite in `data/mizan.sqlite3`. Agents: `agent_engine.py`; model client: `local_model.py`; solver: `solver.py` (OR-Tools); metrics/validation: `analysis.py`; recruitment: `recruitment.py`.
-- `frontend/` React 19 + Vite 7 + TS (pnpm). Built output `frontend/dist/` is what the app serves. Rebuild: `cd frontend; pnpm install; pnpm build`.
+- `frontend/` React 19 + Vite 7 + TS (pnpm). Built output `frontend/dist/` is what the app serves. Rebuild: `cd frontend; pnpm install; pnpm build`. node/pnpm are NOT on PATH: use `C:\Users\Admin\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe` with `..\node_modules\pnpm\bin\pnpm.cjs`, and set `CI=true` (pnpm aborts without a TTY otherwise).
 - `.models/qwen3-8b.gguf` live model; `.models/mizan-coordinator-lora.gguf` fine-tuned coordinator adapter.
 - `.runtime/ollama/lib/ollama/llama-server.exe` — bundled llama.cpp server (Ollama daemon is NOT used; `ollama` CLI is not on PATH).
 - `training/coordinator/` — coordinator fine-tuning experiment (see below). `base/`, `checkpoints/`, `cache/` are git-ignored.
@@ -14,7 +14,7 @@ Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tool
 ## Run
 - `Start Mizan.cmd` → `scripts/start.ps1` → starts model (`scripts/start-model.ps1`, port 11435) + app on http://127.0.0.1:8000. Demo password `Mizan-demo-2026!`; roles admin, registrar, chair, professor, hiring_manager, student.
 - `scripts/restart-model.ps1` restarts llama-server (reloads adapter). `Apply Mizan Update.cmd` → `scripts/apply-update.ps1` restarts model, runs deployed eval, restarts app.
-- Tests: `scripts/test.ps1` (pytest, 31 tests incl. `tests/test_update_v3.py`). Browser e2e: start a server on port 8001 with `MIZAN_DB` pointing to a fresh file under `work/`, then `node tests/browser-smoke.cjs` (all 5 checks passed on 2026-09-24).
+- Tests: `scripts/test.ps1` (pytest on `tests/`, 45 tests incl. `tests/test_update_v3.py` and `tests/test_interpreter.py`; the script passes `tests` so pytest no longer crawls unreadable `work/` folders). Browser e2e: start a server on port 8001 with `MIZAN_DB` pointing to a fresh file under `work/`, then `node tests/browser-smoke.cjs` (all 5 checks passed on 2026-09-24).
 - GPU: RTX 4080 SUPER 16 GB. llama-server holds ~5 GB RAM + VRAM; stop it before training.
 
 ## Fine-tuned coordinator (done, live since 2026-09-24)
@@ -31,10 +31,16 @@ Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tool
 - `frontend/src/InteractiveTimetable.tsx`: drag-and-drop meetings with live `POST /api/scenarios/{sid}/preview-change` (no DB write, ~70 ms), dock to submit as change request (`/changes`), detail drawer with keyboard move form, filters (cohort/room/faculty/department/search), lane layout for overlaps, Riyadh now-line. Professors edit only own sections; students read-only.
 - Agent panel shows roster, LoRA-tagged coordinator events, fine-tuned badge; Settings shows real model/coordinator status.
 
+## Spec v3.1: professor requests (plan approved 2026-09-27; spec §18)
+- Why: 30 real professor requests; ~5/30 supported before. Items 1→4 in order, commit after each: 1 request interpreter, 2 "my classes" scope, 3 optimizer rules, 4 common free-slot finder. Later (after Farq): term calendar/dated changes, session length, online, merged dated sessions, room locations, approval levels, notices.
+- User decisions: §18 lives inside the v3 spec file. Per-meeting different start times ONLY when a rule requires it; same-time default + soft penalty for split times + proposal shows "times split by rule X". New realistic demo scenario (NEW; existing scenarios/tests untouched): professor account owning S087–S091, mixed rosters, some Mon/Wed meetings, a few 75/90-min courses. No EXAM_SCOPE: finding a slot for a quiz/revision is the weekly free-slot finder; booking on a date is EXTRA_SESSION or DATED_CHANGE; finding with any date wording is in scope with `date_note`.
+- Item 1 (done 2026-09-27): `backend/interpreter.py` — the model extracts fields only; code normalizes, applies conventions, decides support (bilingual reasons), asks questions, runs a date lexicon backstop that can only make scope more cautious, and resolves scope/permissions. `backend/request_routes.py` — `/api/requests/interpret`, `/{id}/revise`, `/{id}/confirm`, `/{id}/cancel`; table `request_interpretations`; audited; confirm runs only a read-only preview for exact single moves. Base model only (adapter scale 0; own_sections are not shown to the model). UI: `frontend/src/RequestAssistant.tsx` ("Ask Mizan" on Semester lab for admin/registrar/chair/professor).
+- Interpreter eval: `training/interpreter/` — frozen 30-case `handwritten_test.jsonl` (sha 74f8…e868; score ONCE after items 1–4 with `eval_interpreter.py --set test --final`), dev set of 40 (`dev_set.py`). Dev after prompt work: 18/40 strict, per-field 35–40/40, 0 silent guesses, 4 false flags (base Qwen3-8B). Prompt tuning stopped there on purpose.
+
 ## Project status / next steps
-- Phase 1 approved; Phase 2 (six agents + recruitment) under user review as of 2026-09-25; Phase 3 (final verification & delivery) not started.
-- Next: user's review fixes → hand-written test set → walk the 12 acceptance criteria (spec §13) → Farq demo script (3 scenarios in spec §15) + reset script + deck.
-- Housekeeping: today's changes are uncommitted in git; `work/ollama-0.34.3.zip` (1.4 GB) and `training/coordinator/checkpoints/epoch-*` can be deleted.
+- Phase 1 approved; Phase 2 (six agents + recruitment) under user review; Phase 3 (final verification & delivery) not started.
+- Next: v3.1 items 2 → 3 → 4 (then score the 30 once) → walk the acceptance criteria (spec §13 + §18.7) → Farq demo script (3 scenarios in spec §15) + reset script + deck.
+- Housekeeping: ask the user before deleting `work/ollama-0.34.3.zip` (1.4 GB) or `training/coordinator/checkpoints/epoch-*`.
 
 ## Conventions
 - Keep everything local; loopback-only model URL is enforced in `local_model.base_url()`.

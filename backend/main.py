@@ -27,6 +27,8 @@ async def lifespan(app):
     init_agents()
     from .recruitment import init_recruitment
     init_recruitment()
+    from .request_routes import init_requests
+    init_requests()
     yield
 
 
@@ -437,6 +439,8 @@ from .agent_routes import router as agent_router
 app.include_router(agent_router)
 from .recruitment import router as recruitment_router
 app.include_router(recruitment_router)
+from .request_routes import router as request_router
+app.include_router(request_router)
 
 DIST=ROOT/"frontend"/"dist"
 if DIST.exists():

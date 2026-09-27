@@ -1,0 +1,2288 @@
+{
+  "summary": {
+    "overall": {
+      "cases": 40,
+      "strict_pass": 18,
+      "valid": 40,
+      "silent_guess_cases": 0,
+      "silent_guess_codes": 0,
+      "false_flag_cases": 4,
+      "field_accuracy": {
+        "task": 37,
+        "scope": 38,
+        "target_sections": 40,
+        "day_filter": 36,
+        "move": 38,
+        "max_changes": 40,
+        "protected_sections": 38,
+        "locked_days": 40,
+        "keep_days": 36,
+        "keep_time": 39,
+        "keep_room": 40,
+        "allowed_time_window": 35,
+        "min_break": 37,
+        "day_to_empty": 38,
+        "slot_search": 37,
+        "date_scope.kind": 39,
+        "duration_change": 39,
+        "delivery_mode": 40,
+        "unsupported_codes": 36,
+        "needs_clarification": 36,
+        "date_note": 40
+      }
+    },
+    "by_language": {
+      "ar": {
+        "cases": 15,
+        "strict_pass": 7,
+        "valid": 15,
+        "silent_guess_cases": 0,
+        "silent_guess_codes": 0,
+        "false_flag_cases": 2,
+        "field_accuracy": {
+          "task": 15,
+          "scope": 15,
+          "target_sections": 15,
+          "day_filter": 15,
+          "move": 15,
+          "max_changes": 15,
+          "protected_sections": 13,
+          "locked_days": 15,
+          "keep_days": 15,
+          "keep_time": 15,
+          "keep_room": 15,
+          "allowed_time_window": 14,
+          "min_break": 13,
+          "day_to_empty": 14,
+          "slot_search": 14,
+          "date_scope.kind": 15,
+          "duration_change": 14,
+          "delivery_mode": 15,
+          "unsupported_codes": 13,
+          "needs_clarification": 12,
+          "date_note": 15
+        }
+      },
+      "en": {
+        "cases": 20,
+        "strict_pass": 9,
+        "valid": 20,
+        "silent_guess_cases": 0,
+        "silent_guess_codes": 0,
+        "false_flag_cases": 1,
+        "field_accuracy": {
+          "task": 19,
+          "scope": 18,
+          "target_sections": 20,
+          "day_filter": 17,
+          "move": 20,
+          "max_changes": 20,
+          "protected_sections": 20,
+          "locked_days": 20,
+          "keep_days": 18,
+          "keep_time": 19,
+          "keep_room": 20,
+          "allowed_time_window": 17,
+          "min_break": 19,
+          "day_to_empty": 19,
+          "slot_search": 19,
+          "date_scope.kind": 20,
+          "duration_change": 20,
+          "delivery_mode": 20,
+          "unsupported_codes": 19,
+          "needs_clarification": 19,
+          "date_note": 20
+        }
+      },
+      "mixed": {
+        "cases": 5,
+        "strict_pass": 2,
+        "valid": 5,
+        "silent_guess_cases": 0,
+        "silent_guess_codes": 0,
+        "false_flag_cases": 1,
+        "field_accuracy": {
+          "task": 3,
+          "scope": 5,
+          "target_sections": 5,
+          "day_filter": 4,
+          "move": 3,
+          "max_changes": 5,
+          "protected_sections": 5,
+          "locked_days": 5,
+          "keep_days": 3,
+          "keep_time": 5,
+          "keep_room": 5,
+          "allowed_time_window": 4,
+          "min_break": 5,
+          "day_to_empty": 5,
+          "slot_search": 4,
+          "date_scope.kind": 4,
+          "duration_change": 5,
+          "delivery_mode": 5,
+          "unsupported_codes": 4,
+          "needs_clarification": 5,
+          "date_note": 5
+        }
+      }
+    },
+    "failures": {
+      "D05": [
+        "allowed_time_window"
+      ],
+      "D06": [
+        "scope",
+        "keep_days"
+      ],
+      "D08": [
+        "min_break",
+        "needs_clarification"
+      ],
+      "D09": [
+        "keep_time"
+      ],
+      "D10": [
+        "day_to_empty"
+      ],
+      "D12": [
+        "slot_search",
+        "unsupported_codes",
+        "needs_clarification"
+      ],
+      "D13": [
+        "task",
+        "needs_clarification"
+      ],
+      "D16": [
+        "duration_change",
+        "needs_clarification"
+      ],
+      "D18": [
+        "unsupported_codes"
+      ],
+      "D19": [
+        "scope"
+      ],
+      "D20": [
+        "task",
+        "move",
+        "keep_days",
+        "slot_search"
+      ],
+      "D21": [
+        "day_filter",
+        "allowed_time_window"
+      ],
+      "D23": [
+        "allowed_time_window",
+        "min_break"
+      ],
+      "D24": [
+        "protected_sections"
+      ],
+      "D27": [
+        "allowed_time_window",
+        "slot_search"
+      ],
+      "D31": [
+        "task",
+        "day_filter",
+        "move",
+        "keep_days",
+        "date_scope.kind",
+        "unsupported_codes"
+      ],
+      "D32": [
+        "day_filter"
+      ],
+      "D34": [
+        "day_to_empty"
+      ],
+      "D36": [
+        "allowed_time_window"
+      ],
+      "D38": [
+        "day_filter",
+        "keep_days"
+      ],
+      "D39": [
+        "protected_sections",
+        "min_break"
+      ],
+      "D40": [
+        "unsupported_codes"
+      ]
+    },
+    "set": "dev",
+    "model": "qwen3-8b",
+    "adapter": "none (base model)",
+    "seconds": 24.9
+  },
+  "predictions": [
+    {
+      "id": "D01",
+      "predicted": {
+        "task": "move_meeting",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S012"
+        ],
+        "day_filter": [
+          "mon"
+        ],
+        "move": {
+          "to_day": null,
+          "shift_minutes": 45,
+          "new_start": null
+        },
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": true,
+        "keep_time": false,
+        "keep_room": true,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 58,
+        "input_tokens": 2004,
+        "duration_seconds": 1.234
+      },
+      "passed": true
+    },
+    {
+      "id": "D02",
+      "predicted": {
+        "task": "move_meeting",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [
+          "wed"
+        ],
+        "move": {
+          "to_day": null,
+          "shift_minutes": null,
+          "new_start": "11:00"
+        },
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": true,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 56,
+        "input_tokens": 2004,
+        "duration_seconds": 0.625
+      },
+      "passed": true
+    },
+    {
+      "id": "D03",
+      "predicted": {
+        "task": "move_meeting",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S045"
+        ],
+        "day_filter": [
+          "sun"
+        ],
+        "move": {
+          "to_day": "wed",
+          "shift_minutes": null,
+          "new_start": null
+        },
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": true,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 52,
+        "input_tokens": 2000,
+        "duration_seconds": 0.578
+      },
+      "passed": true
+    },
+    {
+      "id": "D04",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": {
+          "earliest_start": null,
+          "latest_start": null,
+          "latest_end": "17:00",
+          "days": []
+        },
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 51,
+        "input_tokens": 1995,
+        "duration_seconds": 0.578
+      },
+      "passed": true
+    },
+    {
+      "id": "D05",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": {
+          "earliest_start": null,
+          "latest_start": null,
+          "latest_end": "10:30",
+          "days": []
+        },
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 57,
+        "input_tokens": 1998,
+        "duration_seconds": 0.625
+      },
+      "passed": false
+    },
+    {
+      "id": "D06",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": {
+          "earliest_start": "09:00",
+          "latest_start": null,
+          "latest_end": "16:00",
+          "days": []
+        },
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 61,
+        "input_tokens": 2000,
+        "duration_seconds": 0.719
+      },
+      "passed": false
+    },
+    {
+      "id": "D07",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [
+          "tue"
+        ],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": {
+          "minutes": 30,
+          "days": [
+            "tue"
+          ],
+          "kind": "between_each",
+          "applies_to": "professor"
+        },
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 54,
+        "input_tokens": 2004,
+        "duration_seconds": 0.594
+      },
+      "passed": true
+    },
+    {
+      "id": "D08",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [
+          "sun"
+        ],
+        "move": null,
+        "max_changes": 1,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [
+          "WHICH_SECTION"
+        ],
+        "unsupported": [],
+        "needs_clarification": true,
+        "questions": [
+          {
+            "code": "WHICH_SECTION",
+            "en": "Which section do you mean?",
+            "ar": "أي شعبة تقصد؟"
+          }
+        ],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 46,
+        "input_tokens": 2015,
+        "duration_seconds": 0.547
+      },
+      "passed": false
+    },
+    {
+      "id": "D09",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": {
+          "from_day": "wed",
+          "to_day": "thu"
+        },
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 44,
+        "input_tokens": 1997,
+        "duration_seconds": 0.484
+      },
+      "passed": false
+    },
+    {
+      "id": "D10",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": {
+          "from_day": "thu",
+          "to_day": "tue"
+        },
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 45,
+        "input_tokens": 2001,
+        "duration_seconds": 0.5
+      },
+      "passed": false
+    },
+    {
+      "id": "D11",
+      "predicted": {
+        "task": "find_common_slot",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S033"
+        ],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": {
+          "duration": 90,
+          "days": [],
+          "same_time_for_all": false,
+          "group": "target_sections"
+        },
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 53,
+        "input_tokens": 2001,
+        "duration_seconds": 0.578
+      },
+      "passed": true
+    },
+    {
+      "id": "D12",
+      "predicted": {
+        "task": "find_common_slot",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": {
+          "duration": 60,
+          "days": [],
+          "same_time_for_all": true,
+          "group": "all_own_sections"
+        },
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": true,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "EXTRA_SESSION",
+            "reason_en": "Booking an extra one-off session needs dated sessions (planned). Mizan can find the free slot.",
+            "reason_ar": "حجز محاضرة إضافية لمرة واحدة يحتاج جلسات مؤرخة (مخطط له). يستطيع ميزان إيجاد الوقت المتاح."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 51,
+        "input_tokens": 2010,
+        "duration_seconds": 0.562
+      },
+      "passed": false
+    },
+    {
+      "id": "D13",
+      "predicted": {
+        "task": "find_common_slot",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S021",
+          "S022"
+        ],
+        "day_filter": [
+          "mon",
+          "wed"
+        ],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": {
+          "duration": null,
+          "days": [
+            "mon",
+            "wed"
+          ],
+          "same_time_for_all": true,
+          "group": "target_sections"
+        },
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [
+          "MISSING_DURATION"
+        ],
+        "unsupported": [],
+        "needs_clarification": true,
+        "questions": [
+          {
+            "code": "MISSING_DURATION",
+            "en": "How long should the slot be?",
+            "ar": "كم مدة الوقت المطلوب؟"
+          }
+        ],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 67,
+        "input_tokens": 2003,
+        "duration_seconds": 0.719
+      },
+      "passed": false
+    },
+    {
+      "id": "D14",
+      "predicted": {
+        "task": "change_delivery",
+        "scope": "own",
+        "date_scope": {
+          "kind": "one_off",
+          "phrase": "next week"
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": "online",
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "DATED_CHANGE",
+            "reason_en": "Mizan models one repeating weekly timetable; changes on specific dates or single occurrences need the term calendar (planned).",
+            "reason_ar": "ميزان يتعامل مع جدول أسبوعي متكرر فقط؛ التغيير في تواريخ محددة أو لمرة واحدة يحتاج تقويم الفصل (مخطط له)."
+          },
+          {
+            "code": "ONLINE_DELIVERY",
+            "reason_en": "Online delivery is not modelled yet (planned).",
+            "reason_ar": "التدريس عن بُعد غير مدعوم بعد (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 28,
+        "input_tokens": 1998,
+        "duration_seconds": 0.328
+      },
+      "passed": true
+    },
+    {
+      "id": "D15",
+      "predicted": {
+        "task": "change_duration",
+        "scope": "own",
+        "date_scope": {
+          "kind": "one_off",
+          "phrase": "tomorrow"
+        },
+        "target_sections": [],
+        "day_filter": [
+          "mon"
+        ],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": {
+          "new_minutes": 45,
+          "start_delta": null,
+          "end_delta": null,
+          "direction": "shorter"
+        },
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "DATED_CHANGE",
+            "reason_en": "Mizan models one repeating weekly timetable; changes on specific dates or single occurrences need the term calendar (planned).",
+            "reason_ar": "ميزان يتعامل مع جدول أسبوعي متكرر فقط؛ التغيير في تواريخ محددة أو لمرة واحدة يحتاج تقويم الفصل (مخطط له)."
+          },
+          {
+            "code": "DURATION_CHANGE",
+            "reason_en": "Session length is fixed by the course; changing it needs an approved policy (planned).",
+            "reason_ar": "مدة المحاضرة ثابتة حسب المقرر؛ تغييرها يحتاج سياسة معتمدة (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 54,
+        "input_tokens": 1994,
+        "duration_seconds": 0.578
+      },
+      "passed": true
+    },
+    {
+      "id": "D16",
+      "predicted": {
+        "task": "change_duration",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": "today"
+        },
+        "target_sections": [
+          "S050"
+        ],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": {
+          "new_minutes": null,
+          "start_delta": null,
+          "end_delta": null,
+          "direction": "longer"
+        },
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [
+          "MISSING_AMOUNT"
+        ],
+        "unsupported": [
+          {
+            "code": "DURATION_CHANGE",
+            "reason_en": "Session length is fixed by the course; changing it needs an approved policy (planned).",
+            "reason_ar": "مدة المحاضرة ثابتة حسب المقرر؛ تغييرها يحتاج سياسة معتمدة (مخطط له)."
+          }
+        ],
+        "needs_clarification": true,
+        "questions": [
+          {
+            "code": "MISSING_AMOUNT",
+            "en": "By how much should it change?",
+            "ar": "بكم تريد التغيير؟"
+          }
+        ],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 60,
+        "input_tokens": 2005,
+        "duration_seconds": 0.656
+      },
+      "passed": false
+    },
+    {
+      "id": "D17",
+      "predicted": {
+        "task": "change_room",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S070"
+        ],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": true,
+        "keep_time": true,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": true,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "ROOM_LOCATION",
+            "reason_en": "Rooms have no building data and offices have no location, so distance cannot be checked (planned).",
+            "reason_ar": "لا توجد بيانات مبانٍ للقاعات ولا مواقع للمكاتب، فلا يمكن حساب المسافة (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 40,
+        "input_tokens": 2003,
+        "duration_seconds": 0.437
+      },
+      "passed": true
+    },
+    {
+      "id": "D18",
+      "predicted": {
+        "task": "change_room",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S030"
+        ],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": true,
+        "keep_time": true,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": true,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "ROOM_LOCATION",
+            "reason_en": "Rooms have no building data and offices have no location, so distance cannot be checked (planned).",
+            "reason_ar": "لا توجد بيانات مبانٍ للقاعات ولا مواقع للمكاتب، فلا يمكن حساب المسافة (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 40,
+        "input_tokens": 2005,
+        "duration_seconds": 0.438
+      },
+      "passed": false
+    },
+    {
+      "id": "D19",
+      "predicted": {
+        "task": "change_duration",
+        "scope": "semester",
+        "date_scope": {
+          "kind": "one_off",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": {
+          "new_minutes": null,
+          "start_delta": null,
+          "end_delta": -10,
+          "direction": "shorter"
+        },
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "DATED_CHANGE",
+            "reason_en": "Mizan models one repeating weekly timetable; changes on specific dates or single occurrences need the term calendar (planned).",
+            "reason_ar": "ميزان يتعامل مع جدول أسبوعي متكرر فقط؛ التغيير في تواريخ محددة أو لمرة واحدة يحتاج تقويم الفصل (مخطط له)."
+          },
+          {
+            "code": "DURATION_CHANGE",
+            "reason_en": "Session length is fixed by the course; changing it needs an approved policy (planned).",
+            "reason_ar": "مدة المحاضرة ثابتة حسب المقرر؛ تغييرها يحتاج سياسة معتمدة (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 45,
+        "input_tokens": 1996,
+        "duration_seconds": 0.5
+      },
+      "passed": false
+    },
+    {
+      "id": "D20",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "one_off",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [
+          "mon"
+        ],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": {
+          "duration": null,
+          "days": [],
+          "same_time_for_all": false,
+          "group": "own_class_students"
+        },
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "DATED_CHANGE",
+            "reason_en": "Mizan models one repeating weekly timetable; changes on specific dates or single occurrences need the term calendar (planned).",
+            "reason_ar": "ميزان يتعامل مع جدول أسبوعي متكرر فقط؛ التغيير في تواريخ محددة أو لمرة واحدة يحتاج تقويم الفصل (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 76,
+        "input_tokens": 2002,
+        "duration_seconds": 0.812
+      },
+      "passed": false
+    },
+    {
+      "id": "D21",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": "from now on"
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": {
+          "earliest_start": null,
+          "latest_start": null,
+          "latest_end": "12:00",
+          "days": []
+        },
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 66,
+        "input_tokens": 1998,
+        "duration_seconds": 0.766
+      },
+      "passed": false
+    },
+    {
+      "id": "D22",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "date_range",
+          "phrase": "december"
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": {
+          "earliest_start": null,
+          "latest_start": null,
+          "latest_end": "15:00",
+          "days": []
+        },
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "DATED_CHANGE",
+            "reason_en": "Mizan models one repeating weekly timetable; changes on specific dates or single occurrences need the term calendar (planned).",
+            "reason_ar": "ميزان يتعامل مع جدول أسبوعي متكرر فقط؛ التغيير في تواريخ محددة أو لمرة واحدة يحتاج تقويم الفصل (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 60,
+        "input_tokens": 2000,
+        "duration_seconds": 0.656
+      },
+      "passed": true
+    },
+    {
+      "id": "D23",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [
+          {
+            "section": "S015",
+            "days": []
+          }
+        ],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": {
+          "minutes": 10,
+          "days": [],
+          "kind": "between_each",
+          "applies_to": "professor"
+        },
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 84,
+        "input_tokens": 2005,
+        "duration_seconds": 0.937
+      },
+      "passed": false
+    },
+    {
+      "id": "D24",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "semester",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": {
+          "earliest_start": null,
+          "latest_start": null,
+          "latest_end": "16:00",
+          "days": []
+        },
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 57,
+        "input_tokens": 2007,
+        "duration_seconds": 0.641
+      },
+      "passed": false
+    },
+    {
+      "id": "D25",
+      "predicted": {
+        "task": "move_meeting",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [
+          "tue"
+        ],
+        "move": {
+          "to_day": null,
+          "shift_minutes": 60,
+          "new_start": null
+        },
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": true,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 46,
+        "input_tokens": 1996,
+        "duration_seconds": 0.515
+      },
+      "passed": true
+    },
+    {
+      "id": "D26",
+      "predicted": {
+        "task": "find_common_slot",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": {
+          "duration": 30,
+          "days": [],
+          "same_time_for_all": true,
+          "group": "all_own_sections"
+        },
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 46,
+        "input_tokens": 2005,
+        "duration_seconds": 0.5
+      },
+      "passed": true
+    },
+    {
+      "id": "D27",
+      "predicted": {
+        "task": "add_session",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "one_off",
+          "phrase": "next Thursday"
+        },
+        "target_sections": [
+          "S040"
+        ],
+        "day_filter": [
+          "thu"
+        ],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": {
+          "earliest_start": null,
+          "latest_start": "11:00",
+          "latest_end": null,
+          "days": [
+            "thu"
+          ]
+        },
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": true,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "EXTRA_SESSION",
+            "reason_en": "Booking an extra one-off session needs dated sessions (planned). Mizan can find the free slot.",
+            "reason_ar": "حجز محاضرة إضافية لمرة واحدة يحتاج جلسات مؤرخة (مخطط له). يستطيع ميزان إيجاد الوقت المتاح."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 77,
+        "input_tokens": 2000,
+        "duration_seconds": 0.828
+      },
+      "passed": false
+    },
+    {
+      "id": "D28",
+      "predicted": {
+        "task": "change_delivery",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S061"
+        ],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": "online",
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "ONLINE_DELIVERY",
+            "reason_en": "Online delivery is not modelled yet (planned).",
+            "reason_ar": "التدريس عن بُعد غير مدعوم بعد (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 34,
+        "input_tokens": 1993,
+        "duration_seconds": 0.407
+      },
+      "passed": true
+    },
+    {
+      "id": "D29",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [
+          "mon"
+        ],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": {
+          "minutes": 90,
+          "days": [
+            "mon"
+          ],
+          "kind": "one_block",
+          "applies_to": "students"
+        },
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 51,
+        "input_tokens": 2004,
+        "duration_seconds": 0.562
+      },
+      "passed": true
+    },
+    {
+      "id": "D30",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [
+          "mon",
+          "tue"
+        ],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": {
+          "earliest_start": "09:00",
+          "latest_start": null,
+          "latest_end": null,
+          "days": []
+        },
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 59,
+        "input_tokens": 2011,
+        "duration_seconds": 0.656
+      },
+      "passed": true
+    },
+    {
+      "id": "D31",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "one_off",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S018"
+        ],
+        "day_filter": [
+          "mon",
+          "tue",
+          "wed"
+        ],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": true,
+        "keep_time": true,
+        "keep_room": true,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "DATED_CHANGE",
+            "reason_en": "Mizan models one repeating weekly timetable; changes on specific dates or single occurrences need the term calendar (planned).",
+            "reason_ar": "ميزان يتعامل مع جدول أسبوعي متكرر فقط؛ التغيير في تواريخ محددة أو لمرة واحدة يحتاج تقويم الفصل (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 56,
+        "input_tokens": 2005,
+        "duration_seconds": 0.625
+      },
+      "passed": false
+    },
+    {
+      "id": "D32",
+      "predicted": {
+        "task": "find_common_slot",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": {
+          "duration": 120,
+          "days": [
+            "sun"
+          ],
+          "same_time_for_all": true,
+          "group": "all_own_sections"
+        },
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 48,
+        "input_tokens": 2010,
+        "duration_seconds": 0.532
+      },
+      "passed": false
+    },
+    {
+      "id": "D33",
+      "predicted": {
+        "task": "find_common_slot",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "one_off",
+          "phrase": "next week"
+        },
+        "target_sections": [
+          "S056"
+        ],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": {
+          "duration": 60,
+          "days": [],
+          "same_time_for_all": false,
+          "group": "target_sections"
+        },
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": true
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 61,
+        "input_tokens": 2008,
+        "duration_seconds": 0.657
+      },
+      "passed": true
+    },
+    {
+      "id": "D34",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "date_range",
+          "phrase": "from ... to ..."
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "DATED_CHANGE",
+            "reason_en": "Mizan models one repeating weekly timetable; changes on specific dates or single occurrences need the term calendar (planned).",
+            "reason_ar": "ميزان يتعامل مع جدول أسبوعي متكرر فقط؛ التغيير في تواريخ محددة أو لمرة واحدة يحتاج تقويم الفصل (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 34,
+        "input_tokens": 1995,
+        "duration_seconds": 0.421
+      },
+      "passed": false
+    },
+    {
+      "id": "D35",
+      "predicted": {
+        "task": "move_meeting",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S009"
+        ],
+        "day_filter": [
+          "wed"
+        ],
+        "move": {
+          "to_day": null,
+          "shift_minutes": -15,
+          "new_start": null
+        },
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": true,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 59,
+        "input_tokens": 1997,
+        "duration_seconds": 0.641
+      },
+      "passed": true
+    },
+    {
+      "id": "D36",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "own",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": {
+          "earliest_start": "08:00",
+          "latest_start": null,
+          "latest_end": "14:00",
+          "days": []
+        },
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 61,
+        "input_tokens": 2000,
+        "duration_seconds": 0.688
+      },
+      "passed": false
+    },
+    {
+      "id": "D37",
+      "predicted": {
+        "task": "change_room",
+        "scope": "own",
+        "date_scope": {
+          "kind": "one_off",
+          "phrase": "next week"
+        },
+        "target_sections": [],
+        "day_filter": [],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": true,
+        "keep_time": true,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "DATED_CHANGE",
+            "reason_en": "Mizan models one repeating weekly timetable; changes on specific dates or single occurrences need the term calendar (planned).",
+            "reason_ar": "ميزان يتعامل مع جدول أسبوعي متكرر فقط؛ التغيير في تواريخ محددة أو لمرة واحدة يحتاج تقويم الفصل (مخطط له)."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 30,
+        "input_tokens": 2002,
+        "duration_seconds": 0.359
+      },
+      "passed": true
+    },
+    {
+      "id": "D38",
+      "predicted": {
+        "task": "move_meeting",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S005"
+        ],
+        "day_filter": [
+          "sun"
+        ],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": true,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": true,
+        "clarify": [
+          "NON_TEACHING_DAY",
+          "MISSING_TIME"
+        ],
+        "unsupported": [],
+        "needs_clarification": true,
+        "questions": [
+          {
+            "code": "NON_TEACHING_DAY",
+            "en": "Friday and Saturday are not teaching days. Which day do you mean?",
+            "ar": "الجمعة والسبت ليسا من أيام التدريس. أي يوم تقصد؟"
+          },
+          {
+            "code": "MISSING_TIME",
+            "en": "Which time should it move to, or which time should it avoid?",
+            "ar": "إلى أي وقت تريد نقلها، أو ما الوقت الذي يجب تجنبه؟"
+          }
+        ],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 58,
+        "input_tokens": 2002,
+        "duration_seconds": 0.656
+      },
+      "passed": false
+    },
+    {
+      "id": "D39",
+      "predicted": {
+        "task": "reschedule_with_rules",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S066"
+        ],
+        "day_filter": [
+          "sun"
+        ],
+        "move": null,
+        "max_changes": 2,
+        "protected_sections": [
+          {
+            "section": "S066",
+            "days": [
+              "sun"
+            ]
+          }
+        ],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": {
+          "minutes": 90,
+          "days": [
+            "sun"
+          ],
+          "kind": "one_block",
+          "applies_to": "students"
+        },
+        "day_to_empty": null,
+        "slot_search": null,
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": false,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 79,
+        "input_tokens": 2016,
+        "duration_seconds": 0.875
+      },
+      "passed": false
+    },
+    {
+      "id": "D40",
+      "predicted": {
+        "task": "find_common_slot",
+        "scope": "sections",
+        "date_scope": {
+          "kind": "weekly",
+          "phrase": ""
+        },
+        "target_sections": [
+          "S083"
+        ],
+        "day_filter": [
+          "mon"
+        ],
+        "move": null,
+        "max_changes": null,
+        "protected_sections": [],
+        "locked_days": [],
+        "keep_days": false,
+        "keep_time": false,
+        "keep_room": false,
+        "allowed_time_window": null,
+        "min_break": null,
+        "day_to_empty": null,
+        "slot_search": {
+          "duration": 75,
+          "days": [
+            "mon"
+          ],
+          "same_time_for_all": false,
+          "group": "target_sections"
+        },
+        "duration_change": null,
+        "delivery_mode": null,
+        "book_session": true,
+        "room_location": false,
+        "date_mentioned": false,
+        "clarify": [],
+        "unsupported": [
+          {
+            "code": "EXTRA_SESSION",
+            "reason_en": "Booking an extra one-off session needs dated sessions (planned). Mizan can find the free slot.",
+            "reason_ar": "حجز محاضرة إضافية لمرة واحدة يحتاج جلسات مؤرخة (مخطط له). يستطيع ميزان إيجاد الوقت المتاح."
+          }
+        ],
+        "needs_clarification": false,
+        "questions": [],
+        "date_note": false
+      },
+      "error": null,
+      "telemetry": {
+        "model": "qwen3-8b",
+        "output_tokens": 64,
+        "input_tokens": 2011,
+        "duration_seconds": 0.719
+      },
+      "passed": false
+    }
+  ]
+}
