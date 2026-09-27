@@ -2,15 +2,18 @@
 
 Local-first university scheduling, workforce planning, and recruitment assistance.
 
+## Presenting the demo?
+
+Start with **[docs/HANDOVER.md](docs/HANDOVER.md)**: install on a new PC, check readiness, run, reset, and the demo itself.
+
+- [Demo script (7 minutes)](docs/demo-script.md)
+- [Acceptance report: all spec criteria mapped to passing tests](docs/acceptance-report.md)
+- [Revised project specification](docs/MIZAN%20-%20Project%20Documentation%20v3.md)
+- Design system: [DESIGN.md](DESIGN.md) · product brief: [PRODUCT.md](PRODUCT.md)
+
 ## Current status
 
-The second consolidated build phase is ready for review: Apple-inspired colors, five collaborating scheduling agents, and a Recruitment Assistant using local Qwen3 8B inference. Recruitment includes manager-approved criteria, PDF/DOCX/TXT CV ingestion, source correction, evidence comparisons, printable briefs and source CV drafts, and bilingual hiring-manager chat. No live LinkedIn connection is configured.
-
-- [Build 2 checkpoint and review guide](docs/build-02-checkpoint.md)
-- [Build 1 checkpoint and review guide](docs/build-01-checkpoint.md)
-- [Approved scope, journeys, and acceptance criteria](docs/phase-01-product-contract.md)
-- [Environment assessment](docs/environment-assessment.md)
-- [Revised project specification](docs/MIZAN%20-%20Project%20Documentation%20v3.md)
+Ready for the Farq demo (27 September 2026). Six collaborating agents with a fine-tuned local coordinator, OR-Tools optimization with independent validation, change requests, professor requests (Ask Mizan, My classes, request rules, common free-slot finder), workforce evidence and recruitment assistance, in a bilingual "Information System" interface with graded metrics. 80 automated tests and two browser suites pass.
 
 ## Architecture
 
@@ -20,21 +23,21 @@ The initial release uses a local database and reproducible synthetic data. Live 
 
 ## Phase gates
 
-1. Working scheduling application — approved.
-2. Six agents and recruitment — ready for review.
-3. Final verification and delivery — not started.
+1. Working scheduling application: approved.
+2. Six agents and recruitment: ready for review.
+3. Final verification and delivery: done (acceptance report, demo script, reset script, deck).
 
 ## Run on this PC
 
-Double-click **Start Mizan.cmd**, then open **http://127.0.0.1:8000**. The prepared environment and built frontend are already present locally. The server binds to loopback only.
+Double-click **Start Mizan.cmd**, then open **http://127.0.0.1:8000**. The server binds to loopback only. **Check Mizan Setup.cmd** reports anything missing; **Reset Mizan Demo.cmd** restores clean demo data (the old database is kept in `data/backups/`).
 
 Demo accounts: `admin`, `registrar`, `chair`, `professor`, `student`, `hiring_manager`. The default demonstration password is `Mizan-demo-2026!`. These are intentionally local demo identities, not institutional authentication. Set `MIZAN_DEMO_PASSWORD` before starting to override the shared demo password.
 
-The initial fixtures contain 1,500 fictional students, 80 courses, 100 sections, 40 rooms, and 50 professors. The baseline, diagnostic, and staffing-shortfall scenarios are separate. Your changes are saved in `data/mizan.sqlite3`; restarting does not reset them.
+The initial fixtures contain 1,500 fictional students, 80 courses, 100 sections, 40 rooms, and 50 professors. The baseline, diagnostic, staffing-shortfall and faculty-week scenarios are separate. Your changes are saved in `data/mizan.sqlite3`; restarting does not reset them (use Reset Mizan Demo.cmd).
 
 ## Fresh setup
 
-Prerequisites: Python 3.12+, Node.js 24+, and pnpm 11+. The setup script accepts explicit `-Python` and `-Pnpm` paths when these are not on PATH.
+Prerequisites: Python 3.12+ and Node.js 24+ (pnpm is fetched through npx when it is not installed). The setup script accepts explicit `-Python` and `-Pnpm` paths. The fine-tuned coordinator adapter ships in `.models/`; the base model and runtime are downloaded and checksum-verified by `install_model_runtime.py`.
 
 ```powershell
 ./scripts/setup.ps1
