@@ -8,7 +8,6 @@ Setup takes about 30–60 minutes, mostly downloading. Do it the day before, not
 Mizan checks a university timetable before it's published. It measures what the timetable costs students (for example, hours lost to gaps between classes), recommends changes, shows the evidence, and a person approves every change. It runs entirely on one PC: a local AI model, no cloud services. All data is synthetic.
 
 - Demo script, 7 minutes, word for word: [`docs/demo-script.md`](demo-script.md)
-- Slide deck: https://claude.ai/artifact/7HQp54eBHaf9ka8Qk975uW (the project owner must share it with you; it downloads as PowerPoint or PDF)
 - Proof that it works, if a judge asks: [`docs/acceptance-report.md`](acceptance-report.md)
 
 ## 1. What your PC needs
@@ -20,18 +19,18 @@ Mizan checks a university timetable before it's published. It measures what the 
 | About 15 GB free disk | 5.2 GB model, 1.8 GB runtime, dependencies |
 | Python 3.12 — https://www.python.org/downloads/ | Tick "Add python.exe to PATH" in the installer |
 | Node.js 24 LTS — https://nodejs.org | Builds the website (includes `npx`; pnpm doesn't need installing) |
-| Git — https://git-scm.com | To get the code |
+| Git (optional) — https://git-scm.com | Only if you clone instead of downloading the ZIP |
 | Google Chrome or Microsoft Edge | To show the app |
 
 Without an NVIDIA GPU you can still demo everything except Ask Mizan, "Start collaboration" and "Analyze evidence". The demo script marks those steps as optional.
 
 ## 2. Install (once)
 
-Open **PowerShell** and run these one at a time:
+**Get the code (ZIP):** on GitHub click **Code → Download ZIP**. Before extracting, right-click the ZIP → **Properties** → tick **Unblock** → OK, so Windows doesn't block the scripts. Extract it to a short path such as `C:\Mizan`, not a OneDrive or Desktop folder. Check that the folder contains `Check Mizan Setup.cmd` and `docs\HANDOVER.md`; if not, the ZIP is outdated, so download it again. (With Git you can use `git clone https://github.com/ImSleepingHere/Mizan.git` instead.)
+
+Then open **PowerShell** in that folder (Shift + right-click inside the folder → *Open PowerShell window here*) and run these one at a time:
 
 ```powershell
-git clone https://github.com/ImSleepingHere/Mizan.git
-cd Mizan
 powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
 .\.venv\Scripts\python.exe scripts\install_model_runtime.py
 ```
@@ -41,7 +40,7 @@ powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
 
 **Faster alternative:** if the project owner can give you a USB drive, copy their `.models\qwen3-8b.gguf` file and whole `.runtime` folder into your `Mizan` folder, and skip the download.
 
-You need a GitHub invitation to the repository if it's private. Ask the project owner.
+**Updating later:** a ZIP can't pull fixes. Download the new ZIP, extract it, and copy your old `.venv`, `.models`, `.runtime` and `data` folders into it (or run setup again).
 
 ## 3. Check it's ready
 
