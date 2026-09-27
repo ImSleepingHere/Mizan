@@ -32,7 +32,8 @@ def options_for(data, section, room_limit=3):
     return options
 
 
-def optimize(data, max_changes=5, seconds=10):
+def optimize(data, max_changes=5, seconds=10, movable=None):
+    """movable: optional set of section IDs that may change (e.g. a professor's own sections); all others stay fixed."""
     started = perf_counter()
     issues = validate(data)
     if issues:
@@ -50,7 +51,10 @@ def optimize(data, max_changes=5, seconds=10):
             memberships[sid].append(group)
     day_terms = defaultdict(list)
     for section in data.sections:
-        opts = options_for(data,section)
+        if movable is not None and section.id not in movable:
+            opts = [section]
+        else:
+            opts = options_for(data,section)
         # Bounded neighborhood keeps the interactive run small. Preserve every approved
         # start on the current days/room, plus a few day/room alternatives and baseline.
         current_days=[m.day for m in section.meetings]

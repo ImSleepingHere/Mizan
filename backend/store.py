@@ -45,7 +45,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS requisitions(id TEXT PRIMARY KEY,scenario_id TEXT NOT NULL,revision INTEGER NOT NULL,status TEXT NOT NULL,data TEXT NOT NULL,created TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY,username TEXT NOT NULL,expires REAL NOT NULL);
         ''')
-        for kind in ["baseline","diagnostic","shortfall"]:
+        for kind in ["baseline","diagnostic","shortfall","faculty"]:
             if not con.execute("SELECT 1 FROM scenarios WHERE id=?",(kind,)).fetchone():
                 data=generate(kind)
                 payload=data.model_dump_json()

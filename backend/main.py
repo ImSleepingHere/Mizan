@@ -73,6 +73,33 @@ def scenario(sid):
     return dict(row),Semester.model_validate_json(row["data"])
 
 
+def redact(u,obj):
+    """Professors see aggregate student counts only (spec §18.3): no student identities in any response."""
+    if u["role"]!="professor":
+        return obj
+    def walk(x):
+        if isinstance(x,dict):
+            out={}
+            for k,v in x.items():
+                if k=="adverse_students":
+                    out["adverse_count"]=len(v)
+                elif k=="records" and isinstance(v,list):
+                    out[k]=[r for r in v if not str(r).startswith("ST")]
+                    hidden=len(v)-len(out[k])
+                    if hidden: out["student_count"]=hidden
+                else:
+                    out[k]=walk(v)
+            return out
+        if isinstance(x,list):
+            return [walk(v) for v in x]
+        return x
+    return walk(obj)
+
+
+def own_sections(u,data):
+    return {s.id for s in data.sections if u["role"]=="professor" and s.professor_id==u.get("professor_id")}
+
+
 def save_proposal(sid,row,data,kind,analysis,u,reason=""):
     pid=identifier()
     issues=validate(data)
@@ -188,13 +215,21 @@ class OptimizeRequest(StrictModel):
 
 @app.post("/api/scenarios/{sid}/optimize")
 def run_optimize(sid:str,body:OptimizeRequest,u=Depends(user)):
-    require(u,{"admin","registrar"})
+    require(u,{"admin","registrar","professor"})
     row,data=scenario(sid)
-    result=optimize(data,body.max_changes,body.seconds)
+    movable=None
+    if u["role"]=="professor":
+        # "My classes" scope (spec §18.3): only own sections may move; every other section is fixed in the search.
+        movable=own_sections(u,data)
+        if not movable: raise HTTPException(403,"You have no sections in this timetable")
+    max_changes=min(body.max_changes,len(movable)) if movable is not None else body.max_changes
+    result=optimize(data,max_changes,body.seconds,movable=movable)
+    result.update(scope="own" if movable is not None else "semester",max_changes_used=max_changes)
     candidate=result.pop("candidate",None)
     if not candidate or not result["comparison"]["changes"]:
-        return result
-    return dict(**result,proposal=save_proposal(sid,row,Semester.model_validate(candidate),"optimization",dict(result),u))
+        return redact(u,result)
+    kind="optimization" if movable is None else "own_optimization"
+    return redact(u,dict(**result,proposal=save_proposal(sid,row,Semester.model_validate(candidate),kind,dict(result),u)))
 
 
 class ChangeRequest(StrictModel):
@@ -229,7 +264,7 @@ def change(sid:str,body:ChangeRequest,u=Depends(user)):
                 alternatives.append(dict(section=option.model_dump(),recovered_hours=diff["recovered_hours"],worsened=diff["worsened"]))
         alternatives.sort(key=lambda a:(a["worsened"],-a["recovered_hours"]))
     analysis["alternatives"]=alternatives[:3]
-    return save_proposal(sid,row,candidate,"change",analysis,u,body.reason)
+    return redact(u,save_proposal(sid,row,candidate,"change",analysis,u,body.reason))
 
 
 class PreviewRequest(StrictModel):
@@ -268,10 +303,31 @@ def preview_change(sid:str,body:PreviewRequest,u=Depends(user)):
     issues=validate(candidate)
     introduced=[i for i in issues if (i["code"],tuple(i["records"])) not in existing]
     diff=compare(data,candidate)
-    return dict(revision=row["revision"],section_id=body.section_id,meeting_index=body.meeting_index,day=body.day,start=body.start,end=body.start+duration,
+    return redact(u,dict(revision=row["revision"],section_id=body.section_id,meeting_index=body.meeting_index,day=body.day,start=body.start,end=body.start+duration,
                 feasible=not introduced,new_issues=introduced[:20],new_issue_count=len(introduced),existing_issue_count=len(existing),
                 recovered_hours=diff["recovered_hours"],benefiting=diff["benefiting"],worsened=diff["worsened"],
-                worst_increase_minutes=diff["worst_increase_minutes"])
+                worst_increase_minutes=diff["worst_increase_minutes"]))
+
+
+@app.get("/api/scenarios/{sid}/my-classes")
+def my_classes(sid:str,u=Depends(user)):
+    """A professor's own sections with aggregate figures for their students only (no identities)."""
+    require(u,{"professor"})
+    row,data=scenario(sid)
+    mine=own_sections(u,data)
+    sections=[s for s in data.sections if s.id in mine]
+    roster={s.id:[st for st in data.students if s.id in st.sections] for s in sections}
+    students={st.id:st for ids in roster.values() for st in ids}
+    personal={m["id"]:m for m in student_metrics(data) if m["id"] in students}
+    issues=[i for i in validate(data) if set(i["records"])&mine]
+    n=max(1,len(personal))
+    return dict(revision=row["revision"],sections=[dict(**s.model_dump(),enrolled=len(roster[s.id])) for s in sections],
+                students=len(personal),average_gap_hours=round(sum(p["gap_minutes"] for p in personal.values())/n/60,2),
+                average_campus_days=round(sum(p["campus_days"] for p in personal.values())/n,2),
+                long_gap_2h=sum(p["longest_gap"]>=120 for p in personal.values()),
+                teaching_minutes=sum(m.end-m.start for s in sections for m in s.meetings),
+                contracted_minutes=next((p.contracted_minutes for p in data.professors if p.id==u.get("professor_id")),None),
+                conflicts=len(issues),note="Aggregates cover students enrolled in at least one of your sections.")
 
 
 class Alternative(StrictModel):
@@ -291,7 +347,7 @@ def alternative(sid:str,body:Alternative,u=Depends(user)):
     if body.section.room_id not in {r.id for r in data.rooms}: raise HTTPException(422,"Unknown room")
     candidate=data.model_copy(deep=True)
     candidate.sections=[body.section if s.id==existing.id else s for s in candidate.sections]
-    return save_proposal(sid,row,candidate,"change",dict(comparison=compare(data,candidate)),u,body.reason)
+    return redact(u,save_proposal(sid,row,candidate,"change",dict(comparison=compare(data,candidate)),u,body.reason))
 
 
 @app.get("/api/scenarios/{sid}/placement/{course_id}")
@@ -344,7 +400,7 @@ def proposals(scenario_id:str,u=Depends(user)):
     require(u,STAFF|{"professor"})
     with connect() as con:
         rows=con.execute("SELECT id,scenario_id,base_revision,kind,status,analysis,created,actor,reason FROM proposals WHERE scenario_id=? ORDER BY created DESC",(scenario_id,)).fetchall()
-    return [dict(**{k:r[k] for k in r.keys() if k!="analysis"},analysis=json.loads(r["analysis"])) for r in rows if u["role"]!="professor" or r["actor"]==u["username"]]
+    return redact(u,[dict(**{k:r[k] for k in r.keys() if k!="analysis"},analysis=json.loads(r["analysis"])) for r in rows if u["role"]!="professor" or r["actor"]==u["username"]])
 
 
 @app.post("/api/proposals/{pid}/{action}")

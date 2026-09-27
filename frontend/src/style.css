@@ -423,3 +423,15 @@ html[dir=rtl] .nav-item.active:before{border-radius:3px}
 .ra-result{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-2)}.ra-result p{display:flex;gap:6px;align-items:center;font-size:13px}
 .ra-preview{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 @media (max-width:640px){.ra-input{flex-direction:column}.ra-actions{justify-content:stretch}.ra-actions button{flex:1;justify-content:center}}
+
+/* My classes (spec §18.3) */
+.mc{padding:20px 22px;margin-bottom:22px}
+.mc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:6px 0 14px}
+.mc-stats div{background:var(--grad-soft);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.mc-stats span{font-size:12px;color:var(--muted)}.mc-stats strong{font-family:'Sora','Noto Sans Arabic',sans-serif;font-size:20px}.mc-stats small{font-size:12px;color:var(--muted)}
+.mc-sections{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+.mc-section{border:1px solid var(--line);border-radius:10px;padding:9px 11px;display:flex;flex-direction:column;gap:3px;font-size:13px}
+.mc-section small{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:12px}
+.mc-run{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;margin-top:14px}.mc-run label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+.mc-run select{border:1px solid var(--line-2);border-radius:8px;padding:8px 9px;background:#fff}.mc-run button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:10px}
+.mc-run .muted{flex-basis:100%;color:var(--muted);font-size:12.5px}

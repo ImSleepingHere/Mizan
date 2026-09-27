@@ -120,7 +120,8 @@ def confirm(rid: str, u=Depends(user)):
         con.execute("UPDATE request_interpretations SET status='confirmed',revision=?,updated=? WHERE id=?", (current_row["revision"], now(), rid))
         audit(con, u["username"], "request_confirmed", rid, dict(version=row["version"], step=result["step"], revision=current_row["revision"]))
     row.update(status="confirmed", revision=current_row["revision"])
-    return dict(**present(row, interp, resolution), result=result)
+    from .main import redact
+    return dict(**present(row, interp, resolution), result=redact(u, result))
 
 
 def preview(data, row, meeting, target):
