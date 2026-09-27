@@ -1,0 +1,635 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-27T00:00:00Z",
+  "title": "Design System: MIZAN",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(0.972 0.004 106.5)",
+        "tonalRamp": [
+          "oklch(0.15 0.004 106.5)",
+          "oklch(0.27 0.004 106.5)",
+          "oklch(0.39 0.004 106.5)",
+          "oklch(0.51 0.004 106.5)",
+          "oklch(0.63 0.004 106.5)",
+          "oklch(0.75 0.004 106.5)",
+          "oklch(0.87 0.004 106.5)",
+          "oklch(0.95 0.004 106.5)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface White",
+        "canonical": "oklch(1.000 0.000 0.0)",
+        "tonalRamp": [
+          "oklch(0.15 0.000 0.0)",
+          "oklch(0.27 0.000 0.0)",
+          "oklch(0.39 0.000 0.0)",
+          "oklch(0.51 0.000 0.0)",
+          "oklch(0.63 0.000 0.0)",
+          "oklch(0.75 0.000 0.0)",
+          "oklch(0.87 0.000 0.0)",
+          "oklch(0.95 0.000 0.0)"
+        ]
+      },
+      "sunk": {
+        "role": "neutral",
+        "displayName": "Sunk Grey",
+        "canonical": "oklch(0.951 0.005 106.5)",
+        "tonalRamp": [
+          "oklch(0.15 0.005 106.5)",
+          "oklch(0.27 0.005 106.5)",
+          "oklch(0.39 0.005 106.5)",
+          "oklch(0.51 0.005 106.5)",
+          "oklch(0.63 0.005 106.5)",
+          "oklch(0.75 0.005 106.5)",
+          "oklch(0.87 0.005 106.5)",
+          "oklch(0.95 0.005 106.5)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.178 0.000 90.0)",
+        "tonalRamp": [
+          "oklch(0.15 0.000 90.0)",
+          "oklch(0.27 0.000 90.0)",
+          "oklch(0.39 0.000 90.0)",
+          "oklch(0.51 0.000 90.0)",
+          "oklch(0.63 0.000 90.0)",
+          "oklch(0.75 0.000 90.0)",
+          "oklch(0.87 0.000 90.0)",
+          "oklch(0.95 0.000 90.0)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "canonical": "oklch(0.268 0.003 106.0)",
+        "tonalRamp": [
+          "oklch(0.15 0.003 106.0)",
+          "oklch(0.27 0.003 106.0)",
+          "oklch(0.39 0.003 106.0)",
+          "oklch(0.51 0.003 106.0)",
+          "oklch(0.63 0.003 106.0)",
+          "oklch(0.75 0.003 106.0)",
+          "oklch(0.87 0.003 106.0)",
+          "oklch(0.95 0.003 106.0)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Text",
+        "canonical": "oklch(0.200 0.002 106.0)",
+        "tonalRamp": [
+          "oklch(0.15 0.002 106.0)",
+          "oklch(0.27 0.002 106.0)",
+          "oklch(0.39 0.002 106.0)",
+          "oklch(0.51 0.002 106.0)",
+          "oklch(0.63 0.002 106.0)",
+          "oklch(0.75 0.002 106.0)",
+          "oklch(0.87 0.002 106.0)",
+          "oklch(0.95 0.002 106.0)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "oklch(0.484 0.008 106.7)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 106.7)",
+          "oklch(0.27 0.008 106.7)",
+          "oklch(0.39 0.008 106.7)",
+          "oklch(0.51 0.008 106.7)",
+          "oklch(0.63 0.008 106.7)",
+          "oklch(0.75 0.008 106.7)",
+          "oklch(0.87 0.008 106.7)",
+          "oklch(0.95 0.008 106.7)"
+        ]
+      },
+      "faint": {
+        "role": "neutral",
+        "displayName": "Faint",
+        "canonical": "oklch(0.615 0.009 106.7)",
+        "tonalRamp": [
+          "oklch(0.15 0.009 106.7)",
+          "oklch(0.27 0.009 106.7)",
+          "oklch(0.39 0.009 106.7)",
+          "oklch(0.51 0.009 106.7)",
+          "oklch(0.63 0.009 106.7)",
+          "oklch(0.75 0.009 106.7)",
+          "oklch(0.87 0.009 106.7)",
+          "oklch(0.95 0.009 106.7)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.911 0.008 106.6)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 106.6)",
+          "oklch(0.27 0.008 106.6)",
+          "oklch(0.39 0.008 106.6)",
+          "oklch(0.51 0.008 106.6)",
+          "oklch(0.63 0.008 106.6)",
+          "oklch(0.75 0.008 106.6)",
+          "oklch(0.87 0.008 106.6)",
+          "oklch(0.95 0.008 106.6)"
+        ]
+      },
+      "line-2": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "canonical": "oklch(0.852 0.011 106.6)",
+        "tonalRamp": [
+          "oklch(0.15 0.011 106.6)",
+          "oklch(0.27 0.011 106.6)",
+          "oklch(0.39 0.011 106.6)",
+          "oklch(0.51 0.011 106.6)",
+          "oklch(0.63 0.011 106.6)",
+          "oklch(0.75 0.011 106.6)",
+          "oklch(0.87 0.011 106.6)",
+          "oklch(0.95 0.011 106.6)"
+        ]
+      },
+      "signal-blue": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "oklch(0.500 0.281 266.1)",
+        "tonalRamp": [
+          "oklch(0.15 0.115 266.1)",
+          "oklch(0.27 0.175 266.1)",
+          "oklch(0.39 0.235 266.1)",
+          "oklch(0.51 0.281 266.1)",
+          "oklch(0.63 0.225 266.1)",
+          "oklch(0.75 0.165 266.1)",
+          "oklch(0.87 0.105 266.1)",
+          "oklch(0.95 0.065 266.1)"
+        ]
+      },
+      "signal-green": {
+        "role": "secondary",
+        "displayName": "Signal Green",
+        "canonical": "oklch(0.620 0.154 154.6)",
+        "tonalRamp": [
+          "oklch(0.15 0.115 154.6)",
+          "oklch(0.27 0.154 154.6)",
+          "oklch(0.39 0.154 154.6)",
+          "oklch(0.51 0.154 154.6)",
+          "oklch(0.63 0.154 154.6)",
+          "oklch(0.75 0.154 154.6)",
+          "oklch(0.87 0.105 154.6)",
+          "oklch(0.95 0.065 154.6)"
+        ]
+      },
+      "signal-orange": {
+        "role": "secondary",
+        "displayName": "Signal Orange",
+        "canonical": "oklch(0.694 0.204 41.7)",
+        "tonalRamp": [
+          "oklch(0.15 0.115 41.7)",
+          "oklch(0.27 0.175 41.7)",
+          "oklch(0.39 0.204 41.7)",
+          "oklch(0.51 0.204 41.7)",
+          "oklch(0.63 0.204 41.7)",
+          "oklch(0.75 0.165 41.7)",
+          "oklch(0.87 0.105 41.7)",
+          "oklch(0.95 0.065 41.7)"
+        ]
+      },
+      "signal-red": {
+        "role": "secondary",
+        "displayName": "Signal Red",
+        "canonical": "oklch(0.576 0.227 23.7)",
+        "tonalRamp": [
+          "oklch(0.15 0.115 23.7)",
+          "oklch(0.27 0.175 23.7)",
+          "oklch(0.39 0.227 23.7)",
+          "oklch(0.51 0.227 23.7)",
+          "oklch(0.63 0.225 23.7)",
+          "oklch(0.75 0.165 23.7)",
+          "oklch(0.87 0.105 23.7)",
+          "oklch(0.95 0.065 23.7)"
+        ]
+      },
+      "fallback-teal": {
+        "role": "tertiary",
+        "displayName": "Fallback Teal",
+        "canonical": "oklch(0.595 0.101 208.0)",
+        "tonalRamp": [
+          "oklch(0.15 0.101 208.0)",
+          "oklch(0.27 0.101 208.0)",
+          "oklch(0.39 0.101 208.0)",
+          "oklch(0.51 0.101 208.0)",
+          "oklch(0.63 0.101 208.0)",
+          "oklch(0.75 0.101 208.0)",
+          "oklch(0.87 0.101 208.0)",
+          "oklch(0.95 0.065 208.0)"
+        ]
+      },
+      "fallback-magenta": {
+        "role": "tertiary",
+        "displayName": "Fallback Magenta",
+        "canonical": "oklch(0.556 0.184 344.6)",
+        "tonalRamp": [
+          "oklch(0.15 0.115 344.6)",
+          "oklch(0.27 0.175 344.6)",
+          "oklch(0.39 0.184 344.6)",
+          "oklch(0.51 0.184 344.6)",
+          "oklch(0.63 0.184 344.6)",
+          "oklch(0.75 0.165 344.6)",
+          "oklch(0.87 0.105 344.6)",
+          "oklch(0.95 0.065 344.6)"
+        ]
+      },
+      "signal-blue-ink": {
+        "role": "primary",
+        "displayName": "Signal Blue Ink",
+        "tonalRamp": [
+          "oklch(0.15 0.115 266.1)",
+          "oklch(0.27 0.175 266.1)",
+          "oklch(0.39 0.235 266.1)",
+          "oklch(0.51 0.281 266.1)",
+          "oklch(0.63 0.225 266.1)",
+          "oklch(0.75 0.165 266.1)",
+          "oklch(0.87 0.105 266.1)",
+          "oklch(0.95 0.065 266.1)"
+        ]
+      },
+      "signal-blue-bg": {
+        "role": "primary",
+        "displayName": "Signal Blue Tint",
+        "tonalRamp": [
+          "oklch(0.15 0.115 266.1)",
+          "oklch(0.27 0.175 266.1)",
+          "oklch(0.39 0.235 266.1)",
+          "oklch(0.51 0.281 266.1)",
+          "oklch(0.63 0.225 266.1)",
+          "oklch(0.75 0.165 266.1)",
+          "oklch(0.87 0.105 266.1)",
+          "oklch(0.95 0.065 266.1)"
+        ]
+      },
+      "signal-green-ink": {
+        "role": "secondary",
+        "displayName": "Signal Green Ink",
+        "tonalRamp": [
+          "oklch(0.15 0.115 154.6)",
+          "oklch(0.27 0.154 154.6)",
+          "oklch(0.39 0.154 154.6)",
+          "oklch(0.51 0.154 154.6)",
+          "oklch(0.63 0.154 154.6)",
+          "oklch(0.75 0.154 154.6)",
+          "oklch(0.87 0.105 154.6)",
+          "oklch(0.95 0.065 154.6)"
+        ]
+      },
+      "signal-green-bg": {
+        "role": "secondary",
+        "displayName": "Signal Green Tint",
+        "tonalRamp": [
+          "oklch(0.15 0.115 154.6)",
+          "oklch(0.27 0.154 154.6)",
+          "oklch(0.39 0.154 154.6)",
+          "oklch(0.51 0.154 154.6)",
+          "oklch(0.63 0.154 154.6)",
+          "oklch(0.75 0.154 154.6)",
+          "oklch(0.87 0.105 154.6)",
+          "oklch(0.95 0.065 154.6)"
+        ]
+      },
+      "signal-orange-ink": {
+        "role": "secondary",
+        "displayName": "Signal Orange Ink",
+        "tonalRamp": [
+          "oklch(0.15 0.115 41.7)",
+          "oklch(0.27 0.175 41.7)",
+          "oklch(0.39 0.204 41.7)",
+          "oklch(0.51 0.204 41.7)",
+          "oklch(0.63 0.204 41.7)",
+          "oklch(0.75 0.165 41.7)",
+          "oklch(0.87 0.105 41.7)",
+          "oklch(0.95 0.065 41.7)"
+        ]
+      },
+      "signal-orange-bg": {
+        "role": "secondary",
+        "displayName": "Signal Orange Tint",
+        "tonalRamp": [
+          "oklch(0.15 0.115 41.7)",
+          "oklch(0.27 0.175 41.7)",
+          "oklch(0.39 0.204 41.7)",
+          "oklch(0.51 0.204 41.7)",
+          "oklch(0.63 0.204 41.7)",
+          "oklch(0.75 0.165 41.7)",
+          "oklch(0.87 0.105 41.7)",
+          "oklch(0.95 0.065 41.7)"
+        ]
+      },
+      "signal-red-ink": {
+        "role": "secondary",
+        "displayName": "Signal Red Ink",
+        "tonalRamp": [
+          "oklch(0.15 0.115 23.7)",
+          "oklch(0.27 0.175 23.7)",
+          "oklch(0.39 0.227 23.7)",
+          "oklch(0.51 0.227 23.7)",
+          "oklch(0.63 0.225 23.7)",
+          "oklch(0.75 0.165 23.7)",
+          "oklch(0.87 0.105 23.7)",
+          "oklch(0.95 0.065 23.7)"
+        ]
+      },
+      "signal-red-bg": {
+        "role": "secondary",
+        "displayName": "Signal Red Tint",
+        "tonalRamp": [
+          "oklch(0.15 0.115 23.7)",
+          "oklch(0.27 0.175 23.7)",
+          "oklch(0.39 0.227 23.7)",
+          "oklch(0.51 0.227 23.7)",
+          "oklch(0.63 0.225 23.7)",
+          "oklch(0.75 0.165 23.7)",
+          "oklch(0.87 0.105 23.7)",
+          "oklch(0.95 0.065 23.7)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Numeral",
+        "purpose": "One headline figure per page (Overview weekly gap hours); login story headline at 64px."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles (h1); 28px on Overview."
+      },
+      "metric": {
+        "displayName": "Metric",
+        "purpose": "Numbers in metric and stat tiles; light, tabular, graded."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Panel headings (h2)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Paragraphs and subtitles in muted text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, badges, field labels, table headers, grade words."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Axis ticks, hour labels, timetable meta lines."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift",
+        "value": "0 18px 40px -16px #1113, 0 2px 6px -2px #1111",
+        "purpose": "Only for floating layers: modal, drag ghost, change dock, overlaid drawer, modal error."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 3px #1d3cff24",
+        "purpose": "Input and search focus halo alongside a blue border."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Default ease-out for entrances, bars and grade-colour settling."
+      },
+      {
+        "name": "ease-in",
+        "value": "cubic-bezier(.7,0,.84,0)",
+        "purpose": "Exits."
+      },
+      {
+        "name": "page-enter",
+        "value": ".45s opacity 0 + translateY(6px)",
+        "purpose": "Page and card entrance."
+      },
+      {
+        "name": "count-up",
+        "value": "700ms ease-out cubic, colour settles over .6s",
+        "purpose": "Graded numerals count from 0 and settle into their grade colour."
+      },
+      {
+        "name": "bar-grow",
+        "value": "scaleX from 0, 1s, 60ms stagger, origin inline-start",
+        "purpose": "Cohort and workload bars; department strip uses .9s with 60ms stagger."
+      },
+      {
+        "name": "block-in",
+        "value": "clip-path reveal top to bottom, .45s",
+        "purpose": "Timetable blocks and login week blocks."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animations and transitions to .01ms",
+        "purpose": "prefers-reduced-motion collapses motion to the final state; count-up shows the value immediately."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1600px"
+      },
+      {
+        "name": "stack",
+        "value": "1200px"
+      },
+      {
+        "name": "narrow-rail",
+        "value": "1150px"
+      },
+      {
+        "name": "icon-rail",
+        "value": "850px"
+      },
+      {
+        "name": "phone",
+        "value": "540px"
+      }
+    ],
+    "gradeScale": {
+      "huePath": "red 25deg -> amber 70deg -> green 150deg (upper half eased by sqrt)",
+      "ink": "oklch(0.50-0.54 0.15-0.18 h)",
+      "tint": "oklch(0.955 0.045 h)",
+      "line": "oklch(0.66-0.74 0.18 h)",
+      "words": {
+        "en": [
+          "Critical",
+          "Weak",
+          "Fair",
+          "Good",
+          "Strong"
+        ],
+        "ar": [
+          "حرج",
+          "ضعيف",
+          "متوسط",
+          "جيد",
+          "ممتاز"
+        ]
+      },
+      "source": "frontend/src/grade.ts SCALES"
+    },
+    "departmentColors": {
+      "order": "alphabetical by department name",
+      "d0": "#1d3cff",
+      "d1": "#00a05a",
+      "d2": "#ff6414",
+      "d3": "#e0102e",
+      "d4": "#0a8f9e",
+      "d5": "#b8398c"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single blue action block: Optimize semester, Approve, Publish.",
+      "html": "<button class=\"ds-btn-primary\">Optimize semester</button>",
+      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-btn-primary{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:10px 16px;font:600 13px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:#fff;background:var(--blue);border:0;border-radius:0;cursor:pointer;transition:background-color .16s,transform .16s var(--ease)} .ds-btn-primary:hover{background:var(--blue-ink)} .ds-btn-primary:active{transform:scale(.97)} .ds-btn-primary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "White hairline block for non-primary actions; hairline turns ink on hover.",
+      "html": "<button class=\"ds-btn-secondary\">Export data</button>",
+      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-btn-secondary{display:inline-flex;align-items:center;min-height:40px;padding:10px 16px;font:600 13px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:var(--text);background:var(--surface);border:1px solid var(--line-2);border-radius:0;cursor:pointer;transition:border-color .16s} .ds-btn-secondary:hover{border-color:var(--ink)} .ds-btn-secondary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+    },
+    {
+      "name": "Text Button",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Blue-ink link action with an arrow that nudges toward reading direction.",
+      "html": "<button class=\"ds-text-btn\">Review <svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></button>",
+      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-text-btn{display:inline-flex;gap:6px;align-items:center;font:600 12.5px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:var(--blue-ink);background:none;border:0;cursor:pointer} .ds-text-btn svg{transition:transform .2s var(--ease)} .ds-text-btn:hover svg{transform:translateX(3px)} .ds-text-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+    },
+    {
+      "name": "Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "White field, 2px radius, blue border and halo on focus.",
+      "html": "<label class=\"ds-label\">Reason<input class=\"ds-input\" placeholder=\"What is prompting this change?\"></label>",
+      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-label{display:flex;flex-direction:column;gap:6px;font:500 12.5px/1.3 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:var(--muted)} .ds-input{font:400 13.5px/1.4 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;min-height:38px;padding:8px 11px;border:1px solid var(--line-2);border-radius:2px;background:var(--surface);color:var(--text);outline:none;caret-color:var(--blue);transition:border-color .16s,box-shadow .16s} .ds-input:hover{border-color:#a9a9a1} .ds-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1d3cff24}"
+    },
+    {
+      "name": "Rail Navigation",
+      "kind": "nav",
+      "refersTo": "nav-item-active",
+      "description": "Ink sidebar; active item inverts to white with a blue icon; orange square count.",
+      "html": "<nav class=\"ds-rail\"><button class=\"ds-nav on\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"9\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"5\"/><rect x=\"14\" y=\"12\" width=\"7\" height=\"9\"/><rect x=\"3\" y=\"16\" width=\"7\" height=\"5\"/></svg>Overview</button><button class=\"ds-nav\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\"/><path d=\"M16 2v4M8 2v4M3 10h18\"/></svg>Semester lab</button><button class=\"ds-nav\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3\"/></svg>Recommendations<b>1</b></button></nav>",
+      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-rail{display:flex;flex-direction:column;gap:1px;width:228px;padding:12px;background:var(--ink)} .ds-nav{display:flex;gap:11px;align-items:center;min-height:38px;padding:9px 10px;font:450 13px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:#b4b4ae;background:none;border:0;text-align:start;cursor:pointer;transition:background-color .16s,color .16s} .ds-nav:hover{background:#ffffff12;color:#fff} .ds-nav.on{background:#fff;color:var(--ink);font-weight:600} .ds-nav.on svg{color:var(--blue)} .ds-nav b{margin-inline-start:auto;min-width:20px;padding:1px 6px;font-size:11px;font-weight:700;background:var(--orange);color:#fff;text-align:center} .ds-nav:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+    },
+    {
+      "name": "Status Badge",
+      "kind": "chip",
+      "refersTo": "badge-recommended",
+      "description": "Square tint badge with a currentColor square; colour from the signal trio.",
+      "html": "<span class=\"ds-badge rec\"><i></i>Ready for review</span> <span class=\"ds-badge pub\"><i></i>Published</span> <span class=\"ds-badge bad\"><i></i>Conflicts found</span>",
+      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;font:600 11.5px/1.3 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;background:var(--sunk);color:var(--muted)} .ds-badge i{width:7px;height:7px;background:currentColor} .ds-badge.rec{background:var(--orange-bg);color:var(--orange-ink)} .ds-badge.pub{background:var(--green-bg);color:var(--green-ink)} .ds-badge.bad{background:var(--red-bg);color:var(--red-ink)}"
+    },
+    {
+      "name": "Graded Stat Tile",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Tint ground, 3px top edge and value coloured from --g / --g-bg / --g-line, with the grade word.",
+      "html": "<div class=\"ds-grid\"><div class=\"ds-stat\" style=\"--g:oklch(0.54 0.18 25);--g-bg:oklch(0.955 0.045 25);--g-line:oklch(0.66 0.18 25)\"><span>Schedule quality</span><strong>45<small>/100</small></strong><em>Critical</em></div><div class=\"ds-stat\" style=\"--g:oklch(0.5 0.15 70);--g-bg:oklch(0.955 0.045 70);--g-line:oklch(0.74 0.18 70)\"><span>Room utilization</span><strong>58<small>%</small></strong><em>Fair</em></div><div class=\"ds-stat\" style=\"--g:oklch(0.54 0.18 150);--g-bg:oklch(0.955 0.045 150);--g-line:oklch(0.66 0.18 150)\"><span>Conflicts</span><strong>0</strong><em>Strong</em></div></div>",
+      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-family:'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;font-variant-numeric:tabular-nums} .ds-stat{padding:12px 16px 14px;background:var(--g-bg,var(--sunk));border-top:3px solid var(--g-line,var(--line-2));transition:background-color .6s var(--ease),border-color .6s var(--ease)} .ds-stat span{display:block;font-size:12px;color:var(--muted)} .ds-stat strong{display:block;margin:4px 0 6px;font-size:26px;font-weight:450;color:var(--g,var(--text))} .ds-stat small{font-size:13px;font-weight:450;color:var(--muted);margin-inline-start:3px} .ds-stat em{display:inline-flex;align-items:center;gap:6px;font-style:normal;font-size:11.5px;font-weight:600;color:var(--g)} .ds-stat em:before{content:'';width:8px;height:8px;background:var(--g-line)}"
+    },
+    {
+      "name": "Station Strip",
+      "kind": "custom",
+      "refersTo": "station-now",
+      "description": "Preview, Propose, Approve, Publish lifecycle; done steps green, the current step inverted to ink.",
+      "html": "<ol class=\"ds-st\"><li class=\"done\"><i><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><path d=\"M20 6 9 17l-5-5\"/></svg></i>Preview</li><li class=\"now\"><i>2</i>Propose</li><li><i>3</i>Approve</li><li><i>4</i>Publish<small>changes the official timetable</small></li></ol>",
+      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-st{display:flex;padding:0;margin:0;font:600 12.5px/1.2 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif} .ds-st li{list-style:none;flex:1;display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line-2);margin-inline-end:-1px;background:var(--surface);color:var(--muted)} .ds-st i{font-style:normal;display:grid;place-items:center;width:20px;height:20px;font-size:11px;background:var(--sunk);flex-shrink:0} .ds-st .done{color:var(--text)} .ds-st .done i{background:var(--green);color:#fff} .ds-st .now{background:var(--ink);color:#fff;border-color:var(--ink)} .ds-st .now i{background:#fff;color:var(--ink)} .ds-st small{margin-inline-start:auto;font-size:11px;font-weight:500;color:var(--red-ink)}"
+    },
+    {
+      "name": "Timetable Block",
+      "kind": "custom",
+      "description": "Department-tinted meeting with a 3px department-colour top; hover fills with the colour, selection inverts to ink.",
+      "html": "<div class=\"ds-tt\"><button class=\"ds-blk d0\"><strong>C022 <span>S002</span></strong><em>Business Studies 22</em><small>R001 · 75/80 · 10:00–11:00</small></button><button class=\"ds-blk d1 sel\"><strong>C021 <span>S001</span></strong><em>Computing Studies 21</em><small>R001 · 75/80 · 08:00–09:00</small></button></div>",
+      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-tt{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-family:'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif} .d0{--c:#1d3cff;--cb:#e9ecff;--ct:#1228b5} .d1{--c:#00a05a;--cb:#e0f3e9;--ct:#006b3c} .ds-blk{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:5px 8px 6px;text-align:start;font-family:inherit;background:var(--cb);color:var(--ct);border:0;border-top:3px solid var(--c);cursor:grab;transition:background-color .16s,color .16s} .ds-blk strong{font-size:12px;font-weight:700} .ds-blk strong span{font-size:11px;font-weight:500;opacity:.8} .ds-blk em{font-style:normal;font-size:11.5px} .ds-blk small{font-size:11px;opacity:.85} .ds-blk:hover{background:var(--c);color:#fff} .ds-blk.sel{background:var(--ink);color:#fff} .ds-blk:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Semester as an Information System",
+    "overview": "Mizan is drawn in the Swiss / Otl Aicher lineage: one paper ground, one ink rail, one Sunday–Thursday hour scale, and four flat signal colours that always mean something. Nothing floats on glows or gradients; hierarchy comes from light, thin numerals set large against small, firm labels, from 1px hairlines, and from coloured strips on the top edge of things. The semester reads like a wall chart in a transit authority: calm, exact, and legible at projector distance.\n\nColour has exactly two jobs. **Department colour** says *which* (blue, green, orange, red assigned by alphabetical department order). **Grade colour** says *how good* (a continuous red → amber → green OKLCH path computed per metric). Everything else is paper, ink and grey. Selection is inversion to ink, not a new hue.\n\nDensity is moderate and data-first: 13.5px body, 12–12.5px labels, tabular numerals everywhere. Arabic is a first-class reading direction: Noto Kufi Arabic carries Arabic text, every layout mirrors through logical properties, and every string exists in English and Arabic.",
+    "keyCharacteristics": [
+      "Paper ground (#f6f6f3), ink sidebar rail with a white inverted active item.",
+      "Four flat signal colours used as fields, strips and dots; never gradients, glass or glow.",
+      "Light Archivo numerals (300–450) at large sizes; small semibold labels.",
+      "Square corners, 1px hairlines, 3px colour tops on tiles and timetable blocks.",
+      "Every graded number coloured on a continuous per-metric scale that never snaps at a threshold.",
+      "A 5px four-colour department strip pinned to the top edge of the workspace."
+    ],
+    "rules": [
+      {
+        "name": "The Two Meanings Rule",
+        "body": "A colour on screen means either *which department* or *how good*. Bar colour = department, number colour = grade. If a colour answers neither question, it is paper, ink or grey.",
+        "section": "colors"
+      },
+      {
+        "name": "The Continuous Grade Rule",
+        "body": "Graded values are coloured from their metric's bad/good anchors on a continuous path. Never introduce a hard threshold, a traffic-light bucket, or a fixed red/green for a metric that has a scale.",
+        "section": "colors"
+      },
+      {
+        "name": "The Alphabetical Department Rule",
+        "body": "Departments take blue, green, orange, red in alphabetical order of department name (d0–d3); teal and magenta are the fifth and sixth fallbacks. Every surface that colours departments sorts the same way, so a department keeps its colour everywhere.",
+        "section": "colors"
+      },
+      {
+        "name": "The Capacity Not Performance Rule",
+        "body": "Individual faculty workload is never graded. Workload bars are blue; only a load over contract turns red. This is capacity planning, not performance evaluation.",
+        "section": "colors"
+      },
+      {
+        "name": "The Light Numeral Rule",
+        "body": "Large numbers are light (300–450), never bold. Weight belongs to small labels; size belongs to numbers.",
+        "section": "typography"
+      },
+      {
+        "name": "The Arabic Line Rule",
+        "body": "In RTL, headline letter-spacing resets to 0 and line-height opens (Overview h1 1.5; login headline 54px/1.35 at weight 600) so Kufi ascenders and dots never collide. Never apply Latin negative tracking to Arabic.",
+        "section": "typography"
+      },
+      {
+        "name": "The Only Lift Rule",
+        "body": "Panels, tiles, cards and buttons have no shadow at rest or on hover. Shadow means \"this is floating above the timetable or the page\", nothing else.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** derive every graded colour from `gradeVars()` with the metric's bad/good anchors, and pair it with the bilingual grade word.",
+      "**Do** colour departments by alphabetical order (blue, green, orange, red; teal and magenta only for a fifth and sixth).",
+      "**Do** use a 3px coloured top edge to mark a tile, block or card; use inversion to ink for selection and the current step.",
+      "**Do** keep large numerals light (300–450) and tabular; put weight on small labels.",
+      "**Do** put semester context and the scenario select in the topbar; start each page directly with its heading.",
+      "**Do** write every string with `t(en, ar)` and lay out with logical properties (inset-inline, margin-inline, border-inline); mirror arrows and transform-origins in RTL.",
+      "**Do** keep chart bars on one shared, labelled hour axis with the target marked in green.",
+      "**Do** respect reduced motion: entrance, count-up and bar-grow collapse to the final state."
+    ],
+    "donts": [
+      "**Don't** use gradients, glassmorphism, glows or blurred shadows on panels, tiles or buttons; the only shadow is the lift for floating layers.",
+      "**Don't** round corners beyond the 2px field radius; the live dot is the only circle.",
+      "**Don't** grade individual faculty workload; only overload turns red.",
+      "**Don't** use a hard threshold or three-bucket traffic light for a metric that has a scale.",
+      "**Don't** place a kicker or eyebrow label above headings.",
+      "**Don't** use a signal colour decoratively where it means neither department nor grade.",
+      "**Don't** apply Latin negative letter-spacing to Arabic headings."
+    ]
+  }
+}
