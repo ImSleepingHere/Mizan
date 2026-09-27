@@ -1,0 +1,128 @@
+{
+  "title": "Choose Mizan's new visual world",
+  "question": "The roll assigned the Swiss information system. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Information System (Swiss / Aicher)",
+      "kicker": "THE ROLL",
+      "lineage": "International Typographic Style information design: Otl Aicher's Munich '72 system, Swiss rail timetables",
+      "thesis": "The semester as a strict information system: one grid, one hour scale, flat colour fields that code departments, huge numerals that state the cost.",
+      "palette": ["#f4f4f1", "#0d0d0d", "#1d3cff", "#00a05a", "#ff6414", "#e0102e"],
+      "materials": ["flat printed colour fields", "hairline grid", "grotesk + Kufi type", "no shadows, no gradients"],
+      "viewport": "Overview opens as a poster-scale sheet: gap hours as a huge numeral, the Sun–Thu hour scale across the full width, cohorts as flat coloured bars, 'Optimize semester' as a solid blue block.",
+      "risk": "Can read cold or 'generic Swiss' if the colour coding is timid; needs full-strength colour and oversized numerals to land on a projector.",
+      "raised": [
+        {"from": "challenger-darkroom", "raise": "Decisions run as a numbered station strip: Preview → Propose → Approve → Publish, with the irreversible step marked."},
+        {"from": "challenger-botanical", "raise": "Before/after metrics render as registered plates at identical scale so the change is directly comparable."},
+        {"from": "challenger-dive", "raise": "One time axis (08:00–18:00) rules every page: metrics, timetable and proposals share the same hour scale."},
+        {"from": "challenger-sneaker", "raise": "Every section carries a fixed label grid: code, course, cohort, room, seats."},
+        {"from": "challenger-onebit", "raise": "One state vocabulary: selected = inverted (ink field, white type)."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Registrar's Timetable Booklet",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "printed university course-schedule booklets and official approval stamps",
+      "thesis": "Mizan as the registrar's printed schedule book: ledger-ruled pages, section codes in tabular columns, approvals as a red stamp.",
+      "palette": ["#e9efe6", "#1a1a1a", "#c8102e", "#243a8f"],
+      "materials": ["ledger-ruled paper", "tabular numerals", "rubber-stamp approval"],
+      "viewport": "A ruled booklet spread: the week's timetable as the printed page, gap cost in the margin, the approval stamp at the foot.",
+      "risk": "Familiar; close to where most runs land for scheduling tools and can tip into nostalgia."
+    },
+    {
+      "id": "challenger-airport",
+      "label": "Terminal Wayfinding",
+      "verdict": "competitive",
+      "lineage": "airport sign systems (yellow overhead bands)",
+      "thesis": "Each page is a junction: one saturated yellow band shows only the next decision, with monumental numbers.",
+      "palette": ["#ffd200", "#111111", "#ffffff", "#2b2b2b"],
+      "materials": ["overhead sign bands", "white pictograms on black insets", "split-flap updates"],
+      "viewport": "A yellow band across the top: '4 proposals waiting → Review', gap hours monumental beneath it.",
+      "case": "Strong on clarity (one decision at a time fits approve/publish); weaker audience identification for a university committee.",
+      "risk": "Yellow everywhere can fight the dense timetable and tables.",
+      "hero": "https://impeccable.style/worlds/cards/wayfinding-cartography-signage-terminal-yellow-wayfinding-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/wayfinding-cartography-signage-terminal-yellow-wayfinding.webp"
+    },
+    {
+      "id": "challenger-darkroom",
+      "label": "Darkroom Safelight",
+      "verdict": "declined",
+      "lineage": "photographic darkroom",
+      "thesis": "Amber safelight stations where results emerge slowly.",
+      "palette": ["#b34a00", "#1a1a1a", "#c9c9c9"],
+      "materials": ["amber wash", "test strips"],
+      "viewport": "Amber stations from compose to dry.",
+      "case": "Loses both axes: judges don't map scheduling to a darkroom; amber hurts data legibility.",
+      "kept": "Numbered irreversible stations with a preview before commit.",
+      "risk": "Low legibility for dense data.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-darkroom-safelight-bay-hero.webp"
+    },
+    {
+      "id": "challenger-botanical",
+      "label": "Botanical Folio",
+      "verdict": "declined",
+      "lineage": "botanical plate sequences",
+      "thesis": "One subject tracked across fixed-scale plates.",
+      "palette": ["#efe6d2", "#2f5d34", "#b3202a"],
+      "materials": ["engraved plates", "hairline rules"],
+      "viewport": "Five plates on one baseline.",
+      "case": "Loses both axes: no audience link, cream-and-serif default.",
+      "kept": "Registered comparison at identical scale.",
+      "risk": "Decorative and off-subject.",
+      "hero": "https://impeccable.style/worlds/cards/editorial-sequence-montage-botanical-folio-season-hero.webp"
+    },
+    {
+      "id": "challenger-dive",
+      "label": "Mesophotic Dive",
+      "verdict": "declined",
+      "lineage": "technical dive profiles",
+      "thesis": "A single vertical depth axis rules everything.",
+      "palette": ["#06142e", "#27d3e6", "#f4f7fa"],
+      "materials": ["dive-computer digits", "marine snow"],
+      "viewport": "A depth profile with the active band lit.",
+      "case": "Loses both axes: the metaphor distracts from the timetable.",
+      "kept": "One axis rules every line.",
+      "risk": "Theatrical."
+    },
+    {
+      "id": "challenger-sneaker",
+      "label": "Sneaker Box Archive",
+      "verdict": "declined",
+      "lineage": "sneaker box end labels",
+      "thesis": "A wall of labelled boxes you pull out and open.",
+      "palette": ["#e0652a", "#111111", "#f6f3ee"],
+      "materials": ["box board", "silhouette line art"],
+      "viewport": "A stacked wall of end labels.",
+      "case": "Loses both axes.",
+      "kept": "A fixed label grid on every record.",
+      "risk": "Off-subject."
+    },
+    {
+      "id": "challenger-onebit",
+      "label": "One-bit Desktop",
+      "verdict": "declined",
+      "lineage": "early one-bit desktop GUIs",
+      "thesis": "Black-and-white windows with dithered greys.",
+      "palette": ["#000000", "#ffffff", "#808080"],
+      "materials": ["dither", "marching ants"],
+      "viewport": "Overlapping windows on a dithered desktop.",
+      "case": "Loses both axes: novelty over clarity, no colour coding for departments.",
+      "kept": "Inversion as the one selection state.",
+      "risk": "Retro novelty."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A polished SaaS admin dashboard: sidebar, KPI cards, charts, tables.",
+    "palette": ["#ffffff", "#111827", "#4f46e5"],
+    "materials": ["card grid", "soft shadows", "chart-library look"],
+    "viewport": "Sidebar nav, four KPI cards, a chart and a recent-activity table.",
+    "risk": "Indistinguishable from every other hackathon dashboard by design."
+  },
+  "buildPath": {"value": "code", "toggle": false},
+  "steer": true
+}
