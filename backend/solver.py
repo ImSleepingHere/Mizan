@@ -278,3 +278,78 @@ def workforce(data):
                             internal_options=redeploy,additional_minutes_needed=unavoidable*unit,
                             note="Internal options are individually validated, not a jointly approved plan. Capacity availability does not prove timetable feasibility."))
     return dict(signals=signals,workloads=[dict(id=p.id,name=p.name,department=p.department,minutes=load[p.id],contracted_minutes=p.contracted_minutes) for p in data.professors])
+
+
+def common_slots(data, section_ids, duration, days=None, same_time_for_all=False, merge=False,
+                 earliest=None, latest_end=None, grid=15, limit=10):
+    """Common free-slot finder (spec §18.5): ranked weekly slots for the students of the given sections.
+
+    For each candidate slot: how many of those students are busy, whether every needed professor is free,
+    and a free room large enough (one room for a merge, otherwise one room per section when all sections meet
+    at the same time). Counts only; no student identities. A weekly slot repeats in every teaching week."""
+    courses, profs, rooms = indexes(data)
+    sections = {s.id: s for s in data.sections}
+    group = [sections[s] for s in section_ids]
+    members = {st.id: st for st in data.students if set(section_ids) & set(st.sections)}
+    exclude = set(section_ids) if merge else set()  # a merged lecture replaces the merged sections' own meetings
+    busy = {sid: [m for m in st.sections if m not in exclude] for sid, st in members.items()}
+    busy = {sid: [mt for x in ids for mt in sections[x].meetings] for sid, ids in busy.items()}
+    teachers = {group[0].professor_id} if merge else {s.professor_id for s in group}
+    teacher_busy = [m for s in data.sections if s.professor_id in teachers and s.id not in exclude for m in s.meetings]
+    room_busy = defaultdict(list)
+    for s in data.sections:
+        if s.id not in exclude:
+            room_busy[s.room_id].extend(s.meetings)
+    size = {s.id: sum(s.id in st.sections for st in data.students) for s in group}
+    room_type = courses[group[0].course_id].room_type
+    def free_rooms(w, need):
+        """Rooms for the slot: one big room (merge / single section) or one room per section."""
+        cands = sorted((r for r in data.rooms if r.type == room_type and available(w, r.availability)
+                        and not any(overlaps(w, m) for m in room_busy[r.id])), key=lambda r: (r.capacity, r.id))
+        if merge or len(group) == 1 or not same_time_for_all:
+            total = sum(need.values()) if merge else max(need.values())
+            room = next((r for r in cands if r.capacity >= total), None)
+            return [room.id] if room else None
+        chosen = []
+        for sid, n in sorted(need.items(), key=lambda x: -x[1]):
+            room = next((r for r in cands if r.capacity >= n and r.id not in chosen), None)
+            if not room:
+                return None
+            chosen.append(room.id)
+        return chosen
+    def total_gap(ms):
+        byday = defaultdict(list)
+        for m in ms: byday[m.day].append(m)
+        return sum(max(x.end for x in v) - min(x.start for x in v) - sum(x.end - x.start for x in v) for v in byday.values())
+    results = []
+    for day in (days if days else range(5)):
+        for start in range(max(data.policy.open_minute, earliest or 0), data.policy.close_minute - duration + 1, grid):
+            end = start + duration
+            if latest_end is not None and end > latest_end:
+                break
+            w = Window(day=day, start=start, end=end)
+            if any(overlaps(w, b) for b in data.policy.blocked):
+                continue
+            professor_free = all(available(w, profs[p].availability) for p in teachers) and not any(overlaps(w, m) for m in teacher_busy)
+            unavailable = extra_days = gap_delta = 0
+            for sid, ms in busy.items():
+                if any(overlaps(w, m) for m in ms):
+                    unavailable += 1
+                    continue
+                if day not in {m.day for m in ms}:
+                    extra_days += 1
+                gap_delta += total_gap(ms + [w]) - total_gap(ms)
+            room_ids = free_rooms(w, size)
+            results.append(dict(day=day, start=start, end=end, group_size=len(members), unavailable=unavailable,
+                                available=len(members) - unavailable, professor_free=professor_free, rooms=room_ids,
+                                extra_campus_days=extra_days, added_gap_hours=round(gap_delta / 60, 1)))
+    results.sort(key=lambda r: (not r["professor_free"], r["rooms"] is None, r["unavailable"], r["extra_campus_days"], r["added_gap_hours"], r["day"], r["start"]))
+    distinct = []  # distinct options: skip a slot that overlaps a better one on the same day
+    for r in results:
+        if not any(k["day"] == r["day"] and k["start"] < r["end"] and r["start"] < k["end"] for k in distinct):
+            distinct.append(r)
+        if len(distinct) == limit:
+            break
+    return dict(sections=list(section_ids), group_size=len(members), duration=duration, merge=merge, same_time_for_all=same_time_for_all,
+                slots=distinct, searched=len(results),
+                note="Weekly timetable: a free slot repeats every teaching week. Date-specific exceptions are not checked.")

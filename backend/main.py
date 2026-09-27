@@ -330,6 +330,38 @@ def my_classes(sid:str,u=Depends(user)):
                 conflicts=len(issues),note="Aggregates cover students enrolled in at least one of your sections.")
 
 
+class SlotRequest(StrictModel):
+    sections:list[str]=Field(min_length=1,max_length=10)
+    duration:int=Field(ge=15,le=240)
+    days:list[int]=[]
+    same_time_for_all:bool=False
+    merge:bool=False
+    earliest:int|None=Field(default=None,ge=0,le=1440)
+    latest_end:int|None=Field(default=None,ge=0,le=1440)
+
+
+def find_slots(u,data,body:SlotRequest):
+    from .solver import common_slots
+    known={s.id for s in data.sections}
+    if not set(body.sections)<=known: raise HTTPException(404,"Section not found")
+    if u["role"]=="professor" and not set(body.sections)<=own_sections(u,data): raise HTTPException(403,"Only your own sections")
+    if body.merge and len(set(body.sections))<2: raise HTTPException(422,"A merge needs at least two sections")
+    if any(d not in range(5) for d in body.days): raise HTTPException(422,"Unknown day")
+    return redact(u,common_slots(data,list(dict.fromkeys(body.sections)),body.duration,body.days or None,body.same_time_for_all,body.merge,
+                                 body.earliest,body.latest_end))
+
+
+@app.post("/api/scenarios/{sid}/free-slots")
+def free_slots(sid:str,body:SlotRequest,u=Depends(user)):
+    """Scheduling tool: ranked common free slots for the students of the given sections (read-only)."""
+    require(u,{"admin","registrar","chair","professor"})
+    _,data=scenario(sid)
+    result=find_slots(u,data,body)
+    with connect() as con:
+        audit(con,u["username"],"free_slot_search",sid,body.model_dump())
+    return result
+
+
 class Alternative(StrictModel):
     section:Section
     reason:str="Feasible alternative to the requested move"

@@ -120,6 +120,8 @@ def confirm(rid: str, u=Depends(user)):
                 result["previews"].append(preview(data, current_row, meeting, target))
     elif result["step"] == "optimize_with_rules":
         result.update(run_rules(interp, resolution, data, current_row, u, rid))
+    elif result["step"] == "find_slots":
+        result.update(run_finder(interp, resolution, data, u))
     with connect() as con:
         con.execute("UPDATE request_interpretations SET status='confirmed',revision=?,updated=? WHERE id=?", (current_row["revision"], now(), rid))
         audit(con, u["username"], "request_confirmed", rid, dict(version=row["version"], step=result["step"], revision=current_row["revision"]))
@@ -149,6 +151,29 @@ def run_rules(interp, resolution, data, row, u, rid):
             result["proposal"].pop("analysis", None)
         else:
             result["proposal"] = None  # read-only roles see the result without creating a proposal
+    return result
+
+
+def run_finder(interp, resolution, data, u):
+    """Free-slot finder for a confirmed request (spec §18.5). Finding only; booking a session is not supported yet."""
+    from .main import find_slots, SlotRequest
+    s = interp.slot_search
+    sections = [x for x in (interp.target_sections or resolution["sections"]) if x in {sec.id for sec in data.sections}]
+    if not sections:
+        return dict(status="NOT_RUN", message="No sections are in scope")
+    merge = interp.task == "merge_sections"
+    duration = s.duration if s and s.duration else None
+    if duration is None:
+        own = [sec for sec in data.sections if sec.id == sections[0]][0]
+        duration = own.meetings[0].end - own.meetings[0].start  # a merged lecture keeps the section's length
+    window = interp.allowed_time_window
+    to_min = lambda v: None if v is None else int(v[:2]) * 60 + int(v[3:])
+    days = sorted({it.DAYS.index(d) for d in ((s.days if s else []) or interp.day_filter)})
+    body = SlotRequest(sections=sections, duration=duration, days=days, same_time_for_all=bool(s and s.same_time_for_all) and not merge,
+                       merge=merge, earliest=to_min(window.earliest_start) if window else None, latest_end=to_min(window.latest_end) if window else None)
+    result = find_slots(u, data, body)
+    result["status"] = "FOUND" if result["slots"] else "NONE"
+    result["tools"] = ["common_slots (Scheduling & Optimization)"]
     return result
 
 

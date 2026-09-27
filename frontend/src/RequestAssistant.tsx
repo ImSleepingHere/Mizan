@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Sparkles, LoaderCircle, Check, X, Pencil, TriangleAlert, CircleHelp, ShieldCheck, Clock3, UsersRound, Send, CalendarClock, Info} from 'lucide-react';
 import {api, time, number} from './api';
+import {SlotList} from './FreeSlotFinder';
 
 type R = Record<string, any>;
 const DAY_KEYS = ['sun','mon','tue','wed','thu'];
@@ -129,7 +130,8 @@ export function RequestAssistant({sid, ar, days, role, onSubmitted}:{sid:string,
           <small className="muted">{t('A change request still needs committee approval before publication.','يحتاج طلب التغيير إلى اعتماد اللجنة قبل النشر.')}</small></div>)
           : <p>{t('Mizan needs an exact new time to check this move. Use the timetable to drag the class, or rephrase with a time.','يحتاج ميزان إلى وقت جديد محدد للتحقق من النقل. اسحب المحاضرة في الجدول أو أعد صياغة الطلب مع الوقت.')}</p>)}
         {result.step === 'optimize_with_rules' && <RuleResult r={result} t={t} day={day}/>}
-        {result.step === 'find_slots' && <p><Info size={15}/>{t('Confirmed and saved. Free-slot search is being added; this request type runs once it is available.','تم التأكيد والحفظ. البحث عن الأوقات المتاحة قيد الإضافة، وسيُنفَّذ هذا النوع من الطلبات عند توفره.')}</p>}
+        {result.step === 'find_slots' && (result.status === 'NOT_RUN' ? <p>{result.message}</p> : <SlotList r={result} ar={ar} days={days}/>)}
+        {result.step === 'find_slots' && i.unsupported.some((u:R) => u.code === 'EXTRA_SESSION') && <p className="muted">{t('Booking the session itself is not supported yet; use the slot to arrange it.','حجز المحاضرة نفسها غير مدعوم بعد؛ استخدم الوقت المقترح لترتيبها.')}</p>}
       </div>}
     </div>}
   </section>;
