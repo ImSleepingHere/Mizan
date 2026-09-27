@@ -25,7 +25,7 @@ The initial release uses a local database and reproducible synthetic data. Live 
 
 1. Working scheduling application: approved.
 2. Six agents and recruitment: ready for review.
-3. Final verification and delivery: done (acceptance report, demo script, reset script, deck).
+3. Final verification and delivery: done (acceptance report, demo script, reset script, handover guide).
 
 ## Run on this PC
 
