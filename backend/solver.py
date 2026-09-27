@@ -32,9 +32,15 @@ def options_for(data, section, room_limit=3):
     return options
 
 
-def optimize(data, max_changes=5, seconds=10, movable=None):
-    """movable: optional set of section IDs that may change (e.g. a professor's own sections); all others stay fixed."""
+def optimize(data, max_changes=5, seconds=10, movable=None, rules=None):
+    """movable: optional set of section IDs that may change (e.g. a professor's own sections); all others stay fixed.
+    rules: optional RuleSet (spec §18.4) applied as hard constraints to its scope; candidates are re-checked independently."""
+    from .rules import option_ok, split_options, needs_split, is_split, add_break_constraints, check_rules, split_reasons
     started = perf_counter()
+    if rules is not None:
+        movable = set(rules.scope_sections)
+        max_changes = min(max_changes, rules.max_changes)
+    intervals_by_section, split_vars = defaultdict(list), []
     issues = validate(data)
     if issues:
         return dict(status="INVALID_BASELINE", message="Resolve hard violations before optimization", issues=issues[:30])
@@ -53,6 +59,21 @@ def optimize(data, max_changes=5, seconds=10, movable=None):
     for section in data.sections:
         if movable is not None and section.id not in movable:
             opts = [section]
+        elif rules is not None:
+            # Rule-scoped section: every generated option that satisfies the rules, split times only where a rule needs them.
+            opts = options_for(data, section, room_limit=len(data.rooms) if section.id in rules.must_change_room else 3)
+            if needs_split(rules, section):
+                opts += split_options(data, section)
+            unique = []
+            for o in opts:
+                if o not in unique and option_ok(rules, section, o):
+                    unique.append(o)
+            unique.sort(key=lambda o: (o != section, is_split(section, o), o.room_id != section.room_id,
+                                       sum(abs(a.start - b.start) + 1440 * (a.day != b.day) for a, b in zip(o.meetings, section.meetings))))
+            opts = unique[:60]
+            if not opts:
+                return dict(status="INFEASIBLE", runtime=round(perf_counter()-started, 3), blocked_section=section.id,
+                            message=f"No placement of {section.id} satisfies the rules", candidates=0)
         else:
             opts = options_for(data,section)
         # Bounded neighborhood keeps the interactive run small. Preserve every approved
@@ -69,7 +90,8 @@ def optimize(data, max_changes=5, seconds=10, movable=None):
             if list(pattern)!=current_days and pattern not in seen_days and o.room_id==section.room_id:
                 day_extras.append(o)
                 seen_days.add(pattern)
-        opts=primary+([room_extra] if room_extra else [])+day_extras[:2]
+        if not (rules is not None and section.id in movable):
+            opts=primary+([room_extra] if room_extra else [])+day_extras[:2]
         option_counts.append(len(opts))
         if not opts:
             return dict(status="INFEASIBLE", message="No feasible option in the configured candidate neighborhood")
@@ -81,7 +103,10 @@ def optimize(data, max_changes=5, seconds=10, movable=None):
         modified.append(moved)
         for oi,(opt,present) in enumerate(zip(opts,variables)):
             model.add_hint(present, int(opt==section))
+            if is_split(section, opt):
+                split_vars.append(present)
             for mi,m in enumerate(opt.meetings):
+                intervals_by_section[section.id].append((present, m.day, m.start, m.end))
                 absolute = m.day*1440+m.start
                 interval = model.new_optional_fixed_size_interval_var(absolute,m.end-m.start,present,f"iv_{section.id}_{oi}_{mi}")
                 resource_intervals[("room",opt.room_id)].append(interval)
@@ -92,6 +117,8 @@ def optimize(data, max_changes=5, seconds=10, movable=None):
     for intervals in resource_intervals.values():
         model.add_no_overlap(intervals)
     model.add(sum(modified) <= max_changes)
+    if rules is not None:
+        add_break_constraints(model, rules, data, intervals_by_section)
     gaps, days, irregular = [], [], []
     for group,(signature,count) in enumerate(patterns.items()):
         group_gaps, group_days = [], []
@@ -134,7 +161,9 @@ def optimize(data, max_changes=5, seconds=10, movable=None):
                +weights["days"]*day_coef*sum(v*c for v,c in days)
                +weights["fairness"]*(scale//1200)*worst
                +weights["changes"]*change_coef*sum(modified)
-               +weights["simplicity"]*(scale//meeting_count)*sum(irregular))
+               +weights["simplicity"]*(scale//meeting_count)*sum(irregular)
+               # Split meeting times are allowed only by rules, and discouraged (twice an irregular meeting).
+               +2*weights["simplicity"]*(scale//meeting_count)*sum(split_vars))
     model.minimize(objective)
     solver=cp_model.CpSolver()
     solver.parameters.max_time_in_seconds=seconds
@@ -152,6 +181,12 @@ def optimize(data, max_changes=5, seconds=10, movable=None):
     candidate_issues=validate(candidate)
     if candidate_issues:
         return dict(**report, validation_failed=True, message="Independent validation rejected the candidate",issues=candidate_issues)
+    if rules is not None:
+        report["rule_violations"]=check_rules(data,candidate,rules)
+        if report["rule_violations"]:
+            return dict(**report, validation_failed=True, message="Independent rule check rejected the candidate")
+        before={s.id:s for s in data.sections}
+        report["split_times"]=[dict(section_id=s.id,reasons=split_reasons(rules,before[s.id],s)) for s in candidate.sections if is_split(before[s.id],s)]
     diff=compare(data,candidate)
     return dict(**report,objective=solver.objective_value,best_bound=solver.best_objective_bound,
                 comparison=diff,candidate=candidate.model_dump(),message="Candidate independently validated" if diff["changes"] else "No change recommended")

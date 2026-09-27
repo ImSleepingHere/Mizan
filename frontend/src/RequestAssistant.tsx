@@ -73,7 +73,9 @@ export function RequestAssistant({sid, ar, days, role, onSubmitted}:{sid:string,
   const setWin = (k:string, v:string) => setEdit(e => ({...e, allowed_time_window:{...e!.allowed_time_window, [k]:v || null}}));
   const i = req?.interpretation, res = req?.resolution;
   const openQuestions = (i?.questions?.length || 0) + (res?.questions?.length || 0);
-  const nothingSupported = !!i && i.unsupported.length > 0 && req!.next_step === 'none';
+  const BLOCKING = ['DATED_CHANGE','DURATION_CHANGE','ONLINE_DELIVERY','UNDEFINED_GOAL'];
+  const blocked = !!i && i.unsupported.some((u:R) => BLOCKING.includes(u.code));
+  const nothingSupported = !!i && (blocked || req!.next_step === 'none');
   const canConfirm = req?.status === 'draft' && !res?.blocked && !openQuestions && !nothingSupported;
 
   return <section className="panel ra">
@@ -103,7 +105,7 @@ export function RequestAssistant({sid, ar, days, role, onSubmitted}:{sid:string,
         <fieldset><legend>{t('Keep','الإبقاء على')}</legend>{([['keep_days','Days','الأيام'],['keep_time','Time','الوقت'],['keep_room','Room','القاعة']] as const).map(([k, en, a]) => <label key={k} className="ra-check"><input type="checkbox" checked={edit[k]} onChange={e => setEdit({...edit, [k]:e.target.checked})}/>{t(en, a)}</label>)}</fieldset>
       </div>}
 
-      {i.unsupported.length > 0 && <div className="ra-block warn"><h4><TriangleAlert size={15}/>{t('Not supported yet','غير مدعوم حالياً')}</h4>{i.unsupported.map((u:R) => <p key={u.code}>{t(u.reason_en, u.reason_ar)}</p>)}</div>}
+      {i.unsupported.length > 0 && <div className="ra-block warn"><h4><TriangleAlert size={15}/>{t('Not supported yet','غير مدعوم حالياً')}</h4>{i.unsupported.map((u:R) => <p key={u.code}>{t(u.reason_en, u.reason_ar)}</p>)}{blocked && i.date_scope.kind !== 'weekly' && <p className="muted">{t('To apply it to the weekly timetable instead, choose Correct and set When to Weekly timetable.','لتطبيقه على الجدول الأسبوعي بدلاً من ذلك، اختر «تصحيح» ثم اجعل «متى» الجدول الأسبوعي.')}</p>}</div>}
       {req!.date_note && <div className="ra-block"><h4><Info size={15}/>{t('About dates','عن التواريخ')}</h4><p>{t(req!.date_note.en, req!.date_note.ar)}</p></div>}
       {(i.questions.length > 0 || res.questions.length > 0) && <div className="ra-block ask"><h4><CircleHelp size={15}/>{t('Please clarify','يرجى التوضيح')}</h4>
         {[...i.questions, ...res.questions].map((q:R) => <p key={q.code}>{t(q.en, q.ar)}{q.options && <span className="ra-options">{q.options.map((o:R) => <span key={`${o.section_id}-${o.meeting_index}`} className="tt-chip">{o.section_id} · {day(DAY_KEYS[o.day])} <bdi>{time(o.start)}</bdi></span>)}</span>}</p>)}
@@ -126,8 +128,31 @@ export function RequestAssistant({sid, ar, days, role, onSubmitted}:{sid:string,
           {role !== 'chair' && !p.error && <button className="primary" disabled={!!busy} onClick={() => void submitMove(p)}><Send size={15}/>{p.feasible ? t('Submit change request','إرسال طلب التغيير') : t('Submit & see alternatives','إرسال وعرض البدائل')}</button>}
           <small className="muted">{t('A change request still needs committee approval before publication.','يحتاج طلب التغيير إلى اعتماد اللجنة قبل النشر.')}</small></div>)
           : <p>{t('Mizan needs an exact new time to check this move. Use the timetable to drag the class, or rephrase with a time.','يحتاج ميزان إلى وقت جديد محدد للتحقق من النقل. اسحب المحاضرة في الجدول أو أعد صياغة الطلب مع الوقت.')}</p>)}
-        {result.step !== 'preview_move' && <p><Info size={15}/>{t('Confirmed and saved. Rule-based rescheduling and free-slot search are being added; this request type runs once they are available.','تم التأكيد والحفظ. إعادة الجدولة بالقواعد والبحث عن الأوقات المتاحة قيد الإضافة، وسيُنفَّذ هذا النوع من الطلبات عند توفرها.')}</p>}
+        {result.step === 'optimize_with_rules' && <RuleResult r={result} t={t} day={day}/>}
+        {result.step === 'find_slots' && <p><Info size={15}/>{t('Confirmed and saved. Free-slot search is being added; this request type runs once it is available.','تم التأكيد والحفظ. البحث عن الأوقات المتاحة قيد الإضافة، وسيُنفَّذ هذا النوع من الطلبات عند توفره.')}</p>}
       </div>}
     </div>}
   </section>;
+}
+
+function RuleResult({r, t, day}:{r:R, t:(en:string, ar:string)=>string, day:(k:string)=>string}){
+  const c = r.comparison;
+  const fmt = (ms:R[]) => ms.map((m:R) => `${day(DAY_KEYS[m.day])} ${time(m.start)}`).join(', ');
+  const statusText:Record<string,[string,string]> = {OPTIMAL:['Best option within the search','أفضل خيار ضمن نطاق البحث'], FEASIBLE:['Valid option found (not proven best)','وُجد خيار صحيح (غير مثبت أنه الأفضل)'],
+    INFEASIBLE:['No timetable meets these rules','لا يوجد جدول يحقق هذه القواعد'], UNKNOWN:['Not found within the time limit','لم يُعثر على حل ضمن المهلة'], NOT_RUN:['Not run','لم يُنفَّذ'], INVALID_BASELINE:['The current timetable has violations','الجدول الحالي فيه مخالفات']};
+  const s = statusText[r.status];
+  return <div className="ra-rule-result">
+    <div className="tt-chips"><span className={`tt-chip ${c?.changes?.length ? 'ok' : r.status === 'INFEASIBLE' ? 'bad' : ''}`}>{s ? t(s[0], s[1]) : r.status}</span>
+      {c && <><span className="tt-chip"><Clock3 size={13}/><bdi>{c.recovered_hours > 0 ? '+' : ''}{number(c.recovered_hours)}</bdi> {t('student-h / week','ساعة طالب / أسبوع')}</span>
+      <span className={`tt-chip ${(c.adverse_count ?? c.worsened) ? 'warn' : ''}`}><UsersRound size={13}/>{number(c.adverse_count ?? c.worsened)} {t('worse off','متضرر')}</span></>}
+      {r.rule_violations?.length === 0 && <span className="tt-chip ok"><ShieldCheck size={13}/>{t('All rules checked independently','تم التحقق من جميع القواعد بشكل مستقل')}</span>}</div>
+    {r.rule_items && <ul className="ra-rules">{r.rule_items.map((x:R) => <li key={x.id}>{t(x.en, x.ar)}</li>)}</ul>}
+    {c?.changes?.length > 0 && <ul className="ra-rules">{c.changes.map((x:R) => <li key={x.section_id}>{x.section_id}: {fmt(x.before.meetings)} → {fmt(x.after.meetings)}{x.before.room_id !== x.after.room_id ? ` · ${x.after.room_id}` : ''}</li>)}</ul>}
+    {(r.split_times || []).map((x:R) => <p key={x.section_id} className="muted">{x.section_id}: {t('meeting times split by rule','أوقات المحاضرات مختلفة بسبب القاعدة')} {x.reasons.map((q:R) => t(q.en, q.ar)).join(t('; ','؛ '))}</p>)}
+    {r.diagnosis && <div className="ra-block warn"><p>{t(r.diagnosis.en, r.diagnosis.ar)}</p>{r.diagnosis.blocking_rules.map((b:R) => <p key={b.id}><TriangleAlert size={14}/>{t(b.en, b.ar)}</p>)}<p className="muted">{t('Your current timetable is kept.','يبقى جدولك الحالي كما هو.')}</p></div>}
+    {r.message && r.status === 'NOT_RUN' && <p>{r.message}</p>}
+    {['OPTIMAL','FEASIBLE'].includes(r.status) && !c?.changes?.length && <p>{t('Your timetable already meets these rules; no change is needed.','جدولك يحقق هذه القواعد بالفعل؛ لا حاجة لأي تغيير.')}</p>}
+    {r.proposal ? <p><Check size={15}/>{t('Saved as a proposal for committee review. Nothing changes until it is approved and published.','حُفظ كمقترح لمراجعة اللجنة. لا يتغير شيء حتى يُعتمد ويُنشر.')}</p>
+      : c?.changes?.length > 0 && <p className="muted">{t('Read-only check: no proposal was created for your role.','فحص للاطلاع فقط: لم يُنشأ مقترح لدورك.')}</p>}
+  </div>;
 }

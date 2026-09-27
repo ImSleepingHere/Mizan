@@ -4,7 +4,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import Field, ValidationError
-from .models import StrictModel, Window
+from .models import StrictModel, Window, Semester
 from .main import user, require, scenario
 from .analysis import validate, compare
 from .store import connect, identifier, now, audit
@@ -108,7 +108,9 @@ def confirm(rid: str, u=Depends(user)):
         raise HTTPException(409, "Resolve the listed issues before confirming")
     if interp.needs_clarification or resolution["questions"]:
         raise HTTPException(409, "Answer the open questions before confirming")
-    if interp.unsupported and it.next_step(interp) == "none":
+    if it.blocking_codes(interp):
+        raise HTTPException(409, "Part of this request is not supported yet. To apply it to the weekly timetable instead, correct 'When' to weekly.")
+    if it.next_step(interp) == "none":
         raise HTTPException(409, "Nothing in this request is supported yet")
     result = dict(step=it.next_step(interp), previews=[])
     if result["step"] == "preview_move" and u["role"] in {"admin", "registrar", "professor"}:
@@ -116,12 +118,43 @@ def confirm(rid: str, u=Depends(user)):
             target = it.move_target(interp, meeting)
             if target:
                 result["previews"].append(preview(data, current_row, meeting, target))
+    elif result["step"] == "optimize_with_rules":
+        result.update(run_rules(interp, resolution, data, current_row, u, rid))
     with connect() as con:
         con.execute("UPDATE request_interpretations SET status='confirmed',revision=?,updated=? WHERE id=?", (current_row["revision"], now(), rid))
         audit(con, u["username"], "request_confirmed", rid, dict(version=row["version"], step=result["step"], revision=current_row["revision"]))
     row.update(status="confirmed", revision=current_row["revision"])
     from .main import redact
     return dict(**present(row, interp, resolution), result=redact(u, result))
+
+
+def run_rules(interp, resolution, data, row, u, rid):
+    """Scheduling tool with the request's rules, then Change Impact's independent rule check; a valid change becomes a proposal."""
+    from .rules import from_interpretation, optimize_with_rules
+    from .main import save_proposal
+    try:
+        rules = from_interpretation(interp, resolution, data, u)
+    except ValueError as error:
+        return dict(status="NOT_RUN", message=str(error))
+    if not rules.scope_sections:
+        return dict(status="NOT_RUN", message="No sections are in scope")
+    result = optimize_with_rules(data, rules, seconds=10)
+    candidate = result.pop("candidate", None)
+    result["tools"] = ["optimize_schedule (Scheduling & Optimization)", "check_rules (Change Impact)"]
+    if candidate and result.get("comparison", {}).get("changes"):
+        if u["role"] in {"admin", "registrar", "professor"}:
+            analysis = {k: v for k, v in result.items() if k != "comparison"}
+            analysis.update(comparison=result["comparison"], request_id=rid, request_text=interp_text(rid))
+            result["proposal"] = save_proposal(row["id"], row, Semester.model_validate(candidate), "rule_change", analysis, u, interp_text(rid)[:1000])
+            result["proposal"].pop("analysis", None)
+        else:
+            result["proposal"] = None  # read-only roles see the result without creating a proposal
+    return result
+
+
+def interp_text(rid):
+    with connect() as con:
+        return con.execute("SELECT text FROM request_interpretations WHERE id=?", (rid,)).fetchone()["text"]
 
 
 def preview(data, row, meeting, target):

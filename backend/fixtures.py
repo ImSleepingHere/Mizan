@@ -51,7 +51,7 @@ def generate_faculty(seed=2027):
         room = next(r["id"] for r in rooms if free(busy_room, r["id"], ws))
         busy_prof.setdefault(prof, []).extend(ws)
         busy_room.setdefault(room, []).extend(ws)
-        sections.append(dict(id=sid, course_id=cid, professor_id=prof, room_id=room, capacity=80,
+        sections.append(dict(id=sid, course_id=cid, professor_id=prof, room_id=room, capacity=35 if sid in fixed else 80,
                              meetings=[dict(day=d, start=s, end=e) for d, s, e in ws]))
     by_id = {s["id"]: s for s in sections}
     seats = {s["id"]: 0 for s in sections}

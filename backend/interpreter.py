@@ -470,10 +470,22 @@ def move_target(interp: Interpretation, meeting: dict):
     return dict(day=day, start=start)
 
 
+# Unsupported parts that would change what runs. A request containing one never runs as a weekly change;
+# the user can correct "When" to weekly, which is an explicit decision (spec §18.2).
+BLOCKING_CODES = {"DATED_CHANGE", "DURATION_CHANGE", "ONLINE_DELIVERY", "UNDEFINED_GOAL"}
+
+
+def blocking_codes(interp: Interpretation):
+    return [u["code"] for u in interp.unsupported if u["code"] in BLOCKING_CODES]
+
+
 def next_step(interp: Interpretation):
     """Which tool a confirmed interpretation leads to. Unsupported parts never run."""
+    if blocking_codes(interp):
+        return "none"
     if interp.task == "move_meeting":
-        return "preview_move"
+        exact = interp.move and (interp.move.new_start or interp.move.shift_minutes is not None or interp.move.to_day)
+        return "preview_move" if exact else "optimize_with_rules"
     if interp.task in {"reschedule_with_rules", "change_room"}:
         return "optimize_with_rules"
     if interp.task in FIND_TASKS or (interp.task == "add_session" and interp.slot_search):

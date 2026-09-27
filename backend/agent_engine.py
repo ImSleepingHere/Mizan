@@ -9,6 +9,7 @@ from . import local_model
 from .models import StrictModel,Semester
 from .analysis import metrics,validate,compare
 from .solver import optimize,workforce
+from .rules import RuleSet,check_rules
 from .store import connect,identifier,now,audit
 
 EXECUTOR=ThreadPoolExecutor(max_workers=1,thread_name_prefix="mizan-agent")
@@ -94,6 +95,7 @@ def model_decision(role,context,actions):
 
 def run_collaboration(run_id,sid,row,data,request,limits,user):
     started=time.monotonic()
+    rule_set=RuleSet.model_validate(limits['rules']) if limits.get('rules') else None
     messages=[];evidence={};candidate=None;candidate_revision=0;impact_revision=-1;calls=0;tool_calls=0
     errors=0
     with connect() as con:
@@ -132,7 +134,8 @@ def run_collaboration(run_id,sid,row,data,request,limits,user):
             result={"signals":result['signals'],"faculty_count":len(result['workloads']),"no_new_hires":True}
         elif decision.action=='optimize_schedule':
             max_changes=min(decision.max_changes,limits['max_changes'])
-            result=optimize(data,max_changes,limits.get('solver_seconds',15))
+            # Request rules (spec §18.4) travel to the tools only, never into the coordinator's context.
+            result=optimize(data,max_changes,limits.get('solver_seconds',15),rules=rule_set)
             raw=result.pop('candidate',None)
             if raw:
                 candidate=Semester.model_validate(raw);candidate_revision+=1
@@ -149,9 +152,10 @@ def run_collaboration(run_id,sid,row,data,request,limits,user):
                 result={"accepted":False,"requires_revision":True,"reason":"No candidate is available"}
             else:
                 issues=validate(candidate);diff=compare(data,candidate)
-                accepted=not issues and diff['worsened']<=limits['max_worsened'] and len(diff['changes'])<=limits['max_changes']
+                violations=check_rules(data,candidate,rule_set) if rule_set else []
+                accepted=not issues and not violations and diff['worsened']<=limits['max_worsened'] and len(diff['changes'])<=limits['max_changes']
                 result=dict(accepted=accepted,requires_revision=not accepted,candidate_revision=candidate_revision,
-                            conflict_count=len(issues),worsened=diff['worsened'],recovered_hours=diff['recovered_hours'],changed_sections=len(diff['changes']))
+                            conflict_count=len(issues),rule_violations=len(violations),worsened=diff['worsened'],recovered_hours=diff['recovered_hours'],changed_sections=len(diff['changes']))
             impact_revision=candidate_revision
         else:raise ValueError("Unauthorized tool")
         evidence[role]=result
