@@ -1,7 +1,7 @@
 # MIZAN — ميزان
 ## Project documentation v3.0
 
-**Revised six-agent architecture · 23 September 2026**
+**Revised six-agent architecture · 23 September 2026 · v3.1 addendum 27 September 2026 (§18)**
 
 Operational scheduling intelligence and evidence-based workforce planning for university administration.
 
@@ -330,10 +330,91 @@ All displayed quantities must be computed from the demonstration dataset. No ill
 
 ## 16. Deferred capabilities
 
-Demand forecasting, predictive hiring need, exam scheduling, graduation progression planning, full disruption recovery, and campus-wide simulations remain future scope. Demand forecasting requires suitable historical data and separate model evaluation; it is not part of the six-agent release.
+Demand forecasting, predictive hiring need, exam scheduling, graduation progression planning, full disruption recovery, and campus-wide simulations remain future scope. Finding a common weekly slot for a quiz or revision session is part of the free-slot finder (§18.5); full exam timetabling is not. Demand forecasting requires suitable historical data and separate model evaluation; it is not part of the six-agent release.
 
 ## 17. Architecture summary
 
 **Six AI agents collaborate through a coordinator. Shared deterministic tools compute facts and enforce scheduling rules. One pretrained local model may power all six roles. Human staff approve operational changes and recruitment decisions.**
 
 The initial product is a complete standalone application on the available PC, backed by synthetic and permitted public data. Real-world integrations are added when access exists, without overstating what the local prototype has demonstrated.
+
+## 18. Addendum v3.1: requests from professors
+
+### 18.1 Why this addendum exists
+
+Thirty handwritten requests from a professor (Arabic, English and mixed) showed that about five of the thirty are supported: moving one meeting with conflict checks. Most requests come from professors about their own classes and ask for rules across the timetable, common free slots, specific dates, different session lengths, online delivery or room location. This addendum adds items 1–4 below without adding agents. A calculation or check remains a tool (§4). Optional guidance files may be loaded into prompts, but they never replace a tool for anything that must be correct.
+
+### 18.2 Request interpreter (owner: Coordinator)
+
+The Coordinator's first step translates free text into a validated **Request Interpretation** (§5.1). It uses the shared base model with a JSON schema. The fine-tuned coordinator adapter learned only routing and is not used for interpretation.
+
+| Field | Meaning |
+|---|---|
+| task | move_meeting, reschedule_with_rules, find_common_slot, merge_sections, change_room, change_duration, change_delivery, add_session, balance_hours |
+| scope | own (my classes), sections, cohort, semester |
+| target_sections, day_filter | Sections named in the request; days the request refers to ("my Sunday class") |
+| move | Target day, shift in minutes or new start for a single meeting |
+| max_changes | Upper limit on changed sections, never above the policy limit |
+| protected_sections | Sections, optionally on specific days, that must not change |
+| locked_days | Days whose meetings must not change |
+| keep_days, keep_time, keep_room | Keep each meeting's day, start time or room |
+| allowed_time_window | Earliest start, latest start and latest end, globally or per day |
+| min_break | Minutes, days, and either "between every class" or "one free block" |
+| day_to_empty | Move meetings from one day to another |
+| slot_search | Duration, days, student group, and same time for all sections |
+| date_scope | weekly, one_off or date_range, with the original phrase |
+| duration_change, delivery_mode | Requested length or delivery changes |
+| unsupported | Codes with plain-language reasons in Arabic and English |
+| needs_clarification | Questions to ask when a required value is missing or ambiguous |
+
+Rules:
+
+- Code normalizes Arabic-Indic digits and times, validates every field, checks that named sections exist and resolves "my classes" and day filters to concrete meetings. The model never resolves permissions or support.
+- Support is decided by code from the fields. Any dated, duration, online or location request is reported as unsupported with its reason. Where a weekly version is possible, it is offered as an explicit alternative, never applied silently.
+- The user sees "here is what I understood" in their language, can correct it, and must confirm before any tool runs. Confirmed interpretations are stored, versioned and audited.
+- Request text is untrusted input. It cannot widen the user's role, scope or approval rights.
+
+### 18.3 "My classes" scope
+
+| Role | May interpret and check | May create proposals for | Student data shown |
+|---|---|---|---|
+| Professor | Own sections | Own sections only; all other sections are fixed in the search | Aggregate counts for students in own sections; no student identities or other timetables |
+| Registrar, admin | Any scope | Any scope | As today |
+| Chair | Any scope (read-only checks) | None | As today |
+| Student, hiring manager | Not available | None | Unchanged |
+
+Professor proposals still require committee approval and publication (§12). Approval levels for small changes are a later decision (§18.8).
+
+### 18.4 Scheduling rules (owners: Scheduling & Optimization; Change Impact)
+
+A confirmed interpretation becomes a versioned **Rule Set** passed as typed tool input: allowed time windows (global, per professor or per day), protected sections or meetings, locked days, keep day, keep time, keep room, minimum breaks (between every class or one free block, for a professor or a student group), moving meetings from one day to another, movable sections (scope) and maximum changes.
+
+- The Scheduling agent's CP-SAT search applies rule-set constraints as hard constraints for that request, in addition to §8.
+- An independent rule checker, separate from the solver, verifies every candidate. Change Impact reports any rule violation, and a violated rule blocks acceptance.
+- If no candidate satisfies the rules, the result states which rules conflict (found by removing one rule at a time) and keeps the current timetable.
+- Where a rule concerns one meeting (for example "only the Tuesday meeting"), meetings of the same section may receive different start times. This relaxes the v3 search assumption that meeting spacing is preserved, and is recorded in the proposal.
+
+### 18.5 Common free-slot finder (owner: Scheduling & Optimization)
+
+A new Scheduling tool, built on the section-placement evaluator, finds common free slots. Input: a student group (sections, cohort or own classes), a duration, candidate days and optionally a merge of sections. Output: ranked weekly slots where the professor and a suitable room are free, with the number of students who cannot attend and the added gaps and campus days. For a merge, room capacity is checked against the combined enrollment.
+
+The finder only finds slots, including slots for a quiz or revision session. Booking a one-off session requires dated sessions (§18.8).
+
+### 18.6 Data additions
+
+- **Request Interpretation:** original text, language, user, scenario revision, interpreted fields, unsupported list, clarifications, status (draft, confirmed, cancelled), confirmation time.
+- **Rule Set:** version, source interpretation, rules; referenced by proposals and agent runs.
+- **Proposal:** adds rule set reference and rule-check result.
+- **Slot search result:** stored in the audit log with its inputs; not a proposal.
+
+### 18.7 Validation additions
+
+13. The handwritten request set (`training/interpreter/handwritten_test.jsonl`) has fixed expected interpretations. It is never used for training or prompt tuning and is not changed after results are seen. Prompt development uses a separate development set. The main safety measure is unsupported requests that were missed and silently run.
+14. Each rule has a solver test, and every candidate produced under a rule set passes the independent rule checker.
+15. Professor scope is enforced by code: other sections never move and student identities are not exposed.
+
+### 18.8 Out of scope for v3.1
+
+Later, in this order unless decided otherwise: term calendar and dated one-off changes; session length changes under a policy; online delivery; merged dated sessions; building and floor data with nearest-free-room search; approval levels for small changes to a professor's own dated sessions; student notices for published dated changes. Human-authority rules stay in code.
+
+Finding a weekly slot for a quiz or revision session is part of the free-slot finder (§18.5). Anything bound to specific dates is reported as unsupported until the term calendar exists. Full exam timetabling remains future scope (§16).
