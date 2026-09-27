@@ -216,7 +216,7 @@
     "set": "dev",
     "model": "qwen3-8b",
     "adapter": "none (base model)",
-    "seconds": 24.9
+    "seconds": 27.5
   },
   "predictions": [
     {
@@ -265,7 +265,7 @@
         "model": "qwen3-8b",
         "output_tokens": 58,
         "input_tokens": 2004,
-        "duration_seconds": 1.234
+        "duration_seconds": 0.86
       },
       "passed": true
     },
@@ -313,7 +313,7 @@
         "model": "qwen3-8b",
         "output_tokens": 56,
         "input_tokens": 2004,
-        "duration_seconds": 0.625
+        "duration_seconds": 0.687
       },
       "passed": true
     },
@@ -363,7 +363,7 @@
         "model": "qwen3-8b",
         "output_tokens": 52,
         "input_tokens": 2000,
-        "duration_seconds": 0.578
+        "duration_seconds": 0.657
       },
       "passed": true
     },
@@ -410,7 +410,7 @@
         "model": "qwen3-8b",
         "output_tokens": 51,
         "input_tokens": 1995,
-        "duration_seconds": 0.578
+        "duration_seconds": 0.64
       },
       "passed": true
     },
@@ -457,7 +457,7 @@
         "model": "qwen3-8b",
         "output_tokens": 57,
         "input_tokens": 1998,
-        "duration_seconds": 0.625
+        "duration_seconds": 0.703
       },
       "passed": false
     },
@@ -504,7 +504,7 @@
         "model": "qwen3-8b",
         "output_tokens": 61,
         "input_tokens": 2000,
-        "duration_seconds": 0.719
+        "duration_seconds": 0.797
       },
       "passed": false
     },
@@ -555,7 +555,7 @@
         "model": "qwen3-8b",
         "output_tokens": 54,
         "input_tokens": 2004,
-        "duration_seconds": 0.594
+        "duration_seconds": 0.656
       },
       "passed": true
     },
@@ -607,7 +607,7 @@
         "model": "qwen3-8b",
         "output_tokens": 46,
         "input_tokens": 2015,
-        "duration_seconds": 0.547
+        "duration_seconds": 0.625
       },
       "passed": false
     },
@@ -652,7 +652,7 @@
         "model": "qwen3-8b",
         "output_tokens": 44,
         "input_tokens": 1997,
-        "duration_seconds": 0.484
+        "duration_seconds": 0.578
       },
       "passed": false
     },
@@ -697,7 +697,7 @@
         "model": "qwen3-8b",
         "output_tokens": 45,
         "input_tokens": 2001,
-        "duration_seconds": 0.5
+        "duration_seconds": 0.578
       },
       "passed": false
     },
@@ -746,7 +746,7 @@
         "model": "qwen3-8b",
         "output_tokens": 53,
         "input_tokens": 2001,
-        "duration_seconds": 0.578
+        "duration_seconds": 0.657
       },
       "passed": true
     },
@@ -799,7 +799,7 @@
         "model": "qwen3-8b",
         "output_tokens": 51,
         "input_tokens": 2010,
-        "duration_seconds": 0.562
+        "duration_seconds": 0.625
       },
       "passed": false
     },
@@ -863,7 +863,7 @@
         "model": "qwen3-8b",
         "output_tokens": 67,
         "input_tokens": 2003,
-        "duration_seconds": 0.719
+        "duration_seconds": 0.828
       },
       "passed": false
     },
@@ -916,7 +916,7 @@
         "model": "qwen3-8b",
         "output_tokens": 28,
         "input_tokens": 1998,
-        "duration_seconds": 0.328
+        "duration_seconds": 0.39
       },
       "passed": true
     },
@@ -976,7 +976,7 @@
         "model": "qwen3-8b",
         "output_tokens": 54,
         "input_tokens": 1994,
-        "duration_seconds": 0.578
+        "duration_seconds": 0.657
       },
       "passed": true
     },
@@ -1039,7 +1039,7 @@
         "model": "qwen3-8b",
         "output_tokens": 60,
         "input_tokens": 2005,
-        "duration_seconds": 0.656
+        "duration_seconds": 0.734
       },
       "passed": false
     },
@@ -1089,7 +1089,7 @@
         "model": "qwen3-8b",
         "output_tokens": 40,
         "input_tokens": 2003,
-        "duration_seconds": 0.437
+        "duration_seconds": 0.484
       },
       "passed": true
     },
@@ -1139,7 +1139,7 @@
         "model": "qwen3-8b",
         "output_tokens": 40,
         "input_tokens": 2005,
-        "duration_seconds": 0.438
+        "duration_seconds": 0.516
       },
       "passed": false
     },
@@ -1197,7 +1197,7 @@
         "model": "qwen3-8b",
         "output_tokens": 45,
         "input_tokens": 1996,
-        "duration_seconds": 0.5
+        "duration_seconds": 0.562
       },
       "passed": false
     },
@@ -1252,7 +1252,7 @@
         "model": "qwen3-8b",
         "output_tokens": 76,
         "input_tokens": 2002,
-        "duration_seconds": 0.812
+        "duration_seconds": 0.922
       },
       "passed": false
     },
@@ -1299,7 +1299,7 @@
         "model": "qwen3-8b",
         "output_tokens": 66,
         "input_tokens": 1998,
-        "duration_seconds": 0.766
+        "duration_seconds": 0.813
       },
       "passed": false
     },
@@ -1352,7 +1352,7 @@
         "model": "qwen3-8b",
         "output_tokens": 60,
         "input_tokens": 2000,
-        "duration_seconds": 0.656
+        "duration_seconds": 0.75
       },
       "passed": true
     },
@@ -1404,7 +1404,7 @@
         "model": "qwen3-8b",
         "output_tokens": 84,
         "input_tokens": 2005,
-        "duration_seconds": 0.937
+        "duration_seconds": 1.078
       },
       "passed": false
     },
@@ -1451,7 +1451,7 @@
         "model": "qwen3-8b",
         "output_tokens": 57,
         "input_tokens": 2007,
-        "duration_seconds": 0.641
+        "duration_seconds": 0.719
       },
       "passed": false
     },
@@ -1499,7 +1499,7 @@
         "model": "qwen3-8b",
         "output_tokens": 46,
         "input_tokens": 1996,
-        "duration_seconds": 0.515
+        "duration_seconds": 0.578
       },
       "passed": true
     },
@@ -1546,7 +1546,7 @@
         "model": "qwen3-8b",
         "output_tokens": 46,
         "input_tokens": 2005,
-        "duration_seconds": 0.5
+        "duration_seconds": 0.563
       },
       "passed": true
     },
@@ -1605,7 +1605,7 @@
         "model": "qwen3-8b",
         "output_tokens": 77,
         "input_tokens": 2000,
-        "duration_seconds": 0.828
+        "duration_seconds": 0.907
       },
       "passed": false
     },
@@ -1655,7 +1655,7 @@
         "model": "qwen3-8b",
         "output_tokens": 34,
         "input_tokens": 1993,
-        "duration_seconds": 0.407
+        "duration_seconds": 0.422
       },
       "passed": true
     },
@@ -1706,7 +1706,7 @@
         "model": "qwen3-8b",
         "output_tokens": 51,
         "input_tokens": 2004,
-        "duration_seconds": 0.562
+        "duration_seconds": 0.625
       },
       "passed": true
     },
@@ -1756,7 +1756,7 @@
         "model": "qwen3-8b",
         "output_tokens": 59,
         "input_tokens": 2011,
-        "duration_seconds": 0.656
+        "duration_seconds": 0.719
       },
       "passed": true
     },
@@ -1810,7 +1810,7 @@
         "model": "qwen3-8b",
         "output_tokens": 56,
         "input_tokens": 2005,
-        "duration_seconds": 0.625
+        "duration_seconds": 0.688
       },
       "passed": false
     },
@@ -1859,7 +1859,7 @@
         "model": "qwen3-8b",
         "output_tokens": 48,
         "input_tokens": 2010,
-        "duration_seconds": 0.532
+        "duration_seconds": 0.578
       },
       "passed": false
     },
@@ -1908,7 +1908,7 @@
         "model": "qwen3-8b",
         "output_tokens": 61,
         "input_tokens": 2008,
-        "duration_seconds": 0.657
+        "duration_seconds": 0.766
       },
       "passed": true
     },
@@ -1956,7 +1956,7 @@
         "model": "qwen3-8b",
         "output_tokens": 34,
         "input_tokens": 1995,
-        "duration_seconds": 0.421
+        "duration_seconds": 0.469
       },
       "passed": false
     },
@@ -2006,7 +2006,7 @@
         "model": "qwen3-8b",
         "output_tokens": 59,
         "input_tokens": 1997,
-        "duration_seconds": 0.641
+        "duration_seconds": 0.75
       },
       "passed": true
     },
@@ -2053,7 +2053,7 @@
         "model": "qwen3-8b",
         "output_tokens": 61,
         "input_tokens": 2000,
-        "duration_seconds": 0.688
+        "duration_seconds": 0.782
       },
       "passed": false
     },
@@ -2101,7 +2101,7 @@
         "model": "qwen3-8b",
         "output_tokens": 30,
         "input_tokens": 2002,
-        "duration_seconds": 0.359
+        "duration_seconds": 0.422
       },
       "passed": true
     },
@@ -2161,7 +2161,7 @@
         "model": "qwen3-8b",
         "output_tokens": 58,
         "input_tokens": 2002,
-        "duration_seconds": 0.656
+        "duration_seconds": 0.765
       },
       "passed": false
     },
@@ -2221,7 +2221,7 @@
         "model": "qwen3-8b",
         "output_tokens": 79,
         "input_tokens": 2016,
-        "duration_seconds": 0.875
+        "duration_seconds": 0.985
       },
       "passed": false
     },
@@ -2280,7 +2280,7 @@
         "model": "qwen3-8b",
         "output_tokens": 64,
         "input_tokens": 2011,
-        "duration_seconds": 0.719
+        "duration_seconds": 0.781
       },
       "passed": false
     }
