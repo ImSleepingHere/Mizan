@@ -14,7 +14,8 @@ Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tool
 ## Run
 - `Start Mizan.cmd` → `scripts/start.ps1` → starts model (`scripts/start-model.ps1`, port 11435) + app on http://127.0.0.1:8000. Demo password `Mizan-demo-2026!`; roles admin, registrar, chair, professor, hiring_manager, student.
 - `scripts/restart-model.ps1` restarts llama-server (reloads adapter). `Apply Mizan Update.cmd` → `scripts/apply-update.ps1` restarts model, runs deployed eval, restarts app.
-- Tests: `scripts/test.ps1` (pytest on `tests/`, 71 tests incl. `tests/test_update_v3.py`, `tests/test_interpreter.py`, `tests/test_scope.py`, `tests/test_rules.py`, `tests/test_finder.py`; the script passes `tests` so pytest no longer crawls unreadable `work/` folders). Browser e2e: start a server on port 8001 with `MIZAN_DB` pointing to a fresh file under `work/`, then `node tests/browser-smoke.cjs` (all 5 checks passed on 2026-09-24).
+- Tests: `scripts/test.ps1` (pytest on `tests/`, 80 tests incl. `tests/test_acceptance.py`, `tests/test_update_v3.py`, `tests/test_interpreter.py`, `tests/test_scope.py`, `tests/test_rules.py`, `tests/test_finder.py`; the script passes `tests` so pytest no longer crawls unreadable `work/` folders). Browser e2e: start a server on port 8001 with `MIZAN_DB` pointing to a fresh file under `work/`, then `node tests/browser-smoke.cjs` (5 checks + EN/AR overview parity; passed 2026-09-27). `node tests/browser-phase2.cjs` (port 8001, needs the live model: agent run + recruitment; passed 2026-09-27).
+- Demo reset: `Reset Mizan Demo.cmd` → `scripts/reset-demo.ps1` (refuses while the app runs; moves `data/mizan.sqlite3` to `data/backups/` and reseeds; `-Database <path>` for a scratch copy).
 - GPU: RTX 4080 SUPER 16 GB. llama-server holds ~5 GB RAM + VRAM; stop it before training.
 
 ## Fine-tuned coordinator (done, live since 2026-09-24)
@@ -31,7 +32,7 @@ Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tool
 - `frontend/src/InteractiveTimetable.tsx`: drag-and-drop meetings with live `POST /api/scenarios/{sid}/preview-change` (no DB write, ~70 ms), dock to submit as change request (`/changes`), detail drawer with keyboard move form, filters (cohort/room/faculty/department/search), lane layout for overlaps, Riyadh now-line. Professors edit only own sections; students read-only.
 - Agent panel shows roster, LoRA-tagged coordinator events, fine-tuned badge; Settings shows real model/coordinator status.
 
-## Frontend v4 redesign (branch `redesign/v4`, 2026-09-27, not merged/pushed)
+## Frontend v4 redesign (2026-09-27, merged to main)
 - Replaced Najd Night with an "Information System" world: paper #f6f6f3, ink sidebar, four flat signal colours, light Archivo numerals + Noto Kufi Arabic. Rules live in `DESIGN.md` (+ `.impeccable/design.json`); product truth in `PRODUCT.md`.
 - User direction: calm/small type but colourful and alive; numbers graded continuously red→amber→green per metric (`frontend/src/grade.ts`, no hard thresholds). Faculty workload is deliberately not graded (only overload is red).
 - Scenario select + "Fall semester 2026" live in the topbar. Smoke test (5/5) and pytest (71) pass on the branch.
@@ -53,8 +54,9 @@ Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tool
 - Playwright plugin (Microsoft) was enabled 2026-09-27 but failed to connect in the session where it was added (Claude app started before Node was installed); restart the Claude app.
 
 ## Project status / next steps
-- Phase 1 approved; Phase 2 (six agents + recruitment) under user review; Phase 3 (final verification & delivery) not started.
-- Next: walk the acceptance criteria (spec §13 + §18.7) → Farq demo script (3 scenarios in spec §15) + reset script + deck.
+- Phase 1 approved; Phase 2 (six agents + recruitment) under user review; Phase 3 done 2026-09-27: `docs/acceptance-report.md` (all 15 criteria of §13 + §18.7 mapped to passing tests; gaps closed with `tests/test_acceptance.py` + two agent tests; recruitment now rejects instruction-like CV quotes and flags such CVs), `docs/demo-script.md` (figures measured on a fresh reset DB), reset script, deck (claude.ai artifact https://claude.ai/artifact/7HQp54eBHaf9ka8Qk975uW, private until shared).
+- Demo facts (fresh DB): baseline 15,000 gap h/week, quality 45, 100% students with 2h+ gaps, room use 10%; 15 s optimize ≈ +1,800 h, 225 benefit, 0 worse (FEASIBLE, varies slightly per run); S001→Sun 10:00 = 77 conflicts + 3 alternatives; shortfall C080: 3 needed / 2 covered / 1 uncovered / 112 at risk.
+- Known minor: Activity page audit trail refreshes only on reload after an agent run.
 - Housekeeping: ask the user before deleting `work/ollama-0.34.3.zip` (1.4 GB) or `training/coordinator/checkpoints/epoch-*`.
 
 ## Conventions
