@@ -8,16 +8,10 @@ importers:
 
   .:
     dependencies:
-      '@fontsource/dm-sans':
+      '@fontsource-variable/archivo':
         specifier: ^5.3.0
         version: 5.3.0
-      '@fontsource/manrope':
-        specifier: ^5.3.0
-        version: 5.3.0
-      '@fontsource/noto-sans-arabic':
-        specifier: ^5.3.0
-        version: 5.3.0
-      '@fontsource/sora':
+      '@fontsource/noto-kufi-arabic':
         specifier: ^5.3.0
         version: 5.3.0
       lucide-react:
@@ -290,17 +284,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fontsource/dm-sans@5.3.0':
-    resolution: {integrity: sha512-lYJtMXXO28q1z+yz+z8XKd0s4hXaa9QdkETzkyD760sidCv5heI86weYA0sx0Nc4pAMAQTUuyf4gO44cYKKS9g==}
+  '@fontsource-variable/archivo@5.3.0':
+    resolution: {integrity: sha512-HogK8FJelrD1o7TlZlkIVtHgc20bO5PZRWE7mUeUTdMN055alznQV6/00J00IBeu8FQAH4s3zW9UJNvKExXf+g==}
 
-  '@fontsource/manrope@5.3.0':
-    resolution: {integrity: sha512-obJ1Dv3+uCA6HlHgW8u4BGYxJR9In2HW7gjJhlflEvkrj1X1iSEwu0fToL+JYGC/FEKFfIz1sBuPduvcL2gIAA==}
-
-  '@fontsource/noto-sans-arabic@5.3.0':
-    resolution: {integrity: sha512-i3t6GR0LOReyJVEk+YfYCnxv53wuIelg7Y9NGNvOq4Diq/EP0YszaGXkQwfQNigLjfO4POrLaPGM0sNliGYk7A==}
-
-  '@fontsource/sora@5.3.0':
-    resolution: {integrity: sha512-SqW3OpKxxfKvxDLPlbdrWf2KooPfbd+W3jaYn483o+Y/JrmU87vjFPNptDqwP428c3vY+gnranLhjcbRaXB0Jw==}
+  '@fontsource/noto-kufi-arabic@5.3.0':
+    resolution: {integrity: sha512-3iSq8i00+omfUXFXuCUrNDz1ghck3HDXul3p3iAfY0Vd9NZqI1NcUNoAVPiUW+BaEQGYQSi+r0R3d1eoNK3OBg==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -886,13 +874,9 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@fontsource/dm-sans@5.3.0': {}
+  '@fontsource-variable/archivo@5.3.0': {}
 
-  '@fontsource/manrope@5.3.0': {}
-
-  '@fontsource/noto-sans-arabic@5.3.0': {}
-
-  '@fontsource/sora@5.3.0': {}
+  '@fontsource/noto-kufi-arabic@5.3.0': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
