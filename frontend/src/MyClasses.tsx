@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {BookOpenCheck, LoaderCircle, Wand2, ShieldCheck, TriangleAlert, Clock3, UsersRound, CalendarDays} from 'lucide-react';
 import {api, time, number} from './api';
+import {SCALES, gradeVars} from './grade';
 
 type R = Record<string, any>;
 // Survives the page refresh that follows a new proposal (the panel re-mounts).
@@ -29,9 +30,9 @@ export function MyClasses({sid, ar, days, revision, courseName, onProposal}:{sid
       <p>{t('Your sections and how their students\' weeks look. Figures are totals only; no student is identified.','شعبك وكيف يبدو أسبوع طلابها. الأرقام إجمالية فقط دون تعريف أي طالب.')}</p></div></div>
     <div className="mc-stats">
       <div><span>{t('Students','الطلاب')}</span><strong>{number(info.students)}</strong></div>
-      <div><span>{t('Avg. weekly gap','متوسط الفجوات الأسبوعية')}</span><strong>{number(info.average_gap_hours)} <small>{t('h','س')}</small></strong></div>
-      <div><span>{t('Avg. campus days','متوسط أيام الحضور')}</span><strong>{number(info.average_campus_days)}</strong></div>
-      <div><span>{t('Gaps of 2h or more','فجوات ساعتين فأكثر')}</span><strong>{number(info.long_gap_2h)}</strong></div>
+      <div style={gradeVars(info.average_gap_hours, SCALES.gapPerStudent) as React.CSSProperties}><span>{t('Avg. weekly gap','متوسط الفجوات الأسبوعية')}</span><strong>{number(info.average_gap_hours)} <small>{t('h','س')}</small></strong></div>
+      <div style={gradeVars(info.average_campus_days, SCALES.campusDays) as React.CSSProperties}><span>{t('Avg. campus days','متوسط أيام الحضور')}</span><strong>{number(info.average_campus_days)}</strong></div>
+      <div style={gradeVars(info.students ? info.long_gap_2h / info.students : null, SCALES.longGapShare) as React.CSSProperties}><span>{t('Gaps of 2h or more','فجوات ساعتين فأكثر')}</span><strong>{number(info.long_gap_2h)}</strong></div>
       <div><span>{t('Teaching load','العبء التدريسي')}</span><strong>{number(info.teaching_minutes / 60)} / {number(info.contracted_minutes / 60)} <small>{t('h','س')}</small></strong></div>
     </div>
     <div className="mc-sections">{info.sections.map((s:R) => <div key={s.id} className="mc-section"><strong>{s.id}</strong><span>{courseName(s.course_id)}</span>
