@@ -1,217 +1,217 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-27T00:00:00Z",
-  "title": "Design System: MIZAN",
+  "generatedAt": "2026-09-28T00:00:00Z",
+  "title": "Design System: MIZAN — Campus Experience",
   "extensions": {
     "colorMeta": {
       "paper": {
         "role": "neutral",
         "displayName": "Paper",
-        "canonical": "oklch(0.972 0.004 106.5)",
+        "canonical": "oklch(0.933 0.015 80.7)",
         "tonalRamp": [
-          "oklch(0.15 0.004 106.5)",
-          "oklch(0.27 0.004 106.5)",
-          "oklch(0.39 0.004 106.5)",
-          "oklch(0.51 0.004 106.5)",
-          "oklch(0.63 0.004 106.5)",
-          "oklch(0.75 0.004 106.5)",
-          "oklch(0.87 0.004 106.5)",
-          "oklch(0.95 0.004 106.5)"
+          "oklch(0.15 0.015 80.7)",
+          "oklch(0.27 0.015 80.7)",
+          "oklch(0.39 0.015 80.7)",
+          "oklch(0.51 0.015 80.7)",
+          "oklch(0.63 0.015 80.7)",
+          "oklch(0.75 0.015 80.7)",
+          "oklch(0.87 0.015 80.7)",
+          "oklch(0.95 0.015 80.7)"
         ]
       },
       "surface": {
         "role": "neutral",
-        "displayName": "Surface White",
-        "canonical": "oklch(1.000 0.000 0.0)",
+        "displayName": "Surface",
+        "canonical": "oklch(0.992 0.007 80.7)",
         "tonalRamp": [
-          "oklch(0.15 0.000 0.0)",
-          "oklch(0.27 0.000 0.0)",
-          "oklch(0.39 0.000 0.0)",
-          "oklch(0.51 0.000 0.0)",
-          "oklch(0.63 0.000 0.0)",
-          "oklch(0.75 0.000 0.0)",
-          "oklch(0.87 0.000 0.0)",
-          "oklch(0.95 0.000 0.0)"
+          "oklch(0.15 0.007 80.7)",
+          "oklch(0.27 0.007 80.7)",
+          "oklch(0.39 0.007 80.7)",
+          "oklch(0.51 0.007 80.7)",
+          "oklch(0.63 0.007 80.7)",
+          "oklch(0.75 0.007 80.7)",
+          "oklch(0.87 0.007 80.7)",
+          "oklch(0.95 0.007 80.7)"
         ]
       },
       "sunk": {
         "role": "neutral",
-        "displayName": "Sunk Grey",
-        "canonical": "oklch(0.951 0.005 106.5)",
+        "displayName": "Sunk",
+        "canonical": "oklch(0.945 0.019 83.1)",
         "tonalRamp": [
-          "oklch(0.15 0.005 106.5)",
-          "oklch(0.27 0.005 106.5)",
-          "oklch(0.39 0.005 106.5)",
-          "oklch(0.51 0.005 106.5)",
-          "oklch(0.63 0.005 106.5)",
-          "oklch(0.75 0.005 106.5)",
-          "oklch(0.87 0.005 106.5)",
-          "oklch(0.95 0.005 106.5)"
+          "oklch(0.15 0.019 83.1)",
+          "oklch(0.27 0.019 83.1)",
+          "oklch(0.39 0.019 83.1)",
+          "oklch(0.51 0.019 83.1)",
+          "oklch(0.63 0.019 83.1)",
+          "oklch(0.75 0.019 83.1)",
+          "oklch(0.87 0.019 83.1)",
+          "oklch(0.95 0.019 83.1)"
         ]
       },
       "ink": {
         "role": "neutral",
         "displayName": "Ink",
-        "canonical": "oklch(0.178 0.000 90.0)",
+        "canonical": "oklch(0.240 0.017 230.0)",
         "tonalRamp": [
-          "oklch(0.15 0.000 90.0)",
-          "oklch(0.27 0.000 90.0)",
-          "oklch(0.39 0.000 90.0)",
-          "oklch(0.51 0.000 90.0)",
-          "oklch(0.63 0.000 90.0)",
-          "oklch(0.75 0.000 90.0)",
-          "oklch(0.87 0.000 90.0)",
-          "oklch(0.95 0.000 90.0)"
+          "oklch(0.15 0.017 230.0)",
+          "oklch(0.27 0.017 230.0)",
+          "oklch(0.39 0.017 230.0)",
+          "oklch(0.51 0.017 230.0)",
+          "oklch(0.63 0.017 230.0)",
+          "oklch(0.75 0.017 230.0)",
+          "oklch(0.87 0.017 230.0)",
+          "oklch(0.95 0.017 230.0)"
         ]
       },
       "ink-2": {
         "role": "neutral",
-        "displayName": "Ink Soft",
-        "canonical": "oklch(0.268 0.003 106.0)",
+        "displayName": "Ink 2",
+        "canonical": "oklch(0.323 0.008 169.9)",
         "tonalRamp": [
-          "oklch(0.15 0.003 106.0)",
-          "oklch(0.27 0.003 106.0)",
-          "oklch(0.39 0.003 106.0)",
-          "oklch(0.51 0.003 106.0)",
-          "oklch(0.63 0.003 106.0)",
-          "oklch(0.75 0.003 106.0)",
-          "oklch(0.87 0.003 106.0)",
-          "oklch(0.95 0.003 106.0)"
+          "oklch(0.15 0.008 169.9)",
+          "oklch(0.27 0.008 169.9)",
+          "oklch(0.39 0.008 169.9)",
+          "oklch(0.51 0.008 169.9)",
+          "oklch(0.63 0.008 169.9)",
+          "oklch(0.75 0.008 169.9)",
+          "oklch(0.87 0.008 169.9)",
+          "oklch(0.95 0.008 169.9)"
         ]
       },
       "text": {
         "role": "neutral",
         "displayName": "Text",
-        "canonical": "oklch(0.200 0.002 106.0)",
+        "canonical": "oklch(0.275 0.012 135.1)",
         "tonalRamp": [
-          "oklch(0.15 0.002 106.0)",
-          "oklch(0.27 0.002 106.0)",
-          "oklch(0.39 0.002 106.0)",
-          "oklch(0.51 0.002 106.0)",
-          "oklch(0.63 0.002 106.0)",
-          "oklch(0.75 0.002 106.0)",
-          "oklch(0.87 0.002 106.0)",
-          "oklch(0.95 0.002 106.0)"
+          "oklch(0.15 0.012 135.1)",
+          "oklch(0.27 0.012 135.1)",
+          "oklch(0.39 0.012 135.1)",
+          "oklch(0.51 0.012 135.1)",
+          "oklch(0.63 0.012 135.1)",
+          "oklch(0.75 0.012 135.1)",
+          "oklch(0.87 0.012 135.1)",
+          "oklch(0.95 0.012 135.1)"
         ]
       },
       "muted": {
         "role": "neutral",
         "displayName": "Muted",
-        "canonical": "oklch(0.484 0.008 106.7)",
+        "canonical": "oklch(0.504 0.015 86.9)",
         "tonalRamp": [
-          "oklch(0.15 0.008 106.7)",
-          "oklch(0.27 0.008 106.7)",
-          "oklch(0.39 0.008 106.7)",
-          "oklch(0.51 0.008 106.7)",
-          "oklch(0.63 0.008 106.7)",
-          "oklch(0.75 0.008 106.7)",
-          "oklch(0.87 0.008 106.7)",
-          "oklch(0.95 0.008 106.7)"
+          "oklch(0.15 0.015 86.9)",
+          "oklch(0.27 0.015 86.9)",
+          "oklch(0.39 0.015 86.9)",
+          "oklch(0.51 0.015 86.9)",
+          "oklch(0.63 0.015 86.9)",
+          "oklch(0.75 0.015 86.9)",
+          "oklch(0.87 0.015 86.9)",
+          "oklch(0.95 0.015 86.9)"
         ]
       },
       "faint": {
         "role": "neutral",
         "displayName": "Faint",
-        "canonical": "oklch(0.615 0.009 106.7)",
+        "canonical": "oklch(0.584 0.017 86.5)",
         "tonalRamp": [
-          "oklch(0.15 0.009 106.7)",
-          "oklch(0.27 0.009 106.7)",
-          "oklch(0.39 0.009 106.7)",
-          "oklch(0.51 0.009 106.7)",
-          "oklch(0.63 0.009 106.7)",
-          "oklch(0.75 0.009 106.7)",
-          "oklch(0.87 0.009 106.7)",
-          "oklch(0.95 0.009 106.7)"
+          "oklch(0.15 0.017 86.5)",
+          "oklch(0.27 0.017 86.5)",
+          "oklch(0.39 0.017 86.5)",
+          "oklch(0.51 0.017 86.5)",
+          "oklch(0.63 0.017 86.5)",
+          "oklch(0.75 0.017 86.5)",
+          "oklch(0.87 0.017 86.5)",
+          "oklch(0.95 0.017 86.5)"
         ]
       },
       "line": {
         "role": "neutral",
-        "displayName": "Hairline",
-        "canonical": "oklch(0.911 0.008 106.6)",
+        "displayName": "Line",
+        "canonical": "oklch(0.894 0.018 78.2)",
         "tonalRamp": [
-          "oklch(0.15 0.008 106.6)",
-          "oklch(0.27 0.008 106.6)",
-          "oklch(0.39 0.008 106.6)",
-          "oklch(0.51 0.008 106.6)",
-          "oklch(0.63 0.008 106.6)",
-          "oklch(0.75 0.008 106.6)",
-          "oklch(0.87 0.008 106.6)",
-          "oklch(0.95 0.008 106.6)"
+          "oklch(0.15 0.018 78.2)",
+          "oklch(0.27 0.018 78.2)",
+          "oklch(0.39 0.018 78.2)",
+          "oklch(0.51 0.018 78.2)",
+          "oklch(0.63 0.018 78.2)",
+          "oklch(0.75 0.018 78.2)",
+          "oklch(0.87 0.018 78.2)",
+          "oklch(0.95 0.018 78.2)"
         ]
       },
       "line-2": {
         "role": "neutral",
-        "displayName": "Hairline Strong",
-        "canonical": "oklch(0.852 0.011 106.6)",
+        "displayName": "Line 2",
+        "canonical": "oklch(0.823 0.026 75.2)",
         "tonalRamp": [
-          "oklch(0.15 0.011 106.6)",
-          "oklch(0.27 0.011 106.6)",
-          "oklch(0.39 0.011 106.6)",
-          "oklch(0.51 0.011 106.6)",
-          "oklch(0.63 0.011 106.6)",
-          "oklch(0.75 0.011 106.6)",
-          "oklch(0.87 0.011 106.6)",
-          "oklch(0.95 0.011 106.6)"
+          "oklch(0.15 0.026 75.2)",
+          "oklch(0.27 0.026 75.2)",
+          "oklch(0.39 0.026 75.2)",
+          "oklch(0.51 0.026 75.2)",
+          "oklch(0.63 0.026 75.2)",
+          "oklch(0.75 0.026 75.2)",
+          "oklch(0.87 0.026 75.2)",
+          "oklch(0.95 0.026 75.2)"
         ]
       },
       "signal-blue": {
-        "role": "primary",
+        "role": "secondary",
         "displayName": "Signal Blue",
-        "canonical": "oklch(0.500 0.281 266.1)",
+        "canonical": "oklch(0.529 0.090 258.8)",
         "tonalRamp": [
-          "oklch(0.15 0.115 266.1)",
-          "oklch(0.27 0.175 266.1)",
-          "oklch(0.39 0.235 266.1)",
-          "oklch(0.51 0.281 266.1)",
-          "oklch(0.63 0.225 266.1)",
-          "oklch(0.75 0.165 266.1)",
-          "oklch(0.87 0.105 266.1)",
-          "oklch(0.95 0.065 266.1)"
+          "oklch(0.15 0.090 258.8)",
+          "oklch(0.27 0.090 258.8)",
+          "oklch(0.39 0.090 258.8)",
+          "oklch(0.51 0.090 258.8)",
+          "oklch(0.63 0.090 258.8)",
+          "oklch(0.75 0.090 258.8)",
+          "oklch(0.87 0.080 258.8)",
+          "oklch(0.95 0.080 258.8)"
         ]
       },
       "signal-green": {
         "role": "secondary",
         "displayName": "Signal Green",
-        "canonical": "oklch(0.620 0.154 154.6)",
+        "canonical": "oklch(0.615 0.087 160.3)",
         "tonalRamp": [
-          "oklch(0.15 0.115 154.6)",
-          "oklch(0.27 0.154 154.6)",
-          "oklch(0.39 0.154 154.6)",
-          "oklch(0.51 0.154 154.6)",
-          "oklch(0.63 0.154 154.6)",
-          "oklch(0.75 0.154 154.6)",
-          "oklch(0.87 0.105 154.6)",
-          "oklch(0.95 0.065 154.6)"
+          "oklch(0.15 0.087 160.3)",
+          "oklch(0.27 0.087 160.3)",
+          "oklch(0.39 0.087 160.3)",
+          "oklch(0.51 0.087 160.3)",
+          "oklch(0.63 0.087 160.3)",
+          "oklch(0.75 0.087 160.3)",
+          "oklch(0.87 0.080 160.3)",
+          "oklch(0.95 0.080 160.3)"
         ]
       },
       "signal-orange": {
         "role": "secondary",
         "displayName": "Signal Orange",
-        "canonical": "oklch(0.694 0.204 41.7)",
+        "canonical": "oklch(0.784 0.117 67.9)",
         "tonalRamp": [
-          "oklch(0.15 0.115 41.7)",
-          "oklch(0.27 0.175 41.7)",
-          "oklch(0.39 0.204 41.7)",
-          "oklch(0.51 0.204 41.7)",
-          "oklch(0.63 0.204 41.7)",
-          "oklch(0.75 0.165 41.7)",
-          "oklch(0.87 0.105 41.7)",
-          "oklch(0.95 0.065 41.7)"
+          "oklch(0.15 0.117 67.9)",
+          "oklch(0.27 0.117 67.9)",
+          "oklch(0.39 0.117 67.9)",
+          "oklch(0.51 0.117 67.9)",
+          "oklch(0.63 0.117 67.9)",
+          "oklch(0.75 0.117 67.9)",
+          "oklch(0.87 0.080 67.9)",
+          "oklch(0.95 0.080 67.9)"
         ]
       },
       "signal-red": {
         "role": "secondary",
         "displayName": "Signal Red",
-        "canonical": "oklch(0.576 0.227 23.7)",
+        "canonical": "oklch(0.564 0.139 29.8)",
         "tonalRamp": [
-          "oklch(0.15 0.115 23.7)",
-          "oklch(0.27 0.175 23.7)",
-          "oklch(0.39 0.227 23.7)",
-          "oklch(0.51 0.227 23.7)",
-          "oklch(0.63 0.225 23.7)",
-          "oklch(0.75 0.165 23.7)",
-          "oklch(0.87 0.105 23.7)",
-          "oklch(0.95 0.065 23.7)"
+          "oklch(0.15 0.139 29.8)",
+          "oklch(0.27 0.139 29.8)",
+          "oklch(0.39 0.139 29.8)",
+          "oklch(0.51 0.139 29.8)",
+          "oklch(0.63 0.139 29.8)",
+          "oklch(0.75 0.139 29.8)",
+          "oklch(0.87 0.080 29.8)",
+          "oklch(0.95 0.080 29.8)"
         ]
       },
       "fallback-teal": {
@@ -225,8 +225,8 @@
           "oklch(0.51 0.101 208.0)",
           "oklch(0.63 0.101 208.0)",
           "oklch(0.75 0.101 208.0)",
-          "oklch(0.87 0.101 208.0)",
-          "oklch(0.95 0.065 208.0)"
+          "oklch(0.87 0.080 208.0)",
+          "oklch(0.95 0.080 208.0)"
         ]
       },
       "fallback-magenta": {
@@ -234,137 +234,190 @@
         "displayName": "Fallback Magenta",
         "canonical": "oklch(0.556 0.184 344.6)",
         "tonalRamp": [
-          "oklch(0.15 0.115 344.6)",
-          "oklch(0.27 0.175 344.6)",
+          "oklch(0.15 0.184 344.6)",
+          "oklch(0.27 0.184 344.6)",
           "oklch(0.39 0.184 344.6)",
           "oklch(0.51 0.184 344.6)",
           "oklch(0.63 0.184 344.6)",
-          "oklch(0.75 0.165 344.6)",
-          "oklch(0.87 0.105 344.6)",
-          "oklch(0.95 0.065 344.6)"
+          "oklch(0.75 0.184 344.6)",
+          "oklch(0.87 0.080 344.6)",
+          "oklch(0.95 0.080 344.6)"
         ]
       },
       "signal-blue-ink": {
-        "role": "primary",
+        "role": "secondary",
         "displayName": "Signal Blue Ink",
+        "canonical": "oklch(0.445 0.087 255.3)",
         "tonalRamp": [
-          "oklch(0.15 0.115 266.1)",
-          "oklch(0.27 0.175 266.1)",
-          "oklch(0.39 0.235 266.1)",
-          "oklch(0.51 0.281 266.1)",
-          "oklch(0.63 0.225 266.1)",
-          "oklch(0.75 0.165 266.1)",
-          "oklch(0.87 0.105 266.1)",
-          "oklch(0.95 0.065 266.1)"
+          "oklch(0.15 0.087 255.3)",
+          "oklch(0.27 0.087 255.3)",
+          "oklch(0.39 0.087 255.3)",
+          "oklch(0.51 0.087 255.3)",
+          "oklch(0.63 0.087 255.3)",
+          "oklch(0.75 0.087 255.3)",
+          "oklch(0.87 0.080 255.3)",
+          "oklch(0.95 0.080 255.3)"
         ]
       },
       "signal-blue-bg": {
-        "role": "primary",
-        "displayName": "Signal Blue Tint",
+        "role": "secondary",
+        "displayName": "Signal Blue Bg",
+        "canonical": "oklch(0.944 0.015 257.2)",
         "tonalRamp": [
-          "oklch(0.15 0.115 266.1)",
-          "oklch(0.27 0.175 266.1)",
-          "oklch(0.39 0.235 266.1)",
-          "oklch(0.51 0.281 266.1)",
-          "oklch(0.63 0.225 266.1)",
-          "oklch(0.75 0.165 266.1)",
-          "oklch(0.87 0.105 266.1)",
-          "oklch(0.95 0.065 266.1)"
+          "oklch(0.15 0.015 257.2)",
+          "oklch(0.27 0.015 257.2)",
+          "oklch(0.39 0.015 257.2)",
+          "oklch(0.51 0.015 257.2)",
+          "oklch(0.63 0.015 257.2)",
+          "oklch(0.75 0.015 257.2)",
+          "oklch(0.87 0.015 257.2)",
+          "oklch(0.95 0.015 257.2)"
         ]
       },
       "signal-green-ink": {
         "role": "secondary",
         "displayName": "Signal Green Ink",
+        "canonical": "oklch(0.460 0.083 158.0)",
         "tonalRamp": [
-          "oklch(0.15 0.115 154.6)",
-          "oklch(0.27 0.154 154.6)",
-          "oklch(0.39 0.154 154.6)",
-          "oklch(0.51 0.154 154.6)",
-          "oklch(0.63 0.154 154.6)",
-          "oklch(0.75 0.154 154.6)",
-          "oklch(0.87 0.105 154.6)",
-          "oklch(0.95 0.065 154.6)"
+          "oklch(0.15 0.083 158.0)",
+          "oklch(0.27 0.083 158.0)",
+          "oklch(0.39 0.083 158.0)",
+          "oklch(0.51 0.083 158.0)",
+          "oklch(0.63 0.083 158.0)",
+          "oklch(0.75 0.083 158.0)",
+          "oklch(0.87 0.080 158.0)",
+          "oklch(0.95 0.080 158.0)"
         ]
       },
       "signal-green-bg": {
         "role": "secondary",
-        "displayName": "Signal Green Tint",
+        "displayName": "Signal Green Bg",
+        "canonical": "oklch(0.944 0.019 145.4)",
         "tonalRamp": [
-          "oklch(0.15 0.115 154.6)",
-          "oklch(0.27 0.154 154.6)",
-          "oklch(0.39 0.154 154.6)",
-          "oklch(0.51 0.154 154.6)",
-          "oklch(0.63 0.154 154.6)",
-          "oklch(0.75 0.154 154.6)",
-          "oklch(0.87 0.105 154.6)",
-          "oklch(0.95 0.065 154.6)"
+          "oklch(0.15 0.019 145.4)",
+          "oklch(0.27 0.019 145.4)",
+          "oklch(0.39 0.019 145.4)",
+          "oklch(0.51 0.019 145.4)",
+          "oklch(0.63 0.019 145.4)",
+          "oklch(0.75 0.019 145.4)",
+          "oklch(0.87 0.019 145.4)",
+          "oklch(0.95 0.019 145.4)"
         ]
       },
       "signal-orange-ink": {
         "role": "secondary",
         "displayName": "Signal Orange Ink",
+        "canonical": "oklch(0.501 0.110 55.7)",
         "tonalRamp": [
-          "oklch(0.15 0.115 41.7)",
-          "oklch(0.27 0.175 41.7)",
-          "oklch(0.39 0.204 41.7)",
-          "oklch(0.51 0.204 41.7)",
-          "oklch(0.63 0.204 41.7)",
-          "oklch(0.75 0.165 41.7)",
-          "oklch(0.87 0.105 41.7)",
-          "oklch(0.95 0.065 41.7)"
+          "oklch(0.15 0.110 55.7)",
+          "oklch(0.27 0.110 55.7)",
+          "oklch(0.39 0.110 55.7)",
+          "oklch(0.51 0.110 55.7)",
+          "oklch(0.63 0.110 55.7)",
+          "oklch(0.75 0.110 55.7)",
+          "oklch(0.87 0.080 55.7)",
+          "oklch(0.95 0.080 55.7)"
         ]
       },
       "signal-orange-bg": {
         "role": "secondary",
-        "displayName": "Signal Orange Tint",
+        "displayName": "Signal Orange Bg",
+        "canonical": "oklch(0.961 0.033 77.6)",
         "tonalRamp": [
-          "oklch(0.15 0.115 41.7)",
-          "oklch(0.27 0.175 41.7)",
-          "oklch(0.39 0.204 41.7)",
-          "oklch(0.51 0.204 41.7)",
-          "oklch(0.63 0.204 41.7)",
-          "oklch(0.75 0.165 41.7)",
-          "oklch(0.87 0.105 41.7)",
-          "oklch(0.95 0.065 41.7)"
+          "oklch(0.15 0.033 77.6)",
+          "oklch(0.27 0.033 77.6)",
+          "oklch(0.39 0.033 77.6)",
+          "oklch(0.51 0.033 77.6)",
+          "oklch(0.63 0.033 77.6)",
+          "oklch(0.75 0.033 77.6)",
+          "oklch(0.87 0.033 77.6)",
+          "oklch(0.95 0.033 77.6)"
         ]
       },
       "signal-red-ink": {
         "role": "secondary",
         "displayName": "Signal Red Ink",
+        "canonical": "oklch(0.473 0.138 28.0)",
         "tonalRamp": [
-          "oklch(0.15 0.115 23.7)",
-          "oklch(0.27 0.175 23.7)",
-          "oklch(0.39 0.227 23.7)",
-          "oklch(0.51 0.227 23.7)",
-          "oklch(0.63 0.225 23.7)",
-          "oklch(0.75 0.165 23.7)",
-          "oklch(0.87 0.105 23.7)",
-          "oklch(0.95 0.065 23.7)"
+          "oklch(0.15 0.138 28.0)",
+          "oklch(0.27 0.138 28.0)",
+          "oklch(0.39 0.138 28.0)",
+          "oklch(0.51 0.138 28.0)",
+          "oklch(0.63 0.138 28.0)",
+          "oklch(0.75 0.138 28.0)",
+          "oklch(0.87 0.080 28.0)",
+          "oklch(0.95 0.080 28.0)"
         ]
       },
       "signal-red-bg": {
         "role": "secondary",
-        "displayName": "Signal Red Tint",
+        "displayName": "Signal Red Bg",
+        "canonical": "oklch(0.937 0.025 39.4)",
         "tonalRamp": [
-          "oklch(0.15 0.115 23.7)",
-          "oklch(0.27 0.175 23.7)",
-          "oklch(0.39 0.227 23.7)",
-          "oklch(0.51 0.227 23.7)",
-          "oklch(0.63 0.225 23.7)",
-          "oklch(0.75 0.165 23.7)",
-          "oklch(0.87 0.105 23.7)",
-          "oklch(0.95 0.065 23.7)"
+          "oklch(0.15 0.025 39.4)",
+          "oklch(0.27 0.025 39.4)",
+          "oklch(0.39 0.025 39.4)",
+          "oklch(0.51 0.025 39.4)",
+          "oklch(0.63 0.025 39.4)",
+          "oklch(0.75 0.025 39.4)",
+          "oklch(0.87 0.025 39.4)",
+          "oklch(0.95 0.025 39.4)"
+        ]
+      },
+      "rail": {
+        "role": "neutral",
+        "displayName": "Rail",
+        "canonical": "oklch(0.218 0.019 227.9)",
+        "tonalRamp": [
+          "oklch(0.15 0.019 227.9)",
+          "oklch(0.27 0.019 227.9)",
+          "oklch(0.39 0.019 227.9)",
+          "oklch(0.51 0.019 227.9)",
+          "oklch(0.63 0.019 227.9)",
+          "oklch(0.75 0.019 227.9)",
+          "oklch(0.87 0.019 227.9)",
+          "oklch(0.95 0.019 227.9)"
+        ]
+      },
+      "action": {
+        "role": "primary",
+        "displayName": "Action",
+        "canonical": "oklch(0.779 0.136 62.7)",
+        "tonalRamp": [
+          "oklch(0.15 0.136 62.7)",
+          "oklch(0.27 0.136 62.7)",
+          "oklch(0.39 0.136 62.7)",
+          "oklch(0.51 0.136 62.7)",
+          "oklch(0.63 0.136 62.7)",
+          "oklch(0.75 0.136 62.7)",
+          "oklch(0.87 0.080 62.7)",
+          "oklch(0.95 0.080 62.7)"
+        ]
+      },
+      "action-ink": {
+        "role": "primary",
+        "displayName": "Action Ink",
+        "canonical": "oklch(0.280 0.030 66.1)",
+        "tonalRamp": [
+          "oklch(0.15 0.030 66.1)",
+          "oklch(0.27 0.030 66.1)",
+          "oklch(0.39 0.030 66.1)",
+          "oklch(0.51 0.030 66.1)",
+          "oklch(0.63 0.030 66.1)",
+          "oklch(0.75 0.030 66.1)",
+          "oklch(0.87 0.030 66.1)",
+          "oklch(0.95 0.030 66.1)"
         ]
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Display Numeral",
-        "purpose": "One headline figure per page (Overview weekly gap hours); login story headline at 64px."
+        "purpose": "Warm-white overview weekly-gap numeral at 66px/450, with responsive sizes and an adjacent graded label."
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Page titles (h1); 28px on Overview."
+        "purpose": "Georgia English page titles; Noto Kufi Arabic in RTL. Overview title 32px, responsive."
       },
       "metric": {
         "displayName": "Metric",
@@ -436,28 +489,13 @@
         "purpose": "prefers-reduced-motion collapses motion to the final state; count-up shows the value immediately."
       }
     ],
-    "breakpoints": [
-      {
-        "name": "wide",
-        "value": "1600px"
-      },
-      {
-        "name": "stack",
-        "value": "1200px"
-      },
-      {
-        "name": "narrow-rail",
-        "value": "1150px"
-      },
-      {
-        "name": "icon-rail",
-        "value": "850px"
-      },
-      {
-        "name": "phone",
-        "value": "540px"
-      }
-    ],
+    "breakpoints": {
+      "wide": "1600px",
+      "railNarrow": "1200px",
+      "overviewStack": "1000px",
+      "iconRail": "850px",
+      "compact": "540px"
+    },
     "gradeScale": {
       "huePath": "red 25deg -> amber 70deg -> green 150deg (upper half eased by sqrt)",
       "ink": "oklch(0.50-0.54 0.15-0.18 h)",
@@ -483,12 +521,22 @@
     },
     "departmentColors": {
       "order": "alphabetical by department name",
-      "d0": "#1d3cff",
-      "d1": "#00a05a",
-      "d2": "#ff6414",
-      "d3": "#e0102e",
+      "d0": "#4b6c9f",
+      "d1": "#529573",
+      "d2": "#eaaa62",
+      "d3": "#b95042",
       "d4": "#0a8f9e",
       "d5": "#b8398c"
+    },
+    "campus": {
+      "sourceStyles": [
+        "frontend/src/style.css",
+        "frontend/src/campus.css"
+      ],
+      "photo": "frontend/src/assets/al-yamamah-campus.jpg",
+      "provenance": "User supplied Al Yamamah University entrance photograph; no institutional adoption claim.",
+      "heroNumerals": "Warm white; continuous grade retained on cream-backed labels.",
+      "reducedTransparency": "Solid overview tiles with no backdrop blur."
     }
   },
   "components": [
@@ -496,99 +544,94 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The single blue action block: Optimize semester, Approve, Publish.",
+      "description": "Apricot action button with dark ink, 6px corners and warm focus.",
       "html": "<button class=\"ds-btn-primary\">Optimize semester</button>",
-      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-btn-primary{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:10px 16px;font:600 13px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:#fff;background:var(--blue);border:0;border-radius:0;cursor:pointer;transition:background-color .16s,transform .16s var(--ease)} .ds-btn-primary:hover{background:var(--blue-ink)} .ds-btn-primary:active{transform:scale(.97)} .ds-btn-primary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+      "css": ":host{--paper:#eee8de;--surface:#fffcf7;--sunk:#f3ecdf;--ink:#172126;--ink-2:#303533;--rail:#111c21;--text:#252923;--muted:#68645b;--faint:#807b70;--line:#e3dbcf;--line-2:#cfc3b3;--action:#f4a252;--action-ink:#332619;--blue:#4b6c9f;--blue-ink:#315583;--blue-bg:#e6edf7;--green:#529573;--green-ink:#286646;--green-bg:#e5f0e5;--orange:#eaaa62;--orange-ink:#925018;--orange-bg:#fff0da;--red:#b95042;--red-ink:#9a342c;--red-bg:#fae5de;--ease:cubic-bezier(.16,1,.3,1)} .ds-btn-primary{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:10px 16px;font:600 13px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:#fff;background:var(--blue);border:0;border-radius:0;cursor:pointer;transition:background-color .16s,transform .16s var(--ease)} .ds-btn-primary:hover{background:var(--blue-ink)} .ds-btn-primary:active{transform:scale(.97)} .ds-btn-primary:focus-visible{outline:2px solid var(--blue);outline-offset:2px} .ds-btn-primary{background:var(--action);color:var(--action-ink);border-radius:6px}.ds-btn-primary:hover{background:#ffb96f}.ds-btn-primary:focus-visible{outline-color:#a36124}"
     },
     {
       "name": "Secondary Button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "White hairline block for non-primary actions; hairline turns ink on hover.",
+      "description": "Cream hairline button with 6px corners.",
       "html": "<button class=\"ds-btn-secondary\">Export data</button>",
-      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-btn-secondary{display:inline-flex;align-items:center;min-height:40px;padding:10px 16px;font:600 13px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:var(--text);background:var(--surface);border:1px solid var(--line-2);border-radius:0;cursor:pointer;transition:border-color .16s} .ds-btn-secondary:hover{border-color:var(--ink)} .ds-btn-secondary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+      "css": ":host{--paper:#eee8de;--surface:#fffcf7;--sunk:#f3ecdf;--ink:#172126;--ink-2:#303533;--rail:#111c21;--text:#252923;--muted:#68645b;--faint:#807b70;--line:#e3dbcf;--line-2:#cfc3b3;--action:#f4a252;--action-ink:#332619;--blue:#4b6c9f;--blue-ink:#315583;--blue-bg:#e6edf7;--green:#529573;--green-ink:#286646;--green-bg:#e5f0e5;--orange:#eaaa62;--orange-ink:#925018;--orange-bg:#fff0da;--red:#b95042;--red-ink:#9a342c;--red-bg:#fae5de;--ease:cubic-bezier(.16,1,.3,1)} .ds-btn-secondary{display:inline-flex;align-items:center;min-height:40px;padding:10px 16px;font:600 13px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:var(--text);background:var(--surface);border:1px solid var(--line-2);border-radius:0;cursor:pointer;transition:border-color .16s} .ds-btn-secondary:hover{border-color:var(--ink)} .ds-btn-secondary:focus-visible{outline:2px solid var(--blue);outline-offset:2px} .ds-btn-secondary{border-radius:6px}.ds-btn-secondary:focus-visible{outline-color:#a36124}"
     },
     {
       "name": "Text Button",
       "kind": "button",
       "refersTo": "button-text",
-      "description": "Blue-ink link action with an arrow that nudges toward reading direction.",
+      "description": "Orange-ink text action with direction-aware arrow.",
       "html": "<button class=\"ds-text-btn\">Review <svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></button>",
-      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-text-btn{display:inline-flex;gap:6px;align-items:center;font:600 12.5px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:var(--blue-ink);background:none;border:0;cursor:pointer} .ds-text-btn svg{transition:transform .2s var(--ease)} .ds-text-btn:hover svg{transform:translateX(3px)} .ds-text-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+      "css": ":host{--paper:#eee8de;--surface:#fffcf7;--sunk:#f3ecdf;--ink:#172126;--ink-2:#303533;--rail:#111c21;--text:#252923;--muted:#68645b;--faint:#807b70;--line:#e3dbcf;--line-2:#cfc3b3;--action:#f4a252;--action-ink:#332619;--blue:#4b6c9f;--blue-ink:#315583;--blue-bg:#e6edf7;--green:#529573;--green-ink:#286646;--green-bg:#e5f0e5;--orange:#eaaa62;--orange-ink:#925018;--orange-bg:#fff0da;--red:#b95042;--red-ink:#9a342c;--red-bg:#fae5de;--ease:cubic-bezier(.16,1,.3,1)} .ds-text-btn{display:inline-flex;gap:6px;align-items:center;font:600 12.5px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:var(--blue-ink);background:none;border:0;cursor:pointer} .ds-text-btn svg{transition:transform .2s var(--ease)} .ds-text-btn:hover svg{transform:translateX(3px)} .ds-text-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px} .ds-text-btn{color:var(--orange-ink)}.ds-text-btn:focus-visible{outline-color:#a36124}"
     },
     {
       "name": "Input",
       "kind": "input",
       "refersTo": "input",
-      "description": "White field, 2px radius, blue border and halo on focus.",
+      "description": "Cream field with 6px corners and warm border/halo focus.",
       "html": "<label class=\"ds-label\">Reason<input class=\"ds-input\" placeholder=\"What is prompting this change?\"></label>",
-      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-label{display:flex;flex-direction:column;gap:6px;font:500 12.5px/1.3 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:var(--muted)} .ds-input{font:400 13.5px/1.4 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;min-height:38px;padding:8px 11px;border:1px solid var(--line-2);border-radius:2px;background:var(--surface);color:var(--text);outline:none;caret-color:var(--blue);transition:border-color .16s,box-shadow .16s} .ds-input:hover{border-color:#a9a9a1} .ds-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1d3cff24}"
+      "css": ":host{--paper:#eee8de;--surface:#fffcf7;--sunk:#f3ecdf;--ink:#172126;--ink-2:#303533;--rail:#111c21;--text:#252923;--muted:#68645b;--faint:#807b70;--line:#e3dbcf;--line-2:#cfc3b3;--action:#f4a252;--action-ink:#332619;--blue:#4b6c9f;--blue-ink:#315583;--blue-bg:#e6edf7;--green:#529573;--green-ink:#286646;--green-bg:#e5f0e5;--orange:#eaaa62;--orange-ink:#925018;--orange-bg:#fff0da;--red:#b95042;--red-ink:#9a342c;--red-bg:#fae5de;--ease:cubic-bezier(.16,1,.3,1)} .ds-label{display:flex;flex-direction:column;gap:6px;font:500 12.5px/1.3 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:var(--muted)} .ds-input{font:400 13.5px/1.4 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;min-height:38px;padding:8px 11px;border:1px solid var(--line-2);border-radius:2px;background:var(--surface);color:var(--text);outline:none;caret-color:var(--blue);transition:border-color .16s,box-shadow .16s} .ds-input:hover{border-color:#a9a9a1} .ds-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1d3cff24} .ds-input{border-radius:6px}.ds-input:focus{border-color:#b8793d;box-shadow:0 0 0 3px #de9c5426}"
     },
     {
       "name": "Rail Navigation",
       "kind": "nav",
       "refersTo": "nav-item-active",
-      "description": "Ink sidebar; active item inverts to white with a blue icon; orange square count.",
+      "description": "Deep campus rail with brown active item and apricot text/icon.",
       "html": "<nav class=\"ds-rail\"><button class=\"ds-nav on\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"9\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"5\"/><rect x=\"14\" y=\"12\" width=\"7\" height=\"9\"/><rect x=\"3\" y=\"16\" width=\"7\" height=\"5\"/></svg>Overview</button><button class=\"ds-nav\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\"/><path d=\"M16 2v4M8 2v4M3 10h18\"/></svg>Semester lab</button><button class=\"ds-nav\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3\"/></svg>Recommendations<b>1</b></button></nav>",
-      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-rail{display:flex;flex-direction:column;gap:1px;width:228px;padding:12px;background:var(--ink)} .ds-nav{display:flex;gap:11px;align-items:center;min-height:38px;padding:9px 10px;font:450 13px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:#b4b4ae;background:none;border:0;text-align:start;cursor:pointer;transition:background-color .16s,color .16s} .ds-nav:hover{background:#ffffff12;color:#fff} .ds-nav.on{background:#fff;color:var(--ink);font-weight:600} .ds-nav.on svg{color:var(--blue)} .ds-nav b{margin-inline-start:auto;min-width:20px;padding:1px 6px;font-size:11px;font-weight:700;background:var(--orange);color:#fff;text-align:center} .ds-nav:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+      "css": ":host{--paper:#eee8de;--surface:#fffcf7;--sunk:#f3ecdf;--ink:#172126;--ink-2:#303533;--rail:#111c21;--text:#252923;--muted:#68645b;--faint:#807b70;--line:#e3dbcf;--line-2:#cfc3b3;--action:#f4a252;--action-ink:#332619;--blue:#4b6c9f;--blue-ink:#315583;--blue-bg:#e6edf7;--green:#529573;--green-ink:#286646;--green-bg:#e5f0e5;--orange:#eaaa62;--orange-ink:#925018;--orange-bg:#fff0da;--red:#b95042;--red-ink:#9a342c;--red-bg:#fae5de;--ease:cubic-bezier(.16,1,.3,1)} .ds-rail{display:flex;flex-direction:column;gap:1px;width:228px;padding:12px;background:var(--ink)} .ds-nav{display:flex;gap:11px;align-items:center;min-height:38px;padding:9px 10px;font:450 13px/1 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;color:#b4b4ae;background:none;border:0;text-align:start;cursor:pointer;transition:background-color .16s,color .16s} .ds-nav:hover{background:#ffffff12;color:#fff} .ds-nav.on{background:#fff;color:var(--ink);font-weight:600} .ds-nav.on svg{color:var(--blue)} .ds-nav b{margin-inline-start:auto;min-width:20px;padding:1px 6px;font-size:11px;font-weight:700;background:var(--orange);color:#fff;text-align:center} .ds-nav:focus-visible{outline:2px solid var(--blue);outline-offset:2px} .ds-rail{width:212px;background:var(--rail);gap:5px}.ds-nav{border-radius:6px;color:#d6dfe0;font-size:12px;min-height:40px}.ds-nav.on{background:#453629;color:#ffc586;box-shadow:inset 2px 0 #eeb36f}.ds-nav.on svg{color:#ffc586}.ds-nav b{border-radius:4px;background:#edb477;color:#35281a}"
     },
     {
       "name": "Status Badge",
       "kind": "chip",
       "refersTo": "badge-recommended",
-      "description": "Square tint badge with a currentColor square; colour from the signal trio.",
+      "description": "Soft tint badge with explicit status text and marker.",
       "html": "<span class=\"ds-badge rec\"><i></i>Ready for review</span> <span class=\"ds-badge pub\"><i></i>Published</span> <span class=\"ds-badge bad\"><i></i>Conflicts found</span>",
-      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;font:600 11.5px/1.3 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;background:var(--sunk);color:var(--muted)} .ds-badge i{width:7px;height:7px;background:currentColor} .ds-badge.rec{background:var(--orange-bg);color:var(--orange-ink)} .ds-badge.pub{background:var(--green-bg);color:var(--green-ink)} .ds-badge.bad{background:var(--red-bg);color:var(--red-ink)}"
+      "css": ":host{--paper:#eee8de;--surface:#fffcf7;--sunk:#f3ecdf;--ink:#172126;--ink-2:#303533;--rail:#111c21;--text:#252923;--muted:#68645b;--faint:#807b70;--line:#e3dbcf;--line-2:#cfc3b3;--action:#f4a252;--action-ink:#332619;--blue:#4b6c9f;--blue-ink:#315583;--blue-bg:#e6edf7;--green:#529573;--green-ink:#286646;--green-bg:#e5f0e5;--orange:#eaaa62;--orange-ink:#925018;--orange-bg:#fff0da;--red:#b95042;--red-ink:#9a342c;--red-bg:#fae5de;--ease:cubic-bezier(.16,1,.3,1)} .ds-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;font:600 11.5px/1.3 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;background:var(--sunk);color:var(--muted)} .ds-badge i{width:7px;height:7px;background:currentColor} .ds-badge.rec{background:var(--orange-bg);color:var(--orange-ink)} .ds-badge.pub{background:var(--green-bg);color:var(--green-ink)} .ds-badge.bad{background:var(--red-bg);color:var(--red-ink)} .ds-badge{border-radius:5px}"
     },
     {
       "name": "Graded Stat Tile",
       "kind": "card",
       "refersTo": "panel",
-      "description": "Tint ground, 3px top edge and value coloured from --g / --g-bg / --g-line, with the grade word.",
+      "description": "Operational graded tile: continuous tint, value and marker. Overview photo tiles instead keep white values with cream-backed graded labels.",
       "html": "<div class=\"ds-grid\"><div class=\"ds-stat\" style=\"--g:oklch(0.54 0.18 25);--g-bg:oklch(0.955 0.045 25);--g-line:oklch(0.66 0.18 25)\"><span>Schedule quality</span><strong>45<small>/100</small></strong><em>Critical</em></div><div class=\"ds-stat\" style=\"--g:oklch(0.5 0.15 70);--g-bg:oklch(0.955 0.045 70);--g-line:oklch(0.74 0.18 70)\"><span>Room utilization</span><strong>58<small>%</small></strong><em>Fair</em></div><div class=\"ds-stat\" style=\"--g:oklch(0.54 0.18 150);--g-bg:oklch(0.955 0.045 150);--g-line:oklch(0.66 0.18 150)\"><span>Conflicts</span><strong>0</strong><em>Strong</em></div></div>",
-      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-family:'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;font-variant-numeric:tabular-nums} .ds-stat{padding:12px 16px 14px;background:var(--g-bg,var(--sunk));border-top:3px solid var(--g-line,var(--line-2));transition:background-color .6s var(--ease),border-color .6s var(--ease)} .ds-stat span{display:block;font-size:12px;color:var(--muted)} .ds-stat strong{display:block;margin:4px 0 6px;font-size:26px;font-weight:450;color:var(--g,var(--text))} .ds-stat small{font-size:13px;font-weight:450;color:var(--muted);margin-inline-start:3px} .ds-stat em{display:inline-flex;align-items:center;gap:6px;font-style:normal;font-size:11.5px;font-weight:600;color:var(--g)} .ds-stat em:before{content:'';width:8px;height:8px;background:var(--g-line)}"
+      "css": ":host{--paper:#eee8de;--surface:#fffcf7;--sunk:#f3ecdf;--ink:#172126;--ink-2:#303533;--rail:#111c21;--text:#252923;--muted:#68645b;--faint:#807b70;--line:#e3dbcf;--line-2:#cfc3b3;--action:#f4a252;--action-ink:#332619;--blue:#4b6c9f;--blue-ink:#315583;--blue-bg:#e6edf7;--green:#529573;--green-ink:#286646;--green-bg:#e5f0e5;--orange:#eaaa62;--orange-ink:#925018;--orange-bg:#fff0da;--red:#b95042;--red-ink:#9a342c;--red-bg:#fae5de;--ease:cubic-bezier(.16,1,.3,1)} .ds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-family:'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif;font-variant-numeric:tabular-nums} .ds-stat{padding:12px 16px 14px;background:var(--g-bg,var(--sunk));border-top:3px solid var(--g-line,var(--line-2));transition:background-color .6s var(--ease),border-color .6s var(--ease)} .ds-stat span{display:block;font-size:12px;color:var(--muted)} .ds-stat strong{display:block;margin:4px 0 6px;font-size:26px;font-weight:450;color:var(--g,var(--text))} .ds-stat small{font-size:13px;font-weight:450;color:var(--muted);margin-inline-start:3px} .ds-stat em{display:inline-flex;align-items:center;gap:6px;font-style:normal;font-size:11.5px;font-weight:600;color:var(--g)} .ds-stat em:before{content:'';width:8px;height:8px;background:var(--g-line)} .ds-stat{border-radius:9px}"
     },
     {
       "name": "Station Strip",
       "kind": "custom",
       "refersTo": "station-now",
-      "description": "Preview, Propose, Approve, Publish lifecycle; done steps green, the current step inverted to ink.",
+      "description": "Human decision lifecycle with soft end corners and explicit publication consequence.",
       "html": "<ol class=\"ds-st\"><li class=\"done\"><i><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><path d=\"M20 6 9 17l-5-5\"/></svg></i>Preview</li><li class=\"now\"><i>2</i>Propose</li><li><i>3</i>Approve</li><li><i>4</i>Publish<small>changes the official timetable</small></li></ol>",
-      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-st{display:flex;padding:0;margin:0;font:600 12.5px/1.2 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif} .ds-st li{list-style:none;flex:1;display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line-2);margin-inline-end:-1px;background:var(--surface);color:var(--muted)} .ds-st i{font-style:normal;display:grid;place-items:center;width:20px;height:20px;font-size:11px;background:var(--sunk);flex-shrink:0} .ds-st .done{color:var(--text)} .ds-st .done i{background:var(--green);color:#fff} .ds-st .now{background:var(--ink);color:#fff;border-color:var(--ink)} .ds-st .now i{background:#fff;color:var(--ink)} .ds-st small{margin-inline-start:auto;font-size:11px;font-weight:500;color:var(--red-ink)}"
+      "css": ":host{--paper:#eee8de;--surface:#fffcf7;--sunk:#f3ecdf;--ink:#172126;--ink-2:#303533;--rail:#111c21;--text:#252923;--muted:#68645b;--faint:#807b70;--line:#e3dbcf;--line-2:#cfc3b3;--action:#f4a252;--action-ink:#332619;--blue:#4b6c9f;--blue-ink:#315583;--blue-bg:#e6edf7;--green:#529573;--green-ink:#286646;--green-bg:#e5f0e5;--orange:#eaaa62;--orange-ink:#925018;--orange-bg:#fff0da;--red:#b95042;--red-ink:#9a342c;--red-bg:#fae5de;--ease:cubic-bezier(.16,1,.3,1)} .ds-st{display:flex;padding:0;margin:0;font:600 12.5px/1.2 'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif} .ds-st li{list-style:none;flex:1;display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line-2);margin-inline-end:-1px;background:var(--surface);color:var(--muted)} .ds-st i{font-style:normal;display:grid;place-items:center;width:20px;height:20px;font-size:11px;background:var(--sunk);flex-shrink:0} .ds-st .done{color:var(--text)} .ds-st .done i{background:var(--green);color:#fff} .ds-st .now{background:var(--ink);color:#fff;border-color:var(--ink)} .ds-st .now i{background:#fff;color:var(--ink)} .ds-st small{margin-inline-start:auto;font-size:11px;font-weight:500;color:var(--red-ink)} .ds-st li:first-child{border-start-start-radius:6px;border-end-start-radius:6px}.ds-st li:last-child{border-start-end-radius:6px;border-end-end-radius:6px}"
     },
     {
       "name": "Timetable Block",
       "kind": "custom",
-      "description": "Department-tinted meeting with a 3px department-colour top; hover fills with the colour, selection inverts to ink.",
+      "description": "Department-tinted meeting with 5px corners, department top edge and ink selection.",
       "html": "<div class=\"ds-tt\"><button class=\"ds-blk d0\"><strong>C022 <span>S002</span></strong><em>Business Studies 22</em><small>R001 · 75/80 · 10:00–11:00</small></button><button class=\"ds-blk d1 sel\"><strong>C021 <span>S001</span></strong><em>Computing Studies 21</em><small>R001 · 75/80 · 08:00–09:00</small></button></div>",
-      "css": ":host{--paper:#f6f6f3;--surface:#fff;--sunk:#efefeb;--ink:#111;--text:#141413;--muted:#5f5f5a;--line:#e2e2dc;--line-2:#cfcfc7;--blue:#1d3cff;--blue-ink:#1631d9;--blue-bg:#ebeeff;--green:#00a05a;--green-ink:#007a45;--green-bg:#e2f4ea;--orange:#ff6414;--orange-ink:#b54000;--orange-bg:#fff0e5;--red:#e0102e;--red-ink:#bf0d27;--red-bg:#fde8eb;--ease:cubic-bezier(.16,1,.3,1)} .ds-tt{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-family:'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif} .d0{--c:#1d3cff;--cb:#e9ecff;--ct:#1228b5} .d1{--c:#00a05a;--cb:#e0f3e9;--ct:#006b3c} .ds-blk{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:5px 8px 6px;text-align:start;font-family:inherit;background:var(--cb);color:var(--ct);border:0;border-top:3px solid var(--c);cursor:grab;transition:background-color .16s,color .16s} .ds-blk strong{font-size:12px;font-weight:700} .ds-blk strong span{font-size:11px;font-weight:500;opacity:.8} .ds-blk em{font-style:normal;font-size:11.5px} .ds-blk small{font-size:11px;opacity:.85} .ds-blk:hover{background:var(--c);color:#fff} .ds-blk.sel{background:var(--ink);color:#fff} .ds-blk:focus-visible{outline:2px solid var(--blue);outline-offset:2px}"
+      "css": ":host{--paper:#eee8de;--surface:#fffcf7;--sunk:#f3ecdf;--ink:#172126;--ink-2:#303533;--rail:#111c21;--text:#252923;--muted:#68645b;--faint:#807b70;--line:#e3dbcf;--line-2:#cfc3b3;--action:#f4a252;--action-ink:#332619;--blue:#4b6c9f;--blue-ink:#315583;--blue-bg:#e6edf7;--green:#529573;--green-ink:#286646;--green-bg:#e5f0e5;--orange:#eaaa62;--orange-ink:#925018;--orange-bg:#fff0da;--red:#b95042;--red-ink:#9a342c;--red-bg:#fae5de;--ease:cubic-bezier(.16,1,.3,1)} .ds-tt{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-family:'Archivo Variable','Noto Kufi Arabic',system-ui,sans-serif} .d0{--c:#1d3cff;--cb:#e9ecff;--ct:#1228b5} .d1{--c:#00a05a;--cb:#e0f3e9;--ct:#006b3c} .ds-blk{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:5px 8px 6px;text-align:start;font-family:inherit;background:var(--cb);color:var(--ct);border:0;border-top:3px solid var(--c);cursor:grab;transition:background-color .16s,color .16s} .ds-blk strong{font-size:12px;font-weight:700} .ds-blk strong span{font-size:11px;font-weight:500;opacity:.8} .ds-blk em{font-style:normal;font-size:11.5px} .ds-blk small{font-size:11px;opacity:.85} .ds-blk:hover{background:var(--c);color:#fff} .ds-blk.sel{background:var(--ink);color:#fff} .ds-blk:focus-visible{outline:2px solid var(--blue);outline-offset:2px} .ds-blk{border-radius:5px} .d0{--c:var(--blue);--cb:var(--blue-bg);--ct:var(--blue-ink)}.d1{--c:var(--green);--cb:var(--green-bg);--ct:var(--green-ink)}"
     }
   ],
   "narrative": {
-    "northStar": "The Semester as an Information System",
-    "overview": "Mizan is drawn in the Swiss / Otl Aicher lineage: one paper ground, one ink rail, one Sunday–Thursday hour scale, and four flat signal colours that always mean something. Nothing floats on glows or gradients; hierarchy comes from light, thin numerals set large against small, firm labels, from 1px hairlines, and from coloured strips on the top edge of things. The semester reads like a wall chart in a transit authority: calm, exact, and legible at projector distance.\n\nColour has exactly two jobs. **Department colour** says *which* (blue, green, orange, red assigned by alphabetical department order). **Grade colour** says *how good* (a continuous red → amber → green OKLCH path computed per metric). Everything else is paper, ink and grey. Selection is inversion to ink, not a new hue.\n\nDensity is moderate and data-first: 13.5px body, 12–12.5px labels, tabular numerals everywhere. Arabic is a first-class reading direction: Noto Kufi Arabic carries Arabic text, every layout mirrors through logical properties, and every string exists in English and Arabic.",
+    "northStar": "Campus Experience",
+    "overview": "Campus Experience places live scheduling evidence within a recognisable university setting. Warm sand and cream surfaces, a deep blue-black rail, apricot actions, and the supplied Al Yamamah campus photograph establish the atmosphere. Soft corners and serif English headings replace the previous square information-system world.\n\nThe image is context, not evidence of institutional adoption. All numbers remain live scenario data; synthetic-data labelling, role permissions, validation and explicit human decisions remain visible. The photograph is user supplied at `frontend/src/assets/al-yamamah-campus.jpg` and bundled locally by Vite. `frontend/src/style.css` supplies structural and interaction styles; `frontend/src/campus.css`, loaded afterward, supplies this visual world.\n\nCompact Archivo body text and tabular numerals keep the workspace practical. Arabic uses self-hosted Noto Kufi Arabic with logical layout and full bilingual strings. Photo overlays support legibility; pale grade labels keep continuous metric grading readable beside white hero numbers.",
     "keyCharacteristics": [
-      "Paper ground (#f6f6f3), ink sidebar rail with a white inverted active item.",
-      "Four flat signal colours used as fields, strips and dots; never gradients, glass or glow.",
-      "Light Archivo numerals (300–450) at large sizes; small semibold labels.",
-      "Square corners, 1px hairlines, 3px colour tops on tiles and timetable blocks.",
-      "Every graded number coloured on a continuous per-metric scale that never snaps at a threshold.",
-      "A 5px four-colour department strip pinned to the top edge of the workspace."
+      "Warm sand ground, cream panels and a deep campus rail with apricot active navigation.",
+      "User-supplied campus photography in the overview, rail, login and subdued page backgrounds.",
+      "Serif English headings, compact Archivo data and first-class Noto Kufi Arabic.",
+      "Soft 5–12px corners, thin warm borders and restrained floating-layer shadows.",
+      "White overview hero values paired with continuously graded labels on cream chips.",
+      "Department charts, a room-use ring and role-aware actions use live scenario data."
     ],
     "rules": [
       {
-        "name": "The Two Meanings Rule",
-        "body": "A colour on screen means either *which department* or *how good*. Bar colour = department, number colour = grade. If a colour answers neither question, it is paper, ink or grey.",
-        "section": "colors"
-      },
-      {
         "name": "The Continuous Grade Rule",
-        "body": "Graded values are coloured from their metric's bad/good anchors on a continuous path. Never introduce a hard threshold, a traffic-light bucket, or a fixed red/green for a metric that has a scale.",
+        "body": "Keep gradeVars() and each metric's bad/good anchors. Colour moves continuously red → amber → green; bilingual grade words accompany the scale. Hero values may be white for photo contrast, but their cream-backed grade labels retain the computed colour.",
         "section": "colors"
       },
       {
-        "name": "The Alphabetical Department Rule",
-        "body": "Departments take blue, green, orange, red in alphabetical order of department name (d0–d3); teal and magenta are the fifth and sixth fallbacks. Every surface that colours departments sorts the same way, so a department keeps its colour everywhere.",
+        "name": "The Department Identity Rule",
+        "body": "Assign department hues in alphabetical order: blue, green, orange, red, then teal and magenta. Department identity is separate from metric severity; the chart explains the distinction.",
         "section": "colors"
       },
       {
@@ -597,38 +640,30 @@
         "section": "colors"
       },
       {
-        "name": "The Light Numeral Rule",
-        "body": "Large numbers are light (300–450), never bold. Weight belongs to small labels; size belongs to numbers.",
-        "section": "typography"
-      },
-      {
         "name": "The Arabic Line Rule",
-        "body": "In RTL, headline letter-spacing resets to 0 and line-height opens (Overview h1 1.5; login headline 54px/1.35 at weight 600) so Kufi ascenders and dots never collide. Never apply Latin negative tracking to Arabic.",
+        "body": "Use Noto Kufi Arabic for Arabic headings, reset Latin negative tracking to zero, preserve open line heights and mirror directional layout through logical properties.",
         "section": "typography"
       },
       {
-        "name": "The Only Lift Rule",
-        "body": "Panels, tiles, cards and buttons have no shadow at rest or on hover. Shadow means \"this is floating above the timetable or the page\", nothing else.",
+        "name": "The Evidence Surface Rule",
+        "body": "Keep detailed operational panels opaque and legible. Photo overlays and translucent dark tiles belong to the campus overview; reduced transparency makes those tiles solid.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** derive every graded colour from `gradeVars()` with the metric's bad/good anchors, and pair it with the bilingual grade word.",
-      "**Do** colour departments by alphabetical order (blue, green, orange, red; teal and magenta only for a fifth and sixth).",
-      "**Do** use a 3px coloured top edge to mark a tile, block or card; use inversion to ink for selection and the current step.",
-      "**Do** keep large numerals light (300–450) and tabular; put weight on small labels.",
-      "**Do** put semester context and the scenario select in the topbar; start each page directly with its heading.",
-      "**Do** write every string with `t(en, ar)` and lay out with logical properties (inset-inline, margin-inline, border-inline); mirror arrows and transform-origins in RTL.",
-      "**Do** keep chart bars on one shared, labelled hour axis with the target marked in green.",
-      "**Do** respect reduced motion: entrance, count-up and bar-grow collapse to the final state."
+      "**Do** derive graded colours from gradeVars() and preserve their bilingual labels, including cream-backed labels beside white hero numbers.",
+      "**Do** keep synthetic data, validation status and human approval explicit.",
+      "**Do** use the supplied local campus photograph and retain readable overlays.",
+      "**Do** keep large numerals light and tabular, with compact labels.",
+      "**Do** keep semester context, scenario selection and language controls in the topbar.",
+      "**Do** write every UI string with t(en, ar), mirror layout and respect reduced motion.",
+      "**Do** use one labelled scale for cohort bars and retain clear room-use labels."
     ],
     "donts": [
-      "**Don't** use gradients, glassmorphism, glows or blurred shadows on panels, tiles or buttons; the only shadow is the lift for floating layers.",
-      "**Don't** round corners beyond the 2px field radius; the live dot is the only circle.",
-      "**Don't** grade individual faculty workload; only overload turns red.",
-      "**Don't** use a hard threshold or three-bucket traffic light for a metric that has a scale.",
-      "**Don't** place a kicker or eyebrow label above headings.",
-      "**Don't** use a signal colour decoratively where it means neither department nor grade.",
+      "**Don't** grade faculty performance or turn workload into a quality score.",
+      "**Don't** replace continuous metric colours with hard traffic-light thresholds.",
+      "**Don't** infer university adoption, real institutional data or new capabilities from the campus photo.",
+      "**Don't** obscure grade words, units, conflict warnings or the synthetic-data label with imagery.",
       "**Don't** apply Latin negative letter-spacing to Arabic headings."
     ]
   }
