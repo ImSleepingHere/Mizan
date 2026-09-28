@@ -11,7 +11,9 @@ const PREROLL = Number(process.env.PREROLL_SECONDS || 20);
 const HEADLESS = process.env.HEADLESS === '1';
 const RAW = process.env.RAW === '1'; // no captions or click markers, for recording a separate voice-over
 const outDir = path.resolve(__dirname, '../../work/demo-video');
-const wait = ms => new Promise(r => setTimeout(r, ms));
+const PACE = Number(process.env.PACE || 1); // >1 lengthens every pause evenly (e.g. 1.3 ≈ 1:51 total)
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const wait = ms => sleep(ms * PACE);
 
 (async () => {
   const browser = await chromium.launch({ headless: HEADLESS, channel: 'chrome', args: HEADLESS ? [] : ['--kiosk', '--disable-infobars'] });
@@ -52,7 +54,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   await page.evaluate(() => { localStorage.setItem('mizan-lang', 'en'); });
   await page.goto(ROOT);
   await page.evaluate(() => document.fonts.ready);
-  for (let s = PREROLL; s > 0; s--) { await caption(`Recording starts in ${s}…`); await wait(1000); }
+  for (let s = PREROLL; s > 0; s--) { await caption(`Recording starts in ${s}…`); await sleep(1000); }
   mark('start');
 
   // 1 · Opening
