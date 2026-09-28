@@ -9,6 +9,7 @@ const { chromium } = req('playwright');
 const ROOT = process.env.MIZAN_URL || 'http://127.0.0.1:8000';
 const PREROLL = Number(process.env.PREROLL_SECONDS || 20);
 const HEADLESS = process.env.HEADLESS === '1';
+const RAW = process.env.RAW === '1'; // no captions or click markers, for recording a separate voice-over
 const outDir = path.resolve(__dirname, '../../work/demo-video');
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
@@ -21,7 +22,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   const mark = label => marks.push(`${((Date.now() - started) / 1000).toFixed(1)}s ${label}`);
 
   // Caption bar and click ring live in the page; they survive in-app navigation (single-page app).
-  const caption = async (text, sub = '') => page.evaluate(([text, sub]) => {
+  const caption = async (text, sub = '') => RAW ? undefined : page.evaluate(([text, sub]) => {
     let bar = document.getElementById('demo-caption');
     if (!bar) {
       bar = document.createElement('div'); bar.id = 'demo-caption'; bar.dir = 'ltr';
@@ -32,6 +33,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     setTimeout(() => { bar.innerHTML = text + (sub ? `<div style="font-size:22px;color:#c9c9c3;margin-top:6px">${sub}</div>` : ''); bar.style.opacity = text ? '1' : '0'; }, 180);
   }, [text, sub]);
   const ring = async locator => {
+    if (RAW) return;
     const box = await locator.boundingBox();
     if (!box) return;
     await page.evaluate(([x, y]) => {
