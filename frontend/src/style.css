@@ -454,3 +454,26 @@ html[dir=rtl] .modal-error{left:auto;right:50%;transform:translateX(50%)}
 @media(max-width:1150px){.sidebar{width:200px;padding-inline:10px}.main-shell{margin-inline-start:200px;width:calc(100% - 200px)}main{padding-inline:24px}.topbar{padding-inline:24px}.page-head h1{font-size:24px}.metric-value{font-size:27px}.two-col{grid-template-columns:1fr}.workload-row{grid-template-columns:90px 1fr 74px}.head-actions{flex-wrap:wrap}.tt-drawer.open{position:absolute;inset-inline-end:0;top:0;bottom:0;z-index:14;box-shadow:var(--shadow-lift)}}
 @media(max-width:850px){.sidebar{width:64px;padding:18px 8px}.sidebar .brand{padding:0;justify-content:center}.brand strong,.workspace-label,.nav-item>span,.nav-item b,.local-note,.account>span:not(.avatar),.account>svg{display:none}.sidebar nav{margin-top:28px}.nav-item{padding:11px;justify-content:center}.main-shell{margin-inline-start:64px;width:calc(100% - 64px)}.account{justify-content:center}.metrics-grid{grid-template-columns:1fr 1fr}.metric:nth-child(3){border-inline-start:0}.ov-stats{grid-template-columns:1fr}.ov-head{flex-direction:column;align-items:flex-start}.page-head{flex-direction:column;align-items:flex-start;gap:14px}.synthetic{display:none}.workload-grid{grid-template-columns:1fr}.login-page{grid-template-columns:1fr}.login-story{display:none}.login-form{min-height:100vh;padding:70px 8%}.agent-layout{grid-template-columns:1fr}.criteria-editor .inline{grid-template-columns:1fr}.modal-backdrop{padding:10px}.modal{padding:18px}.change-detail{flex-wrap:wrap}.change-detail>strong{min-width:100%}.placement-option{flex-wrap:wrap}.tt-search input{width:130px}.stations{flex-direction:column}.stations li{margin:0 0 -1px}}
 @media(max-width:540px){main{padding:16px 14px 0}.topbar{padding-inline:14px;gap:8px}.top-actions{gap:6px;min-width:0}.breadcrumb{font-size:11.5px;white-space:nowrap}.breadcrumb>span:not(.live-dot),.breadcrumb strong{display:none}.scenario-select{max-width:118px;font-size:12px;padding-inline:6px}.language{padding:5px 8px;font-size:12px}.topbar .avatar{display:none}.context-row{flex-direction:column;align-items:flex-start;gap:10px}.context-row select{max-width:100%;width:100%}.ov-big{font-size:52px}.ov-head h1{font-size:23px}.metric-value{font-size:24px}.proposal-card{flex-wrap:wrap}.savings{padding:0;text-align:start}footer{flex-direction:column;gap:6px}.tt-drawer.open,.tt-drawer-inner{width:100%}.tt-dock-actions{margin-inline-start:0}.bar-row,.hours-axis{grid-template-columns:84px 1fr 48px;gap:8px}.ra-input{flex-direction:column}.ra-actions{justify-content:stretch}.ra-actions button{flex:1}}
+
+/* Edugate exchange: import review table and export */
+.eg-drop{display:flex;align-items:center;gap:10px;padding:16px;border:1px dashed var(--line-2);background:var(--paper);cursor:pointer;font-size:13.5px;margin:0}
+.eg-drop:hover{border-color:var(--ink)}.eg-drop input{position:absolute;inline-size:1px;block-size:1px;opacity:0}
+.eg-drop:focus-within{outline:2px solid var(--blue);outline-offset:2px}
+.eg-scroll{overflow-x:auto;margin:12px 0 6px}
+.eg-table{border-collapse:collapse;inline-size:100%;font-size:13px}
+.eg-table th{text-align:start;font-weight:600;color:var(--muted);font-size:12px;padding:6px 6px;border-block-end:1px solid var(--line-2)}
+.eg-table td{padding:6px;vertical-align:top;border-block-end:1px solid var(--line)}
+.eg-table td input{inline-size:100%;min-inline-size:88px}.eg-table td input.eg-short{min-inline-size:76px;inline-size:84px}
+.eg-table td small{display:block;color:var(--muted);font-size:11.5px;margin-block-start:3px}
+.eg-table input.missing{background:var(--orange-bg);border-color:var(--orange)}
+.eg-table tr.warn td{background:color-mix(in srgb,var(--orange-bg) 45%,transparent)}
+.eg-table tr.eg-note td{border-block-end:1px solid var(--line);padding-block-start:0;background:color-mix(in srgb,var(--orange-bg) 45%,transparent)}
+.eg-table tr.eg-note .tt-chip{margin-inline-end:6px}
+.eg-days{display:flex;gap:3px}.eg-days button{min-inline-size:34px;white-space:nowrap;padding:4px 6px;font-size:12px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.eg-days button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.eg-export{margin-block-start:16px;padding-block-start:14px;border-block-start:1px dashed var(--line-2)}
+.eg-export h3{display:flex;gap:6px;align-items:center;margin:0 0 4px;font-size:14px}
+.eg-export a.primary{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+.eg-export a.disabled{opacity:.45;pointer-events:none}
+.eg .muted{display:flex;gap:6px;align-items:flex-start}
+.eg .icon-button{border:0;background:none;color:var(--muted);padding:4px;cursor:pointer}.eg .icon-button:hover{color:var(--red-ink)}

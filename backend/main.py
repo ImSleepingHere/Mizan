@@ -529,6 +529,8 @@ from .recruitment import router as recruitment_router
 app.include_router(recruitment_router)
 from .request_routes import router as request_router
 app.include_router(request_router)
+from .edugate_routes import router as edugate_router
+app.include_router(edugate_router)
 
 DIST=ROOT/"frontend"/"dist"
 if DIST.exists():

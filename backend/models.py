@@ -28,6 +28,10 @@ class Course(StrictModel):
     duration: int = Field(default=60, ge=30, le=240)
     meetings_per_week: int = Field(default=2, ge=1, le=5)
     room_type: str = "classroom"
+    # Registrar codes as printed on an imported schedule (e.g. "MKT 201" / "تسق 201"); optional.
+    code: str | None = None
+    code_ar: str | None = None
+    credits: int | None = Field(default=None, ge=0, le=12)
 
 
 class Student(StrictModel):
@@ -62,6 +66,9 @@ class Section(StrictModel):
     room_id: str
     capacity: int = Field(gt=0)
     meetings: list[Window] = Field(min_length=1)
+    # Section number and activity as printed on an imported schedule (e.g. "201", "نظري"); optional.
+    label: str | None = None
+    activity: str | None = None
 
 
 class Demand(StrictModel):
@@ -107,6 +114,7 @@ class Semester(StrictModel):
     sections: list[Section]
     demands: list[Demand] = []
     policy: Policy = Field(default_factory=Policy)
+    term: str | None = None
 
     @model_validator(mode="after")
     def references(self):

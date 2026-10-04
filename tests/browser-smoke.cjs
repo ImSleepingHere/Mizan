@@ -19,7 +19,7 @@ const path = require('node:path');
  await page.getByRole('button',{name:'Enter workspace'}).click();
  await page.getByRole('heading',{name:/Every hour of the week/}).waitFor();
  // Spec §13.11: Arabic and English show identical verified facts (every number on the overview, in order).
- const facts=async()=>{await page.waitForTimeout(1200);return page.evaluate(()=>[...document.querySelectorAll('.ov-big, .ov-stat strong, .ov-label .grade-word, .ov-facts strong, .cohort-chart .bar-row strong')].map(e=>e.innerText).join(' ').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).match(/\d[\d,.]*/g))};
+ const facts=async()=>{await page.waitForTimeout(1200);return page.evaluate(()=>[...document.querySelectorAll('.ov-big, .ov-stat strong, .ov-label .grade-word, .ov-facts strong, .cohort-chart .bar-row strong, .campus-ring strong, .campus-room-legend b')].map(e=>e.innerText).join(' ').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).match(/\d[\d,.]*/g))};
  const factsEn=await facts();
  await page.screenshot({path:path.join(out,'overview-en.png'),fullPage:true});
  await page.getByRole('button',{name:'العربية',exact:true}).click();

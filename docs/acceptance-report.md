@@ -1,11 +1,11 @@
 # MIZAN — acceptance report (spec §13 and §18.7)
 
-Checked on 27 September 2026 against branch `redesign/v4`.
+Checked on 27 September 2026 against branch `redesign/v4`; re-checked on 4 October 2026 against `main` after the campus overview front end (c70ec68). Backend and tests were unchanged in between; all suites below were rerun on the rebuilt frontend.
 
 | Suite | Result |
 |---|---|
 | Python (`scripts/test.ps1`, 80 tests) | 80 passed |
-| Browser smoke (`tests/browser-smoke.cjs`, fresh database) | 5/5 checks passed, plus the EN/AR parity check |
+| Browser smoke (`tests/browser-smoke.cjs`, fresh database) | 5/5 checks passed, plus the EN/AR parity check (now also covering the room-use ring) |
 | Browser phase 2 (`tests/browser-phase2.cjs`, live Qwen3-8B + fine-tuned coordinator) | Passed: agent run completed, recruitment assessed and chatted, Arabic mobile without overflow |
 
 ## Criteria
@@ -22,7 +22,7 @@ Checked on 27 September 2026 against branch `redesign/v4`.
 | 8 | Workforce separates proven shortage from an inconclusive solver run | Met | `test_shortage_is_a_capacity_proof_not_a_timeout`, `test_requisition_requires_proven_shortage`, `test_stale_shortage_cannot_authorize` |
 | 9 | Recruitment assessments trace to approved criteria and evidence; unknowns visible | Met | `test_source_checks_staleness_and_html_escape` (verbatim quotes only, unknowns kept), candidate brief shows source CV unchanged |
 | 10 | No publication, rejection, hiring or outreach without human authorization | Met | `test_approval_publication_and_stale_rejection`, `test_cv_upload_and_rejection`, agents never publish; no outreach channel exists (LinkedIn/email not connected) |
-| 11 | Arabic and English show identical verified facts with correct RTL | Met (new check) | Browser smoke compares every overview figure in EN and AR and asserts `dir=rtl`; phase-2 checks Arabic mobile layout |
+| 11 | Arabic and English show identical verified facts with correct RTL | Met (new check) | Browser smoke compares every overview figure in EN and AR (incl. the room-use ring and legend added with the campus overview) and asserts `dir=rtl`; phase-2 checks Arabic mobile layout |
 | 12 | Stale approvals, unauthorized access, malicious imported instructions are checked | Met (strengthened) | Stale: `test_policy_invalidates_approval`; access: `test_student_isolation_and_server_authorization`, `test_hiring_role_cannot_access_student_records`, `test_csrf_guard_and_logout`; injection: new `test_cv_instructions_are_ignored_even_if_the_model_obeys_them` — instruction-like CV text is never counted as evidence and the CV is flagged |
 | 13 | Handwritten request set frozen and scored once | Met | `test_frozen_test_set_is_unchanged`; scored once: 7/30 strict (see CLAUDE.md), `results_test.json` blocks rescoring |
 | 14 | Each rule has a solver test; candidates pass the independent rule checker | Met | `tests/test_rules.py` (one test per rule family) |
@@ -34,6 +34,7 @@ Checked on 27 September 2026 against branch `redesign/v4`.
 - New tests: `tests/test_acceptance.py` (7) and two agent tests in `tests/test_agents.py`.
 - Browser smoke now asserts that Arabic and English overview figures are identical.
 - `tests/browser-phase2.cjs` updated for the redesigned overview heading.
+- 4 Oct re-check: the local `frontend/dist` build (git-ignored) predated the last `main.tsx` edit, so the frontend was rebuilt before the browser runs; the parity check now also reads `.campus-ring` and `.campus-room-legend` figures.
 
 ## Known limitations (honest, not blockers)
 

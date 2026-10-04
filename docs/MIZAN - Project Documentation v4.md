@@ -219,6 +219,14 @@ A professor sees aggregate figures for their own sections (students, average gap
 
 It books nothing.
 
+### 8.5 Edugate schedules: import and export (4 Oct)
+
+Al Yamamah students get their timetable as an Edugate "جدول الطالب" PDF or as a week grid in the phone app. Mizan reads both and prints back in the Edugate layout (`backend/edugate.py`, `backend/edugate_routes.py`, `frontend/src/EdugateExchange.tsx`, on Semester lab).
+
+- **Reading** uses the Windows OCR engine on this PC (Arabic + English); the file is not stored. Edugate's "Microsoft Print to PDF" output has no text layer, so the PDF page is rendered (PyMuPDF), turned upright, and read. Codes map Arabic ↔ English (عرب ARB, مال FIN, نما MIS, تسق MKT, ادا MGT); OCR slips such as dot confusions (نسف → تسق) and `A-OI` → `A-01` are corrected. Screenshots are read per day column; a missing start is filled from the same course on another day or from the usual class length and flagged; a missing end (block cut off at the bottom) is never guessed.
+- **Review before import:** every row is editable; warnings are shown; nothing is written until **Add to Mizan and optimize** (admin, registrar). The schedule becomes an *Edugate timetable* scenario (kind `edugate`) or is added to an existing one; students in the same course and section share it. Instructors, room sizes and other bookings are not in the source, so placeholders are used (one instructor per section, rooms seat 40); the optimizer then runs as usual (start times on the imported 90-minute rhythm).
+- **Export** (`GET /api/edugate/export`) prints any student's current timetable or a proposal in the Edugate layout (Letter landscape, same eight columns right to left). Rows that differ from the imported schedule are shaded. The page says it is a Mizan document for review, not an official Edugate record, and carries no university logo. Students may export only their own current timetable.
+
 ## 9. Workforce and recruitment
 
 **Workforce signals (`solver.workforce`).** For each unmet demand, Mizan compares required sections with what qualified professors' contracts can cover:
@@ -329,6 +337,8 @@ All endpoints are under `/api`, return JSON, and require a session unless noted.
 | `GET /scenarios/{sid}/metrics` · `/export` | staff | Metrics and validation; JSON export |
 | `POST /import` | admin, registrar | Import a semester |
 | `POST /scenarios/{sid}/optimize` | admin, registrar, professor (own) | Optimization → proposal |
+| `POST /edugate/read` · `POST /edugate/import` · `GET /edugate/timetables` | admin, registrar | Read an Edugate PDF / app screenshot (no write); import reviewed rows; list Edugate timetables |
+| `GET /edugate/export` | staff; student (own, current) | Student timetable or proposal as an Edugate-layout PDF |
 | `POST /scenarios/{sid}/changes` | admin, registrar, professor (own) | Change request → proposal with alternatives |
 | `POST /scenarios/{sid}/preview-change` | admin, registrar, professor (own) | Read-only live preview |
 | `POST /scenarios/{sid}/alternative` | admin, registrar, professor | Propose a feasible alternative |
@@ -378,8 +388,9 @@ Without the model, everything works except Ask Mizan, agent collaboration and CV
 
 | Suite | What it covers | Latest result |
 |---|---|---|
-| `scripts/test.ps1` (pytest, 80 tests) | Hand-checked metrics, validation, solver statuses, rules, scope and redaction, interpreter safety, agents (validation, revision, budgets, cancellation), recruitment evidence and injection, API authorization, CSRF, staleness, import/export | 80 passed |
+| `scripts/test.ps1` (pytest, 86 tests) | Hand-checked metrics, validation, solver statuses, rules, scope and redaction, interpreter safety, agents (validation, revision, budgets, cancellation), recruitment evidence and injection, API authorization, CSRF, staleness, import/export, Edugate import/export incl. an OCR round trip | 86 passed |
 | `tests/browser-smoke.cjs` | Placement → approval → publication; conflict → alternative; shortage → requisition; full optimization → evidence; student access; English/Arabic figures identical; mobile layout | 5/5 + parity passed |
+| `tests/browser-edugate.cjs` | Upload an Edugate PDF or app screenshot (`EDUGATE_FILE`, not committed) → review → import → optimize → export PDF | Passed with both formats (4 Oct) |
 | `tests/browser-phase2.cjs` | Live model: agent run completes, recruitment assessment and chat, Arabic mobile | Passed |
 | `training/interpreter/eval_interpreter.py` | Frozen 30-case handwritten request set (scored once) | 7/30 strict; no misread can change the timetable |
 | `training/coordinator/deployed_eval.py` | 120 coordinator decisions | 111/120 fine-tuned vs 75/120 base |
@@ -393,6 +404,7 @@ The full mapping of acceptance criteria to tests is in [acceptance-report.md](ac
 - **Faculty assignments are fixed** during optimization, so load balance and total room use can't improve there.
 - **Request understanding is modest** (7/30 strict). Confirmation and code-side checks keep it safe.
 - **The coordinator evaluation** uses generator-made test cases.
+- **Edugate import** reads the two layouts seen so far (Edugate PDF, app "My Courses" screenshot) and needs Windows OCR; the course-code map covers ARB, FIN, MIS, MKT, MGT (other codes import as printed). Single-digit section numbers can be missed; the review step shows every row.
 - **Minor UI:** after an agent run, the Activity page's audit trail updates only on reload.
 
 ## 19. Deferred work (after Farq)
@@ -415,6 +427,7 @@ The full mapping of acceptance criteria to tests is in [acceptance-report.md](ac
 | 24 Sep | "Najd Night" interface, interactive drag-and-drop timetable, fine-tuned coordinator live |
 | 27 Sep | Spec v3.1 professor requests: interpreter, My classes, rules, free-slot finder; interpreter test scored once |
 | 27 Sep | Interface v4 "Information System" with graded numbers; independent design review; DESIGN.md |
+| 4 Oct | Edugate schedule import (PDF + app screenshot, local OCR) and Edugate-layout PDF export |
 | 27–28 Sep | Phase 3: acceptance gaps closed with tests, CV-injection guard, reset and setup-check tools, demo script, handover guide, this document |
 
 ## 21. Glossary
