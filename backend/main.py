@@ -18,6 +18,8 @@ USERS={"admin":dict(role="admin",name="Mizan Administrator"),"registrar":dict(ro
        "hiring_manager":dict(role="hiring_manager",name="Hiring Manager"),
        "student":dict(role="student",name="Student 0001",student_id="ST0001")}
 STAFF={"admin","registrar","chair"}
+DEFAULT_PASSWORD="Mizan-demo-2026!"
+LOOPBACK={"127.0.0.1","::1","localhost","testclient"}
 
 
 @asynccontextmanager
@@ -122,15 +124,18 @@ class Login(StrictModel):
 
 
 @app.post("/api/login")
-def login(body:Login,response:Response):
-    password=os.environ.get("MIZAN_DEMO_PASSWORD","Mizan-demo-2026!")
+def login(body:Login,request:Request,response:Response):
+    password=os.environ.get("MIZAN_DEMO_PASSWORD",DEFAULT_PASSWORD)
+    client=request.client.host if request.client else ""
+    if password==DEFAULT_PASSWORD and client not in LOOPBACK:
+        raise HTTPException(403,"Remote sign-in is disabled while Mizan uses the shared demo password. Set MIZAN_DEMO_PASSWORD to allow it.")
     if body.username not in USERS or not secrets.compare_digest(body.password,password):
         raise HTTPException(401,"Incorrect demo account or password")
     token=secrets.token_urlsafe(32)
     with connect() as con:
         con.execute("DELETE FROM sessions WHERE expires<?",(time.time(),))
         con.execute("INSERT INTO sessions VALUES(?,?,?)",(token,body.username,time.time()+8*3600))
-    response.set_cookie("mizan_session",token,httponly=True,samesite="strict",max_age=8*3600)
+    response.set_cookie("mizan_session",token,httponly=True,samesite="strict",max_age=8*3600,secure=request.url.scheme=="https")
     return dict(username=body.username,**USERS[body.username])
 
 
@@ -158,6 +163,31 @@ def scenarios(u=Depends(user)):
         return [dict(r) for r in con.execute("SELECT id,name,revision FROM scenarios ORDER BY rowid")]
 
 
+def enrollment_counts(data,ids=None):
+    """Aggregate seats taken per section. Counts only, never identities (safe for every role)."""
+    counts={s.id:0 for s in data.sections if ids is None or s.id in ids}
+    for st in data.students:
+        for sid in st.sections:
+            if sid in counts: counts[sid]+=1
+    return counts
+
+
+def changed_since_previous(sid,row,data,ids):
+    """Sections (of `ids`) whose meetings or room changed in the latest published version."""
+    if row["revision"]<=1: return []
+    with connect() as con:
+        prev=con.execute("SELECT data FROM versions WHERE scenario_id=? AND revision=?",(sid,row["revision"]-1)).fetchone()
+    if not prev: return []
+    before={s.id:s for s in Semester.model_validate_json(prev["data"]).sections}
+    out=[]
+    for s in data.sections:
+        if s.id not in ids: continue
+        old=before.get(s.id)
+        if old is None or old.room_id!=s.room_id or [(m.day,m.start,m.end) for m in old.meetings]!=[(m.day,m.start,m.end) for m in s.meetings]:
+            out.append(dict(section_id=s.id,before=old.model_dump() if old else None,after=s.model_dump()))
+    return out
+
+
 @app.get("/api/scenarios/{sid}")
 def get_scenario(sid:str,u=Depends(user)):
     row,data=scenario(sid)
@@ -170,15 +200,20 @@ def get_scenario(sid:str,u=Depends(user)):
         personal=next(s for s in student_metrics(data) if s["id"]==student.id)
         if any(set(i["records"]) & ({student.id}|set(student.sections)) for i in validate(data)):
             personal["score"]=None
+        teaching={s.professor_id for s in sections}
         return dict(id=sid,revision=row["revision"],name=data.name,provenance=data.provenance,students=[student.model_dump()],
                     sections=[s.model_dump() for s in sections],courses=[c.model_dump() for c in data.courses],
-                    rooms=[r.model_dump() for r in data.rooms],professors=[],policy=data.policy.model_dump(),kind=data.kind,
-                    personal_metrics=personal)
+                    rooms=[r.model_dump() for r in data.rooms],
+                    professors=[dict(id=p.id,name=p.name,department=p.department) for p in data.professors if p.id in teaching],
+                    policy=data.policy.model_dump(),kind=data.kind,term=data.term,personal_metrics=personal,
+                    enrollment=enrollment_counts(data,set(student.sections)),
+                    recent_changes=changed_since_previous(sid,row,data,set(student.sections)))
     if u["role"]=="professor":
         sections=[s for s in data.sections if s.professor_id==u["professor_id"]]
-        return dict(id=sid,revision=row["revision"],**data.model_copy(update=dict(sections=sections,students=[],demands=[],professors=[p for p in data.professors if p.id==u["professor_id"]])).model_dump())
+        return dict(id=sid,revision=row["revision"],enrollment=enrollment_counts(data,{s.id for s in sections}),
+                    **data.model_copy(update=dict(sections=sections,students=[],demands=[],professors=[p for p in data.professors if p.id==u["professor_id"]])).model_dump())
     require(u,STAFF)
-    return dict(id=sid,revision=row["revision"],**data.model_dump())
+    return dict(id=sid,revision=row["revision"],enrollment=enrollment_counts(data),**data.model_dump())
 
 
 @app.get("/api/scenarios/{sid}/metrics")
@@ -247,24 +282,31 @@ def change(sid:str,body:ChangeRequest,u=Depends(user)):
     original=next((s for s in data.sections if s.id==body.section_id),None)
     if not original or body.meeting_index>=len(original.meetings): raise HTTPException(404,"Meeting not found")
     if u["role"]=="professor" and original.professor_id!=u["professor_id"]: raise HTTPException(403,"Only your own sections may be proposed")
+    current=original.meetings[body.meeting_index]
+    if (current.day,current.start)==(body.day,body.start):
+        raise HTTPException(422,"This meeting is already scheduled at that time. Nothing was sent for review.")
     candidate=data.model_copy(deep=True)
     section=next(s for s in candidate.sections if s.id==body.section_id)
     duration=section.meetings[body.meeting_index].end-section.meetings[body.meeting_index].start
     if body.start+duration>1440: raise HTTPException(422,"Meeting extends past midnight")
     section.meetings[body.meeting_index]=Window(day=body.day,start=body.start,end=body.start+duration)
-    analysis=dict(comparison=compare(data,candidate))
-    alternatives=[]
-    if validate(candidate):
-        for option in options_for(data,original,room_limit=1):
-            if option==original: continue
-            alternative=data.model_copy(deep=True)
-            alternative.sections=[option if s.id==original.id else s for s in alternative.sections]
-            if not validate(alternative):
-                diff=compare(data,alternative)
-                alternatives.append(dict(section=option.model_dump(),recovered_hours=diff["recovered_hours"],worsened=diff["worsened"]))
-        alternatives.sort(key=lambda a:(a["worsened"],-a["recovered_hours"]))
-    analysis["alternatives"]=alternatives[:3]
+    analysis=dict(comparison=compare(data,candidate),request=dict(section_id=body.section_id,meeting_index=body.meeting_index,day=body.day,start=body.start))
+    analysis["alternatives"]=feasible_alternatives(data,original) if validate(candidate) else []
     return redact(u,save_proposal(sid,row,candidate,"change",analysis,u,body.reason))
+
+
+def feasible_alternatives(data,original,limit=3):
+    """Conflict-free placements of the same section, least harm first (read-only)."""
+    alternatives=[]
+    for option in options_for(data,original,room_limit=1):
+        if option==original: continue
+        alternative=data.model_copy(deep=True)
+        alternative.sections=[option if s.id==original.id else s for s in alternative.sections]
+        if not validate(alternative):
+            diff=compare(data,alternative)
+            alternatives.append(dict(section=option.model_dump(),recovered_hours=diff["recovered_hours"],worsened=diff["worsened"]))
+    alternatives.sort(key=lambda a:(a["worsened"],-a["recovered_hours"]))
+    return alternatives[:limit]
 
 
 class PreviewRequest(StrictModel):
@@ -272,6 +314,7 @@ class PreviewRequest(StrictModel):
     meeting_index:int=Field(default=0,ge=0)
     day:int=Field(ge=0,le=4)
     start:int=Field(ge=0,lt=1440)
+    alternatives:bool=False
 
 
 _BASELINE_ISSUES={}
@@ -298,15 +341,21 @@ def preview_change(sid:str,body:PreviewRequest,u=Depends(user)):
     current=section.meetings[body.meeting_index]
     duration=current.end-current.start
     if body.start+duration>1440: raise HTTPException(422,"Meeting extends past midnight")
+    if (current.day,current.start)==(body.day,body.start):
+        return dict(revision=row["revision"],section_id=body.section_id,meeting_index=body.meeting_index,day=body.day,start=body.start,end=body.start+duration,
+                    unchanged=True,feasible=not baseline_issue_keys(sid,row,data),new_issues=[],new_issue_count=0,existing_issue_count=len(baseline_issue_keys(sid,row,data)),
+                    recovered_hours=0,benefiting=0,worsened=0,worst_increase_minutes=0)
     section.meetings[body.meeting_index]=Window(day=body.day,start=body.start,end=body.start+duration)
     existing=baseline_issue_keys(sid,row,data)
     issues=validate(candidate)
     introduced=[i for i in issues if (i["code"],tuple(i["records"])) not in existing]
     diff=compare(data,candidate)
     return redact(u,dict(revision=row["revision"],section_id=body.section_id,meeting_index=body.meeting_index,day=body.day,start=body.start,end=body.start+duration,
-                feasible=not introduced,new_issues=introduced[:20],new_issue_count=len(introduced),existing_issue_count=len(existing),
+                feasible=not introduced and not existing,new_issues=introduced[:20],new_issue_count=len(introduced),existing_issue_count=len(existing),
+                blocked_by_existing=bool(existing) and not introduced,
                 recovered_hours=diff["recovered_hours"],benefiting=diff["benefiting"],worsened=diff["worsened"],
-                worst_increase_minutes=diff["worst_increase_minutes"]))
+                worst_increase_minutes=diff["worst_increase_minutes"],
+                alternatives=feasible_alternatives(data,original) if body.alternatives and introduced else []))
 
 
 @app.get("/api/scenarios/{sid}/my-classes")
@@ -423,7 +472,10 @@ def eligible(sid:str,u=Depends(user)):
             for s in data.sections:
                 if s.course_id==c.id and not any(overlaps(a,b) for a in current for b in s.meetings):
                     seats=s.capacity-sum(s.id in st.sections for st in data.students)
-                    if seats>0: result.append(dict(section_id=s.id,course=c.model_dump(),seats=seats,meetings=[m.model_dump() for m in s.meetings]))
+                    if seats>0:
+                        prof=next((p for p in data.professors if p.id==s.professor_id),None)
+                        result.append(dict(section_id=s.id,course=c.model_dump(),seats=seats,meetings=[m.model_dump() for m in s.meetings],
+                                           professor_name=prof.name if prof else s.professor_id,room_id=s.room_id))
     return result
 
 
@@ -432,7 +484,39 @@ def proposals(scenario_id:str,u=Depends(user)):
     require(u,STAFF|{"professor"})
     with connect() as con:
         rows=con.execute("SELECT id,scenario_id,base_revision,kind,status,analysis,created,actor,reason FROM proposals WHERE scenario_id=? ORDER BY created DESC",(scenario_id,)).fetchall()
-    return redact(u,[dict(**{k:r[k] for k in r.keys() if k!="analysis"},analysis=json.loads(r["analysis"])) for r in rows if u["role"]!="professor" or r["actor"]==u["username"]])
+        current=con.execute("SELECT revision FROM scenarios WHERE id=?",(scenario_id,)).fetchone()
+    revision=current["revision"] if current else None
+    return redact(u,[dict(**{k:r[k] for k in r.keys() if k!="analysis"},analysis=json.loads(r["analysis"]),
+                          actor_name=USERS.get(r["actor"],{}).get("name",r["actor"]),current_revision=revision,
+                          stale=r["status"] in ("recommended","approved") and r["base_revision"]!=revision)
+                     for r in rows if u["role"]!="professor" or r["actor"]==u["username"]])
+
+
+def requested_move(analysis):
+    """The meeting move a change proposal asked for: stored since 4 Oct, derived from before/after for older proposals."""
+    if analysis.get("request"): return analysis["request"]
+    changes=(analysis.get("comparison") or {}).get("changes") or []
+    if len(changes)!=1 or not changes[0].get("before"): return None
+    before,after=changes[0]["before"]["meetings"],changes[0]["after"]["meetings"]
+    moved=[i for i,(a,b) in enumerate(zip(before,after)) if (a["day"],a["start"])!=(b["day"],b["start"])]
+    if len(moved)!=1: return None
+    return dict(section_id=changes[0]["section_id"],meeting_index=moved[0],day=after[moved[0]]["day"],start=after[moved[0]]["start"])
+
+
+@app.post("/api/proposals/{pid}/reevaluate")
+def reevaluate(pid:str,u=Depends(user)):
+    """Re-run an outdated meeting-change request against the current timetable; the old proposal is marked superseded."""
+    require(u,{"admin","registrar","professor"})
+    with connect() as con:
+        p=con.execute("SELECT * FROM proposals WHERE id=?",(pid,)).fetchone()
+    if not p or (u["role"]=="professor" and p["actor"]!=u["username"]): raise HTTPException(404,"Proposal not found")
+    move=requested_move(json.loads(p["analysis"])) if p["kind"]=="change" else None
+    if not move: raise HTTPException(409,"Only single meeting changes can be re-evaluated. Run a new optimization instead.")
+    result=change(p["scenario_id"],ChangeRequest(**move,reason=p["reason"] or "Re-evaluated against the current timetable"),u)
+    with connect() as con:
+        con.execute("UPDATE proposals SET status='superseded' WHERE id=? AND status IN ('recommended','approved','invalid')",(pid,))
+        audit(con,u["username"],"reevaluate",pid,{"scenario_id":p["scenario_id"],"replacement":result["id"]})
+    return result
 
 
 @app.post("/api/proposals/{pid}/{action}")
@@ -453,6 +537,10 @@ def decide(pid:str,action:str,u=Depends(user)):
             if current["revision"]!=proposal["base_revision"]: raise HTTPException(409,"Stale proposal: timetable changed. Evaluate a new proposal.")
             data=Semester.model_validate_json(proposal["data"])
             if validate(data): raise HTTPException(422,"Hard constraints failed; publication blocked")
+            if action=="publish" and data.kind=="edugate":
+                from .edugate_routes import readiness_of
+                if not readiness_of(data)["ready_to_publish"]:
+                    raise HTTPException(409,"Verify instructors and room capacities before publishing an imported timetable. Exploring and approving are allowed; publication needs verified data.")
             status="approved" if action=="approve" else "published"
             if action=="publish":
                 revision=current["revision"]+1
@@ -498,7 +586,17 @@ def requisitions(u=Depends(user)):
 def get_audit(u=Depends(user)):
     require(u,STAFF)
     with connect() as con:
-        return [dict(r) for r in con.execute("SELECT * FROM audit ORDER BY id DESC LIMIT 100")]
+        rows=[dict(r) for r in con.execute("SELECT * FROM audit ORDER BY id DESC LIMIT 300")]
+        names={r["id"]:r["name"] for r in con.execute("SELECT id,name FROM scenarios")}
+        owners={r["id"]:r["scenario_id"] for r in con.execute("SELECT id,scenario_id FROM proposals")}
+    for r in rows:
+        try: r["detail"]=json.loads(r["detail"])
+        except (TypeError,ValueError): r["detail"]={}
+        detail=r["detail"] if isinstance(r["detail"],dict) else {}
+        sid=detail.get("scenario_id") or owners.get(r["subject"]) or (r["subject"] if r["subject"] in names else None)
+        r["scenario_id"],r["scenario_name"]=sid,names.get(sid)
+        r["actor_name"]=USERS.get(r["actor"],{}).get("name",r["actor"])
+    return rows
 
 
 class PolicyUpdate(StrictModel):

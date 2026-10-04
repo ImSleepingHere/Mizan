@@ -6,6 +6,9 @@ if (-not (Test-Path -LiteralPath $pythonPath)) { throw 'Run scripts/setup.ps1 fi
 if (-not (Test-Path -LiteralPath (Join-Path $projectRoot 'frontend\dist\index.html'))) { throw 'Build the frontend first with scripts/setup.ps1.' }
 Set-Location -LiteralPath $projectRoot
 if (Test-Path -LiteralPath (Join-Path $projectRoot '.models\qwen3-8b.gguf')) { & (Join-Path $PSScriptRoot 'start-model.ps1') }
+# On the processor the model answers slowly: give each AI request up to 10 minutes instead of 90 seconds.
+$deviceFile = Join-Path $projectRoot 'work\model.device'
+if ((Test-Path -LiteralPath $deviceFile) -and ((Get-Content -LiteralPath $deviceFile -Raw).Trim() -ne 'cuda') -and -not $env:MIZAN_MODEL_TIMEOUT) { $env:MIZAN_MODEL_TIMEOUT = '600' }
 try {
     $health = Invoke-RestMethod -Uri "http://127.0.0.1:$Port/api/health" -TimeoutSec 2
     if ($health.version -eq '0.2.0' -and $health.mode -eq 'local_demo') {

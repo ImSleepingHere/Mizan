@@ -1,0 +1,27 @@
+MIZAN test log · 2026-10-04 19:54 +0300 · git 034afcb + uncommitted working tree (after both expert reviews)
+Machine: Windows 11, RTX 4080 SUPER; Python 3.12.14; Node v24.19.0
+
+== pytest: python -m pytest tests -q ==
+........................................................................ [ 72%]
+...........................                                              [100%]
+99 passed, 2 warnings in 52.41s
+
+== browser: node tests/browser-smoke.cjs (fresh database, port 8001) ==
+PASS placement -> approval -> publication
+PASS conflict rejection -> valid alternative
+PASS shortage -> draft requisition
+PASS full-scale optimization -> evidence review
+PASS student UI and backend authorization
+PASS all browser checks
+
+== browser: node tests/browser-phase2.cjs (live Qwen3-8B + fine-tuned coordinator) ==
+{"passed":true,"errors":[],"agentRun":"completed","recruitment":"assessed and chatted","mobile":"no overflow"}
+
+== browser: node tests/browser-edugate.cjs (an app screenshot, then an Edugate PDF; files not in the repository) ==
+PASS edugate app: 6 rows read, imported, optimized, exported
+PASS edugate pdf: 6 rows read, imported, optimized, exported
+
+== coordinator: training/coordinator/deployed_eval.py (three arms, run earlier on 4 Oct; see deployed_ablation.md) ==
+pretrained {'valid': 120, 'routing_correct': 112, 'disposition_correct': 83, 'pass': 75, 'premature_finalization': 0}
+pretrained-tunedprompt {'valid': 120, 'routing_correct': 110, 'disposition_correct': 106, 'pass': 96, 'premature_finalization': 0}
+fine-tuned {'valid': 120, 'routing_correct': 112, 'disposition_correct': 114, 'pass': 106, 'premature_finalization': 0}

@@ -1,12 +1,22 @@
 # MIZAN — acceptance report (spec §13 and §18.7)
 
-Checked on 27 September 2026 against branch `redesign/v4`; re-checked on 4 October 2026 against `main` after the campus overview front end (c70ec68). Backend and tests were unchanged in between; all suites below were rerun on the rebuilt frontend.
+Checked on 27 September 2026 against branch `redesign/v4`; re-checked on 4 October 2026 (evening) on `main` plus the Edugate exchange and the UX-review fixes. Every result below comes from one run recorded in [test-log-2026-10-04.txt](test-log-2026-10-04.txt).
 
-| Suite | Result |
+"Met" means the criterion's condition holds and a test or log shows it. Where a criterion is about how something is measured rather than how good it is (13), the measured result is stated next to it so "Met" is never read as "good enough".
+
+| Suite | Result (4 Oct, see log) |
 |---|---|
-| Python (`scripts/test.ps1`, 80 tests) | 80 passed |
-| Browser smoke (`tests/browser-smoke.cjs`, fresh database) | 5/5 checks passed, plus the EN/AR parity check (now also covering the room-use ring) |
+| Python (`scripts/test.ps1`, 99 tests) | 99 passed |
+| Browser smoke (`tests/browser-smoke.cjs`, fresh database) | 5/5 checks passed, plus the EN/AR parity check |
 | Browser phase 2 (`tests/browser-phase2.cjs`, live Qwen3-8B + fine-tuned coordinator) | Passed: agent run completed, recruitment assessed and chatted, Arabic mobile without overflow |
+| Browser Edugate (`tests/browser-edugate.cjs`, an app screenshot and an Edugate PDF, not in the repository) | Both passed: 6 rows read, imported, optimized, exported |
+
+## AI results against what they are for
+
+| Component | Measured result | Target / what it means | Assessment |
+|---|---|---|---|
+| Fine-tuned coordinator (`training/coordinator/deployed_ablation.md`) | 75 → 96 (better prompt) → 106 of 120 (fine-tuned); fine-tuning alone 14 fixed / 4 broken, p ≈ 0.03 | Route the six agents correctly; synthetic benchmark generated like the training data | Useful but modest; workflow-level only, not real-world ability. Code decides hard rules and the final outcome |
+| Ask Mizan request interpreter (`training/interpreter/results_test.json`) | 7/30 fully correct (Arabic 5/19); per field 22–30/30, time windows weakest | Draft an interpretation a person confirms | **Below a usable level for unattended use.** Kept only because nothing runs without the user's confirmation and code-side checks; described as "drafts an interpretation", never "understands" |
 
 ## Criteria
 
@@ -24,7 +34,7 @@ Checked on 27 September 2026 against branch `redesign/v4`; re-checked on 4 Octob
 | 10 | No publication, rejection, hiring or outreach without human authorization | Met | `test_approval_publication_and_stale_rejection`, `test_cv_upload_and_rejection`, agents never publish; no outreach channel exists (LinkedIn/email not connected) |
 | 11 | Arabic and English show identical verified facts with correct RTL | Met (new check) | Browser smoke compares every overview figure in EN and AR (incl. the room-use ring and legend added with the campus overview) and asserts `dir=rtl`; phase-2 checks Arabic mobile layout |
 | 12 | Stale approvals, unauthorized access, malicious imported instructions are checked | Met (strengthened) | Stale: `test_policy_invalidates_approval`; access: `test_student_isolation_and_server_authorization`, `test_hiring_role_cannot_access_student_records`, `test_csrf_guard_and_logout`; injection: new `test_cv_instructions_are_ignored_even_if_the_model_obeys_them` — instruction-like CV text is never counted as evidence and the CV is flagged |
-| 13 | Handwritten request set frozen and scored once | Met | `test_frozen_test_set_is_unchanged`; scored once: 7/30 strict (see CLAUDE.md), `results_test.json` blocks rescoring |
+| 13 | Handwritten request set frozen and scored once | Met (process). **Result: 7/30 strict, below a usable level** | `test_frozen_test_set_is_unchanged`; scored once, `results_test.json` blocks rescoring. See "AI results" above |
 | 14 | Each rule has a solver test; candidates pass the independent rule checker | Met | `tests/test_rules.py` (one test per rule family) |
 | 15 | Professor scope enforced by code; no student identities exposed | Met | `test_optimizer_moves_only_movable_sections`, `test_professor_cannot_move_others_sections`, `test_professor_previews_and_changes_are_redacted`, `test_professor_improves_own_classes_without_student_identities` |
 

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Sparkles, LoaderCircle, Check, X, Pencil, TriangleAlert, CircleHelp, ShieldCheck, Clock3, UsersRound, Send, CalendarClock, Info} from 'lucide-react';
-import {api, time, number} from './api';
+import {api, time, number, useDraft} from './api';
 import {SlotList} from './FreeSlotFinder';
 
 type R = Record<string, any>;
@@ -16,10 +16,12 @@ const SCOPES:Record<string,[string,string]> = {own:['My classes','مقرراتي
 const DATES:Record<string,[string,string]> = {weekly:['Weekly timetable','الجدول الأسبوعي'], one_off:['One occasion','مرة واحدة'], date_range:['A date range','فترة زمنية']};
 const GROUPS:Record<string,[string,string]> = {own_class_students:['students of my class','طلاب مقرري'], all_own_sections:['all my sections','جميع شعبي'], target_sections:['the named sections','الشعب المحددة'], cohort:['a student group','مجموعة طلاب']};
 
-export function RequestAssistant({sid, ar, days, role, onSubmitted}:{sid:string, ar:boolean, days:string[], role:string, onSubmitted:(proposal:R)=>void}){
+export function RequestAssistant({sid, ar, days, role, onSubmitted, onManual}:{sid:string, ar:boolean, days:string[], role:string, onSubmitted:(proposal:R)=>void, onManual?:()=>void}){
   const t = (en:string, arabic:string) => ar ? arabic : en;
   const L = (pair?:[string,string]) => pair ? t(pair[0], pair[1]) : '';
-  const [text, setText] = useState(''), [busy, setBusy] = useState(''), [error, setError] = useState('');
+  const [text, setText] = useDraft<string>(`ask:${sid}`, ''), [busy, setBusy] = useState(''), [error, setError] = useState('');
+  const [model, setModel] = useState<boolean|null>(null);
+  useEffect(() => { api('/agents/status').then(r => setModel(!!r.available)).catch(() => setModel(null)); }, []);
   const [req, setReq] = useState<R|null>(null), [result, setResult] = useState<R|null>(null), [edit, setEdit] = useState<R|null>(null);
   const day = (k:string) => days[DAY_KEYS.indexOf(k)] || k;
   const dayList = (ks:string[]) => ks.map(day).join(t(', ','، '));
@@ -81,12 +83,14 @@ export function RequestAssistant({sid, ar, days, role, onSubmitted}:{sid:string,
 
   return <section className="panel ra">
     <div className="ra-head"><span className="ra-icon"><Sparkles size={18}/></span><div><h2>{t('Ask Mizan','اسأل ميزان')}</h2>
-      <p>{t('Describe what you need in Arabic or English. Mizan shows what it understood; nothing runs until you confirm.','اكتب طلبك بالعربية أو الإنجليزية. يعرض ميزان ما فهمه، ولا يُنفَّذ شيء قبل تأكيدك.')}</p></div></div>
+      <p>{t('Describe what you need in Arabic or English. Mizan drafts an interpretation for you to check and correct; nothing runs until you confirm.','اكتب طلبك بالعربية أو الإنجليزية. يكتب ميزان مسودة لتفسير طلبك لتراجعها وتصححها، ولا يُنفَّذ شيء قبل تأكيدك.')}</p></div></div>
     <div className="ra-input">
       <textarea dir="auto" rows={2} maxLength={1500} value={text} onChange={e => setText(e.target.value)} aria-label={t('Your request','طلبك')}
         placeholder={t('e.g. Move my Sunday class one hour earlier, but keep the room','مثال: انقل محاضرة الأحد ساعة أبكر مع الإبقاء على القاعة')}/>
-      <button className="primary" disabled={text.trim().length < 3 || !!busy} onClick={() => void interpret()}>{busy === 'interpret' ? <LoaderCircle size={16} className="spin"/> : <Sparkles size={16}/>}{t('Understand','افهم الطلب')}</button>
+      <button className="primary" disabled={text.trim().length < 3 || !!busy || model === false} onClick={() => void interpret()}>{busy === 'interpret' ? <LoaderCircle size={16} className="spin"/> : <Sparkles size={16}/>}{t('Draft interpretation','صِغ التفسير')}</button>
     </div>
+    {model === false && <div className="ra-block warn" role="status"><p><TriangleAlert size={14}/>{t('The local AI service isn’t running, so Ask Mizan can’t read requests right now. Your text is kept for later.','خدمة الذكاء الاصطناعي المحلية متوقفة، لذا لا يستطيع «اسأل ميزان» قراءة الطلبات الآن. سيُحفظ نصك لوقت لاحق.')}
+      {onManual && <button type="button" className="text-button" onClick={onManual}>{t('Use the request form instead','استخدم نموذج الطلب بدلاً من ذلك')}</button>}</p></div>}
     {error && <div role="alert" className="alert error"><TriangleAlert size={16}/><span>{error}</span></div>}
 
     {i && <div className="ra-card">

@@ -115,6 +115,8 @@ class Semester(StrictModel):
     demands: list[Demand] = []
     policy: Policy = Field(default_factory=Policy)
     term: str | None = None
+    # Imported timetables: which records a person has verified ("rooms": room IDs, "instructors": section IDs).
+    verified: dict[str, list[str]] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def references(self):

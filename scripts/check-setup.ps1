@@ -16,7 +16,7 @@ Report (Test-Path '.models\qwen3-8b.gguf') 'Base model Qwen3-8B (.models\qwen3-8
 Report (Test-Path '.models\mizan-coordinator-lora.gguf') 'Fine-tuned coordinator adapter' 'pull the latest code from GitHub (it is in the repository)'
 $gpu = $null
 try { $gpu = (& nvidia-smi --query-gpu=name,memory.total --format=csv,noheader 2>$null) } catch { }
-Report ([bool]$gpu) ("NVIDIA GPU: " + ($(if ($gpu) { $gpu } else { 'none found' }))) 'the model will run on the CPU and be very slow; Ask Mizan, agents and CV analysis may time out' -optional
+Report ([bool]$gpu) ("NVIDIA GPU: " + ($(if ($gpu) { $gpu } else { 'none found' }))) 'the model will run on the processor: timetable features are unaffected, but Ask Mizan, CV analysis and agent runs take minutes (show them from the demo video)' -optional
 foreach ($port in 8000, 11435) {
     $busy = $false
     try { $busy = [bool](Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction Stop) } catch { }

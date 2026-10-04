@@ -8,7 +8,7 @@ type R = Record<string, any>;
 const lastResult:Record<string, R|null> = {};
 
 /** Professor view of their own sections (spec §18.3): aggregates only, and optimization limited to own sections. */
-export function MyClasses({sid, ar, days, revision, courseName, onProposal}:{sid:string, ar:boolean, days:string[], revision:number, courseName:(id:string)=>string, onProposal:()=>void}){
+export function MyClasses({sid, ar, days, revision, courseName, onProposal, onOpen}:{sid:string, ar:boolean, days:string[], revision:number, courseName:(id:string)=>string, onProposal:(p:R)=>void, onOpen:(p:R)=>void}){
   const t = (en:string, arabic:string) => ar ? arabic : en;
   const [info, setInfo] = useState<R|null>(null), [error, setError] = useState(''), [busy, setBusy] = useState(false);
   const [maxChanges, setMaxChanges] = useState(2), [result, setResultState] = useState<R|null>(lastResult[sid] || null);
@@ -18,7 +18,7 @@ export function MyClasses({sid, ar, days, revision, courseName, onProposal}:{sid
 
   async function improve(){
     setBusy(true); setError(''); setResult(null);
-    try { const r = await api(`/scenarios/${sid}/optimize`, {max_changes:maxChanges, seconds:10}); setResult(r); if (r.proposal) onProposal(); }
+    try { const r = await api(`/scenarios/${sid}/optimize`, {max_changes:maxChanges, seconds:10}); setResult(r); if (r.proposal) onProposal(r.proposal); }
     catch (e) { setError((e as Error).message); } finally { setBusy(false); }
   }
 
@@ -50,7 +50,8 @@ export function MyClasses({sid, ar, days, revision, courseName, onProposal}:{sid
           <span className={`tt-chip ${c.adverse_count ? 'warn' : ''}`}><UsersRound size={13}/>{number(c.adverse_count ?? c.worsened)} {t('worse off','متضرر')}</span>
           <span className="tt-chip">{t('Solver','المحلّل')}: {result.status}</span></div>
         <ul className="ra-rules">{c.changes.map((x:R) => <li key={x.section_id}>{x.section_id}: {x.before.meetings.map((m:R) => `${days[m.day]} ${time(m.start)}`).join(', ')} → {x.after.meetings.map((m:R) => `${days[m.day]} ${time(m.start)}`).join(', ')}{x.before.room_id !== x.after.room_id ? ` · ${x.after.room_id}` : ''}</li>)}</ul>
-        <p>{t('Saved as a proposal for committee review. Nothing changes until it is approved and published.','حُفظ كمقترح لمراجعة اللجنة. لا يتغير شيء حتى يُعتمد ويُنشر.')}</p></>
+        <p>{t('Saved as a request for committee review. Nothing changes until it is approved and published.','حُفظ كطلب لمراجعة اللجنة. لا يتغير شيء حتى يُعتمد ويُنشر.')}</p>
+        {result.proposal && <button className="secondary" onClick={() => onOpen(result.proposal)}>{t('View request','عرض الطلب')}</button>}</>
         : <p>{t('No improvement found within these limits; your current timetable is kept.','لم يُعثر على تحسين ضمن هذه الحدود؛ يبقى جدولك الحالي كما هو.')} <span className="muted">({result.status})</span></p>}
     </div>}
   </section>;

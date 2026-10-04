@@ -240,6 +240,13 @@ def placement(data, course_id, capacity=80):
                 note="Gap totals cover all compatible students, not a selected enrollment roster. Seat allocation remains a staff decision.")
 
 
+def _unseated(demand,covered_sections):
+    """Students left without a seat when only the covered sections run, demand split evenly across the required sections."""
+    wanting=len(set(demand.students))
+    per_section=-(-wanting//max(1,demand.sections))
+    return max(0,wanting-covered_sections*per_section)
+
+
 def workforce(data):
     courses,profs,rooms=indexes(data)
     load={p.id:sum(m.end-m.start for s in data.sections if s.professor_id==p.id for m in s.meetings) for p in data.professors}
@@ -270,7 +277,7 @@ def workforce(data):
         signals.append(dict(demand_id=demand.id,course_id=course.id,department=course.department,competency=course.competency,
                             required_sections=demand.sections,current_coverage_sections=min(residual,demand.sections),
                             minimum_unservable_sections=unavoidable,current_capacity_gap_sections=current_short,
-                            students_at_risk=len(set(demand.students)),required_minutes=demand.sections*unit,
+                            students_at_risk=_unseated(demand,min(residual,demand.sections)),students_demanding=len(set(demand.students)),required_minutes=demand.sections*unit,
                             qualified_instructors=[dict(id=p.id,name=p.name,contracted_minutes=p.contracted_minutes,assigned_minutes=load[p.id]) for p in qualified],
                             status="PROVEN_CAPACITY_SHORTFALL" if unavoidable else "REDEPLOYMENT_REVIEW" if current_short else "CAPACITY_AVAILABLE",
                             binding_constraint="Qualified contracted teaching capacity" if unavoidable else "Detailed time placement requires review",

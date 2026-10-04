@@ -255,9 +255,9 @@ Only a proven shortfall can become a requisition, and a stale one can't be autho
 | Base | Qwen3-8B, trained in 4-bit NF4 |
 | Method | Attention-only LoRA (rank 8, α 16), 2 epochs, 12.6 minutes on an RTX 4080 SUPER |
 | Data | 480 train / 60 validation / 120 test synthetic coordinator decisions, balanced English/Arabic (`training/coordinator/`, protocol frozen in `PROTOCOL.md`) |
-| Result (deployed GGUF, production schema) | **111/120** vs 75/120 for the base model (42 fixed, 6 broken, p ≈ 1e-7) |
+| Result (deployed GGUF, production schema, measured 4 Oct) | Base model + original prompt **75/120** → base model + training prompt **96/120** → fine-tuned **106/120**. Fine-tuning alone (same prompt and request, adapter scale 0 vs 1): 14 fixed, 4 broken, p ≈ 0.03. Helps on finalizing changed candidates (2/8 → 8/8) and resisting injected "finalize" text (1/8 → 7/8); worse on "no change" (7/8 → 3/8), which the app computes in code anyway. Repeats vary by about ±5. Details: `training/coordinator/deployed_ablation.md`. The earlier "111 vs 75" changed the prompt and the adapter at once and is superseded. |
 | Deployment | `.models/mizan-coordinator-lora.gguf` (15 MB, in the repository). Applied per request **only** to coordinator calls (scale 1.0; 0.0 for everything else). Roll back with `MIZAN_COORDINATOR_ADAPTER=0` |
-| Caveat | The test set comes from the same generator as the training data, so it measures in-workflow generalisation only |
+| Caveat | The test set comes from the same generator as the training data, so it measures whether the implemented workflow is followed, not real-world ability. The NF4 lab run (73 → 116) used free-form generation and is not comparable with the deployed figures |
 
 ## 11. Data
 
@@ -267,7 +267,7 @@ Only a proven shortfall can become a requisition, and a stale one can't be autho
 |---|---|---|
 | Baseline semester | Valid but inefficient timetable | 15,000 gap h/week, quality 45, 100% with 2h+ gaps, room use 10% |
 | Conflict diagnostics | Real hard violations | Violations listed; quality score withheld |
-| Staffing shortfall | Proven capacity shortage | Machine Learning (C080): 3 sections needed, 2 covered, 1 uncovered, 112 students at risk |
+| Staffing shortfall | Proven capacity shortage | Machine Learning (C080): 3 sections needed, 2 covered, 1 uncovered; 112 students need the course, 36 would have no seat (demand split evenly over the 3 sections) |
 | Faculty week | Realistic professor case | P001 owns S087–S091 (mixed rosters, 75- and 90-minute courses); R040 seats 200 for merges |
 
 Each scenario has 1,500 fictional students (20 cohorts × 75), 80 courses in four departments (Computing, Business, Engineering, Design) with English and Arabic names, 100 sections, 40 rooms and 50 professors. Generation is seeded and reproducible (`backend/fixtures.py`).
@@ -339,6 +339,8 @@ All endpoints are under `/api`, return JSON, and require a session unless noted.
 | `POST /scenarios/{sid}/optimize` | admin, registrar, professor (own) | Optimization → proposal |
 | `POST /edugate/read` · `POST /edugate/import` · `GET /edugate/timetables` | admin, registrar | Read an Edugate PDF / app screenshot (no write); import reviewed rows; list Edugate timetables |
 | `GET /edugate/export` | staff; student (own, current) | Student timetable or proposal as an Edugate-layout PDF |
+| `GET /edugate/{sid}/readiness` · `POST /edugate/{sid}/verify` | staff · admin, registrar | Verified / assumed / missing data of an imported timetable; record real room capacities and instructors (publication requires both) |
+| `POST /proposals/{pid}/reevaluate` | admin, registrar, professor (own) | Re-run an outdated meeting change against the current timetable |
 | `POST /scenarios/{sid}/changes` | admin, registrar, professor (own) | Change request → proposal with alternatives |
 | `POST /scenarios/{sid}/preview-change` | admin, registrar, professor (own) | Read-only live preview |
 | `POST /scenarios/{sid}/alternative` | admin, registrar, professor | Propose a feasible alternative |
@@ -388,12 +390,12 @@ Without the model, everything works except Ask Mizan, agent collaboration and CV
 
 | Suite | What it covers | Latest result |
 |---|---|---|
-| `scripts/test.ps1` (pytest, 86 tests) | Hand-checked metrics, validation, solver statuses, rules, scope and redaction, interpreter safety, agents (validation, revision, budgets, cancellation), recruitment evidence and injection, API authorization, CSRF, staleness, import/export, Edugate import/export incl. an OCR round trip | 86 passed |
+| `scripts/test.ps1` (pytest, 99 tests) | Hand-checked metrics, validation, solver statuses, rules, scope and redaction, interpreter safety, agents (validation, revision, budgets, cancellation), recruitment evidence and injection, API authorization, CSRF, staleness, import/export, Edugate import/export incl. an OCR round trip, UX-review and expert-review behaviour (no-op moves, stale proposals, occupancy, readiness, rule groups, unseated students, audit pseudonyms) | 99 passed |
 | `tests/browser-smoke.cjs` | Placement → approval → publication; conflict → alternative; shortage → requisition; full optimization → evidence; student access; English/Arabic figures identical; mobile layout | 5/5 + parity passed |
 | `tests/browser-edugate.cjs` | Upload an Edugate PDF or app screenshot (`EDUGATE_FILE`, not committed) → review → import → optimize → export PDF | Passed with both formats (4 Oct) |
 | `tests/browser-phase2.cjs` | Live model: agent run completes, recruitment assessment and chat, Arabic mobile | Passed |
 | `training/interpreter/eval_interpreter.py` | Frozen 30-case handwritten request set (scored once) | 7/30 strict; no misread can change the timetable |
-| `training/coordinator/deployed_eval.py` | 120 coordinator decisions | 111/120 fine-tuned vs 75/120 base |
+| `training/coordinator/deployed_eval.py` | 120 synthetic coordinator decisions, three arms (prompt and adapter separated) | 75 → 96 (prompt) → 106 (fine-tuned) of 120 |
 
 The full mapping of acceptance criteria to tests is in [acceptance-report.md](acceptance-report.md).
 
@@ -427,6 +429,7 @@ The full mapping of acceptance criteria to tests is in [acceptance-report.md](ac
 | 24 Sep | "Najd Night" interface, interactive drag-and-drop timetable, fine-tuned coordinator live |
 | 27 Sep | Spec v3.1 professor requests: interpreter, My classes, rules, free-slot finder; interpreter test scored once |
 | 27 Sep | Interface v4 "Information System" with graded numbers; independent design review; DESIGN.md |
+| 4 Oct | Hands-on UX review implemented: preview-before-submit, stale/re-evaluate, readable conflicts, role workspaces (My teaching week, student next class), request queue, data readiness and publish guard for imported timetables |
 | 4 Oct | Edugate schedule import (PDF + app screenshot, local OCR) and Edugate-layout PDF export |
 | 27–28 Sep | Phase 3: acceptance gaps closed with tests, CV-injection guard, reset and setup-check tools, demo script, handover guide, this document |
 

@@ -1,14 +1,14 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {CalendarDays, Check, GripVertical, LoaderCircle, MapPin, MoveRight, MoveLeft, Search, ShieldCheck, TriangleAlert, UserRound, UsersRound, X, Undo2, Send, Clock3} from 'lucide-react';
 import {api, time, number} from './api';
+import {groupIssues, describe} from './Conflicts';
 
 type R = Record<string, any>;
 type Slot = {day:number, start:number};
 type Drag = {sectionId:string, mi:number, duration:number, grab:number, origin:Slot, target:Slot|null, moved:boolean, x0:number, y0:number, pointerId:number};
 type Pending = {sectionId:string, mi:number, origin:Slot, target:Slot};
 
-const OPEN = 480, CLOSE = 1080, PX = 1.2, SNAP = 15;
-const HOURS = Array.from({length:(CLOSE-OPEN)/60+1}, (_, i) => OPEN + i*60);
+const PX = 1.2, SNAP = 15;
 
 function riyadhNow(){
   const parts = new Intl.DateTimeFormat('en-US', {timeZone:'Asia/Riyadh', weekday:'short', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(new Date());
@@ -34,16 +34,24 @@ function layout<T extends {start:number, end:number}>(items:T[]){
   return out;
 }
 
-export function InteractiveTimetable({data, sid, ar, days, role, courseName, onSubmitted, onOpenChanges}:{
+export function InteractiveTimetable({data, sid, ar, days, role, courseName, onSubmitted, onOpenChanges, focus}:{
   data:R, sid:string, ar:boolean, days:string[], role:string,
-  courseName:(id:string)=>string, onSubmitted:(proposal:R)=>void, onOpenChanges:(sectionId:string, mi:number, m:R)=>void}){
+  courseName:(id:string)=>string, onSubmitted:(proposal:R)=>void, onOpenChanges:(sectionId:string, mi:number, target:Slot)=>void, focus?:{ids:string[], n:number}|null}){
   const t = (en:string, arabic:string) => ar ? arabic : en;
+  // Visible hours follow the timetable's teaching window and its meetings (evening classes from Edugate imports included).
+  const {OPEN, CLOSE, HOURS} = useMemo(() => {
+    const meetings = (data.sections || []).flatMap((s:R) => s.meetings);
+    const open = Math.floor(Math.min(data.policy?.open_minute ?? 480, 480, ...meetings.map((m:R) => m.start)) / 60) * 60;
+    const close = Math.ceil(Math.max(data.policy?.close_minute ?? 1080, 1080, ...meetings.map((m:R) => m.end)) / 60) * 60;
+    return {OPEN:open, CLOSE:close, HOURS:Array.from({length:(close - open) / 60 + 1}, (_, i) => open + i * 60)};
+  }, [data]);
   const staff = ['admin','registrar','chair'].includes(role);
   const canEditRole = ['admin','registrar','professor'].includes(role);
   const cohorts = useMemo(() => [...new Set<string>((data.students || []).map((s:R) => s.cohort))], [data]);
   const departments = useMemo(() => [...new Set<string>((data.courses || []).map((c:R) => c.department))].sort(), [data]);
   const [cohort, setCohort] = useState<string>(''), [room, setRoom] = useState(''), [prof, setProf] = useState('');
   const [hidden, setHidden] = useState<Set<string>>(new Set()), [query, setQuery] = useState(''), [view, setView] = useState<'week'|'list'>('week');
+  const [slotFilter, setSlotFilter] = useState<{day:number, hour:number}|null>(null), [forceDetail, setForceDetail] = useState(false);
   const [selected, setSelected] = useState<{sectionId:string, mi:number}|null>(null);
   const [drag, setDrag] = useState<Drag|null>(null), [pending, setPending] = useState<Pending|null>(null);
   const [previews, setPreviews] = useState<Record<string, R|'loading'|{error:string}>>({});
@@ -53,13 +61,16 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
   const timer = useRef<number|undefined>(undefined);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { setCohort(cohorts[0] || ''); setSelected(null); setPending(null); setPreviews({}); }, [sid, data.revision, cohorts.join('|')]);
+  useEffect(() => { setCohort(cohorts[0] || ''); setSelected(null); setPending(null); setPreviews({}); setSlotFilter(null); setForceDetail(false); }, [sid, data.revision, cohorts.join('|')]);
+  useEffect(() => { if (focus?.ids.length) { setCohort('all'); setRoom(''); setProf(''); setQuery(focus.ids[0]); setView('week'); setForceDetail(true);
+    const s = (data.sections || []).find((x:R) => x.id === focus.ids[0]); if (s) setSelected({sectionId:s.id, mi:0});
+    window.setTimeout(() => gridRef.current?.scrollIntoView({behavior:'smooth', block:'start'}), 50); } }, [focus?.n]);
   useEffect(() => { const id = window.setInterval(() => setNow(riyadhNow()), 60000); return () => window.clearInterval(id); }, []);
 
   const courses = useMemo(() => Object.fromEntries((data.courses || []).map((c:R) => [c.id, c])), [data]);
   const professors = useMemo(() => Object.fromEntries((data.professors || []).map((p:R) => [p.id, p])), [data]);
   const rooms = useMemo(() => Object.fromEntries((data.rooms || []).map((r:R) => [r.id, r])), [data]);
-  const enrolled = useMemo(() => { const m:Record<string, number> = {}; (data.students || []).forEach((s:R) => s.sections.forEach((id:string) => m[id] = (m[id] || 0) + 1)); return m; }, [data]);
+  const enrolled = useMemo(() => { if (data.enrollment) return data.enrollment as Record<string, number>; const m:Record<string, number> = {}; (data.students || []).forEach((s:R) => s.sections.forEach((id:string) => m[id] = (m[id] || 0) + 1)); return m; }, [data]);
   const deptIndex = (sectionOrCourse:R) => Math.max(0, departments.indexOf(courses[sectionOrCourse.course_id]?.department));
   const canEdit = (_s:R) => canEditRole;
 
@@ -72,10 +83,15 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
     }
     if (room) list = list.filter(s => s.room_id === room);
     if (prof) list = list.filter(s => s.professor_id === prof);
-    return list.filter(s => !hidden.has(courses[s.course_id]?.department));
-  }, [data, cohort, room, prof, hidden, staff, courses]);
+    list = list.filter(s => !hidden.has(courses[s.course_id]?.department));
+    if (slotFilter) list = list.filter(s => s.meetings.some((m:R) => m.day === slotFilter.day && m.start < slotFilter.hour + 60 && m.end > slotFilter.hour));
+    return list;
+  }, [data, cohort, room, prof, hidden, staff, courses, slotFilter]);
 
-  const matches = (s:R) => !query || `${s.id} ${s.course_id} ${courseName(s.course_id)} ${s.room_id} ${s.professor_id}`.toLowerCase().includes(query.toLowerCase());
+  const profName = (id:string) => professors[id]?.name || id;
+  const matches = (s:R) => !query || `${s.id} ${s.course_id} ${courseName(s.course_id)} ${s.room_id} ${s.professor_id} ${profName(s.professor_id)}`.toLowerCase().includes(query.toLowerCase());
+  const listed = visible.filter(matches);
+  const dense = staff && view === 'week' && !forceDetail && !slotFilter && visible.length > 36;
   const key = (sectionId:string, mi:number, slot:Slot) => `${sid}:${data.revision}:${sectionId}:${mi}:${slot.day}:${slot.start}`;
 
   async function preview(sectionId:string, mi:number, slot:Slot){
@@ -150,26 +166,34 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
     if (!p) return null;
     if (p === 'loading') return <span className="tt-chip checking"><LoaderCircle size={13} className="spin"/>{t('Checking…','جارٍ التحقق…')}</span>;
     if (p.error) return <span className="tt-chip bad"><TriangleAlert size={13}/>{p.error}</span>;
-    return <>{p.feasible ? <span className="tt-chip ok"><ShieldCheck size={13}/>{t('No new conflicts','لا تعارضات جديدة')}</span> : <span className="tt-chip bad"><TriangleAlert size={13}/>{p.new_issue_count} {t('new conflicts','تعارضات جديدة')}</span>}
+    if (p.unchanged) return <span className="tt-chip"><Clock3 size={13}/>{t('Already scheduled at this time','مجدولة بالفعل في هذا الوقت')}</span>;
+    return <>{p.feasible ? <span className="tt-chip ok"><ShieldCheck size={13}/>{t('No new conflicts','لا تعارضات جديدة')}</span> : p.blocked_by_existing ? <span className="tt-chip warn"><TriangleAlert size={13}/>{t(`No new conflicts; timetable already has ${p.existing_issue_count}`, `لا تعارضات جديدة؛ في الجدول ${p.existing_issue_count} تعارضاً مسبقاً`)}</span> : <span className="tt-chip bad"><TriangleAlert size={13}/>{p.new_issue_count} {t('new conflicts','تعارضات جديدة')}</span>}
       <span className={`tt-chip ${p.recovered_hours > 0 ? 'ok' : p.recovered_hours < 0 ? 'bad' : ''}`}><Clock3 size={13}/><bdi>{p.recovered_hours > 0 ? '+' : ''}{number(p.recovered_hours)}</bdi> {t('student-h / week','ساعة طالب / أسبوع')}</span>
       <span className={`tt-chip ${p.worsened ? 'warn' : ''}`}><UsersRound size={13}/>{number(p.worsened)} {t('worse off','متضرر')}</span></>;
   };
-  const issueLabel = (code:string) => ar ? ({STUDENT_OVERLAP:'تعارض طلاب', PROFESSOR_OVERLAP:'تعارض أستاذ', ROOM_OVERLAP:'تعارض قاعة', BLOCKED_TIME:'خارج أوقات التدريس', PROFESSOR_AVAILABILITY:'الأستاذ غير متاح', ROOM_AVAILABILITY:'القاعة غير متاحة', MEETING_PATTERN:'نمط المحاضرات'} as Record<string,string>)[code] || code : code.replaceAll('_',' ').toLowerCase();
 
   return <section className="panel timetable-panel tt">
     <div className="tt-toolbar">
       <div className="tt-title"><span className="tt-title-icon"><CalendarDays size={18}/></span><div><h2>{t('Weekly timetable','الجدول الأسبوعي')}</h2><p>{canEditRole ? t('Drag any class to a new time. Mizan checks it live before you submit.','اسحب أي محاضرة إلى وقت جديد، وسيتحقق ميزان منها مباشرة قبل الإرسال.') : t('Tap a class to see its details.','اضغط على أي محاضرة لعرض التفاصيل.')}</p></div></div>
       <div className="tt-controls">
-        <div className="tt-search"><Search size={15}/><input aria-label={t('Highlight classes','تمييز المحاضرات')} placeholder={t('Highlight course, room, faculty…','ميّز مقرراً أو قاعة أو أستاذاً…')} value={query} onChange={e => setQuery(e.target.value)}/></div>
+        <div className="tt-search"><Search size={15}/><input aria-label={t('Search classes','البحث في المحاضرات')} placeholder={t('Course, section, room or instructor…','مقرر أو شعبة أو قاعة أو محاضر…')} value={query} onChange={e => setQuery(e.target.value)}/>{query && <button type="button" aria-label={t('Clear search','مسح البحث')} onClick={() => setQuery('')}><X size={13}/></button>}</div>
         {staff && <select aria-label={t('Cohort','المجموعة')} value={cohort} onChange={e => setCohort(e.target.value)}><option value="all">{t('All sections','جميع الشعب')}</option>{cohorts.map(c => <option key={c} value={c}>{c}</option>)}</select>}
         {staff && <select aria-label={t('Room','القاعة')} value={room} onChange={e => setRoom(e.target.value)}><option value="">{t('All rooms','كل القاعات')}</option>{(data.rooms || []).map((r:R) => <option key={r.id} value={r.id}>{r.id} · {r.name}</option>)}</select>}
         {staff && <select aria-label={t('Faculty','الأستاذ')} value={prof} onChange={e => setProf(e.target.value)}><option value="">{t('All faculty','كل الأساتذة')}</option>{(data.professors || []).map((p:R) => <option key={p.id} value={p.id}>{p.name}</option>)}</select>}
         <div className="segmented"><button className={view === 'week' ? 'selected' : ''} onClick={() => setView('week')}>{t('Week','أسبوع')}</button><button className={view === 'list' ? 'selected' : ''} onClick={() => setView('list')}>{t('List','قائمة')}</button></div>
       </div>
     </div>
-    <div className="tt-legend">{departments.map((d, i) => <button key={d} className={`tt-legend-item d${i % 6} ${hidden.has(d) ? 'off' : ''}`} onClick={() => { const n = new Set(hidden); n.has(d) ? n.delete(d) : n.add(d); setHidden(n); }} aria-pressed={!hidden.has(d)}><span/>{ar ? d.replace('Computing','الحوسبة').replace('Business','الأعمال').replace('Engineering','الهندسة').replace('Design','التصميم') : d}</button>)}<span className="tt-count">{visible.length} {t('sections','شعبة')} · {visible.reduce((a, s) => a + s.meetings.length, 0)} {t('meetings','محاضرة')}</span></div>
+    <div className="tt-legend">{departments.map((d, i) => <button key={d} className={`tt-legend-item d${i % 6} ${hidden.has(d) ? 'off' : ''}`} onClick={() => { const n = new Set(hidden); n.has(d) ? n.delete(d) : n.add(d); setHidden(n); }} aria-pressed={!hidden.has(d)}><span/>{ar ? d.replace('Computing','الحوسبة').replace('Business','الأعمال').replace('Engineering','الهندسة').replace('Design','التصميم') : d}</button>)}<span className="tt-legend-item lunch-key" title={t('Midday break: shown for orientation; classes can still be scheduled here if the timetable allows it.','استراحة منتصف اليوم: للتوضيح فقط، ويمكن جدولة المحاضرات فيها إذا سمح الجدول.')}><i/>{t('Midday break','استراحة منتصف اليوم')}</span><span className="tt-count">{query ? t(`${listed.length} of ${visible.length} sections match`, `${listed.length} من ${visible.length} شعبة مطابقة`) : <>{visible.length} {t('sections','شعبة')} · {visible.reduce((a, s) => a + s.meetings.length, 0)} {t('meetings','محاضرة')}</>}</span>
+      {slotFilter && <button type="button" className="tt-filter-chip" onClick={() => setSlotFilter(null)}>{days[slotFilter.day]} <bdi>{time(slotFilter.hour)}</bdi> <X size={12}/></button>}</div>
+    {query && !listed.length && <div className="tt-empty" role="status">{t(`No classes match “${query}”.`, `لا توجد محاضرات تطابق «${query}».`)} <button type="button" className="text-button" onClick={() => setQuery('')}>{t('Clear search','مسح البحث')}</button></div>}
+    {dense && <div className="tt-density" role="region" aria-label={t('Timetable overview','نظرة عامة على الجدول')}>
+      <p>{t(`${visible.length} sections are too many to read at once. Each cell shows how many classes run in that hour; choose one to see them, or narrow by cohort, room or instructor.`, `${visible.length} شعبة أكثر من أن تُقرأ دفعة واحدة. كل خانة تبين عدد المحاضرات في تلك الساعة؛ اختر خانة لعرضها، أو صفِّ حسب المجموعة أو القاعة أو المحاضر.`)}</p>
+      <div className="density-grid" style={{['--cols' as any]:days.length}}><span/>{days.map(d => <b key={d}>{d}</b>)}
+        {HOURS.slice(0, -1).map(h => <React.Fragment key={h}><i><bdi>{time(h)}</bdi></i>{days.map((_, d) => { const n = visible.reduce((a, s) => a + s.meetings.filter((m:R) => m.day === d && m.start < h + 60 && m.end > h).length, 0);
+          return <button type="button" key={d} className="density-cell" disabled={!n} style={{['--n' as any]:Math.min(1, n / 12)}} aria-label={`${days[d]} ${time(h)}: ${n}`} onClick={() => setSlotFilter({day:d, hour:h})}>{n || ''}</button>; })}</React.Fragment>)}</div>
+      <button type="button" className="text-button" onClick={() => setForceDetail(true)}>{t('Show every class anyway','اعرض كل المحاضرات على أي حال')}</button></div>}
 
-    {view === 'week' ? <div className="tt-body">
+    {dense ? null : view === 'week' ? <div className="tt-body">
       <div className="tt-scroll"><div className={`tt-grid ${drag?.moved ? 'dragging' : ''}`} ref={gridRef} style={{['--tt-height' as any]:`${(CLOSE-OPEN)*PX}px`}}>
         <div className="tt-corner">{t('Riyadh','الرياض')}</div>
         {days.map((d, i) => <div key={d} className={`tt-day-head ${now.day === i ? 'today' : ''}`}><span>{d}</span>{now.day === i && <small>{t('Today','اليوم')}</small>}</div>)}
@@ -186,7 +210,9 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
               className={`tt-block d${deptIndex(s) % 6} ${canEdit(s) ? 'draggable' : ''} ${isDragging ? 'lifted' : ''} ${isPending ? 'pending-origin' : ''} ${dim ? 'dim' : ''} ${selected?.sectionId === s.id ? 'selected' : ''} ${(m.end - m.start) * PX < 58 ? 'short' : ''}`}
               style={{top:(m.start-OPEN)*PX + 2, height:(m.end-m.start)*PX - 4, insetInlineStart:`calc(${lane/lanes*100}% + 4px)`, width:`calc(${100/lanes}% - 8px)`, animationDelay:`${Math.min(i, 24) * 22}ms`}}
               onPointerDown={e => onPointerDown(e, s, mi, m)} onPointerMove={onPointerMove} onPointerUp={e => onPointerUp(e, s, mi)} onPointerCancel={() => setDrag(null)}
+              onClick={() => { if (!canEdit(s)) setSelected({sectionId:s.id, mi}); }}
               onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected({sectionId:s.id, mi}); } }}
+              title={`${courseName(s.course_id)} · ${s.id} · ${days[m.day]} ${time(m.start)}–${time(m.end)} · ${s.room_id}`}
               aria-label={`${courseName(s.course_id)} ${s.id}, ${days[m.day]} ${time(m.start)}–${time(m.end)}, ${s.room_id}`}>
               {canEdit(s) && <GripVertical className="tt-grip" size={13}/>}
               <strong>{s.course_id}<span>{s.id}</span></strong>
@@ -196,7 +222,7 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
           })}
           {drag?.moved && drag.target?.day === day && dragSection && (() => { const p:any = dragPreview; const state = !p ? '' : p === 'loading' ? 'checking' : p.error || !p.feasible ? 'bad' : 'ok'; return <div className={`tt-ghost ${state}`} style={{top:(drag.target.start-OPEN)*PX + 2, height:drag.duration*PX - 4}}>
             <strong>{dragSection.course_id} <bdi>{time(drag.target.start)}–{time(drag.target.start + drag.duration)}</bdi></strong>
-            <small>{state === 'checking' ? t('Checking…','جارٍ التحقق…') : state === 'ok' ? <>{t('Fits','مناسب')} · {p.recovered_hours > 0 ? '+' : ''}{number(p.recovered_hours)} h</> : state === 'bad' ? (p.error || `${p.new_issue_count} ${t('conflicts','تعارضات')}`) : t('Release to stage the move','أفلت لتجهيز النقل')}</small>
+            <small>{state === 'checking' ? t('Checking…','جارٍ التحقق…') : state === 'ok' ? <>{t('Fits','مناسب')} · {p.recovered_hours > 0 ? '+' : ''}{number(p.recovered_hours)} h</> : state === 'bad' ? (p.error || (p.blocked_by_existing ? t('Timetable already has conflicts','في الجدول تعارضات مسبقة') : `${p.new_issue_count} ${t('conflicts','تعارضات')}`)) : t('Release to stage the move','أفلت لتجهيز النقل')}</small>
           </div>; })()}
           {pending && pending.target.day === day && pendingSection && <div className={`tt-ghost staged ${pendingPreview && pendingPreview !== 'loading' && !(pendingPreview as any).error && (pendingPreview as any).feasible ? 'ok' : pendingPreview === 'loading' || !pendingPreview ? 'checking' : 'bad'}`} style={{top:(pending.target.start-OPEN)*PX + 2, height:(pendingSection.meetings[pending.mi].end - pendingSection.meetings[pending.mi].start)*PX - 4}}>
             <strong>{pendingSection.course_id} <bdi>{time(pending.target.start)}</bdi></strong><small>{t('Proposed','مقترح')}</small></div>}
@@ -207,7 +233,7 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
         {selectedSection && (() => { const s = selectedSection, c = courses[s.course_id], p = professors[s.professor_id], r = rooms[s.room_id], cap = enrolled[s.id]; return <>
           <div className="tt-drawer-head"><span className={`tt-dot d${deptIndex(s) % 6}`}/><div><small>{c?.department} · {s.course_id}</small><h3>{courseName(s.course_id)}</h3></div><button aria-label={t('Close','إغلاق')} onClick={() => setSelected(null)}><X size={18}/></button></div>
           <div className="tt-facts">
-            <div><UserRound size={15}/><span>{p?.name || s.professor_id}</span></div>
+            <div><UserRound size={15}/><span>{p?.name || t('Instructor to be confirmed','المحاضر سيُحدد')}{p?.name && staff ? <small className="muted"> · {s.professor_id}</small> : null}</span></div>
             <div><MapPin size={15}/><span>{r ? `${r.name} · ${r.capacity} ${t('seats','مقعد')}` : s.room_id}</span></div>
             {cap !== undefined && <div className="tt-capacity"><UsersRound size={15}/><span>{cap} / {s.capacity} {t('enrolled','مسجل')}</span><i><b style={{width:`${Math.min(100, cap / s.capacity * 100)}%`}}/></i></div>}
           </div>
@@ -218,26 +244,27 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
             <div className="two-inputs"><label>{t('Day','اليوم')}<select value={formDay} onChange={e => setFormDay(Number(e.target.value))}>{days.map((d, i) => <option key={d} value={i}>{d}</option>)}</select></label>
             <label>{t('Start','البداية')}<select value={formStart} onChange={e => setFormStart(Number(e.target.value))}>{Array.from({length:(CLOSE-OPEN)/SNAP}, (_, i) => OPEN + i*SNAP).filter(v => v + (s.meetings[selected!.mi].end - s.meetings[selected!.mi].start) <= CLOSE).map(v => <option key={v} value={v}>{time(v)}</option>)}</select></label></div>
             <div className="tt-chips"><PreviewChips p={formPreview}/></div>
-            <div className="inline"><button className="secondary" onClick={() => void preview(s.id, selected!.mi, {day:formDay, start:formStart})}><ShieldCheck size={15}/>{t('Check','تحقق')}</button>
-            <button className="primary" disabled={formDay === s.meetings[selected!.mi].day && formStart === s.meetings[selected!.mi].start} onClick={() => { const m = s.meetings[selected!.mi]; setPending({sectionId:s.id, mi:selected!.mi, origin:{day:m.day, start:m.start}, target:{day:formDay, start:formStart}}); void preview(s.id, selected!.mi, {day:formDay, start:formStart}); }}><Arrow size={15}/>{t('Stage move','تجهيز النقل')}</button></div>
+            <p className="tt-endnote">{t(`Ends ${time(formStart + s.meetings[selected!.mi].end - s.meetings[selected!.mi].start)}`, `تنتهي ${time(formStart + s.meetings[selected!.mi].end - s.meetings[selected!.mi].start)}`)}</p>
+            <div className="inline"><button className="secondary" disabled={formDay === s.meetings[selected!.mi].day && formStart === s.meetings[selected!.mi].start} onClick={() => void preview(s.id, selected!.mi, {day:formDay, start:formStart})}><ShieldCheck size={15}/>{t('Preview impact','معاينة الأثر')}</button>
+            <button className="primary" disabled={formDay === s.meetings[selected!.mi].day && formStart === s.meetings[selected!.mi].start} onClick={() => { const m = s.meetings[selected!.mi]; setPending({sectionId:s.id, mi:selected!.mi, origin:{day:m.day, start:m.start}, target:{day:formDay, start:formStart}}); void preview(s.id, selected!.mi, {day:formDay, start:formStart}); }}><Arrow size={15}/>{t('Prepare request','تجهيز الطلب')}</button></div>
           </div>}
-          {role !== 'student' && <button className="text-button tt-open" onClick={() => onOpenChanges(s.id, selected!.mi, s.meetings[selected!.mi])}>{t('Open in change requests','فتح في طلبات التغيير')}<Arrow size={14}/></button>}
+          {canEdit(s) && <button className="text-button tt-open" onClick={() => onOpenChanges(s.id, selected!.mi, {day:formDay, start:formStart})}>{t('Continue in the request form','المتابعة في نموذج الطلب')}<Arrow size={14}/></button>}
         </>; })()}
       </div></aside>
     </div> : <>
-      <div className="search-field"><Search size={16}/><input placeholder={t('Find a course or section…','ابحث عن مقرر أو شعبة…')} value={query} onChange={e => setQuery(e.target.value)}/></div>
       <div className="table-scroll"><table><thead><tr><th>{t('Section','الشعبة')}</th><th>{t('Course','المقرر')}</th><th>{t('Meetings','المواعيد')}</th><th>{t('Room','القاعة')}</th><th>{t('Faculty','الأستاذ')}</th><th>{t('Enrolled','المسجلون')}</th></tr></thead>
-      <tbody>{visible.filter(matches).map(s => <tr key={s.id} onClick={() => { setView('week'); setSelected({sectionId:s.id, mi:0}); }}><td><span className={`tt-dot d${deptIndex(s) % 6}`}/><strong>{s.id}</strong></td><td>{courseName(s.course_id)}</td><td>{s.meetings.map((m:R, i:number) => <span className="meeting-line" key={i}>{days[m.day]} <bdi>{time(m.start)}–{time(m.end)}</bdi></span>)}</td><td>{s.room_id}</td><td>{professors[s.professor_id]?.name || s.professor_id}</td><td>{enrolled[s.id] ?? '—'} / {s.capacity}</td></tr>)}</tbody></table></div></>}
+      <tbody>{listed.map(s => <tr key={s.id} onClick={() => { setView('week'); setSelected({sectionId:s.id, mi:0}); }}><td><span className={`tt-dot d${deptIndex(s) % 6}`}/><strong>{s.id}</strong></td><td>{courseName(s.course_id)}</td><td>{s.meetings.map((m:R, i:number) => <span className="meeting-line" key={i}>{days[m.day]} <bdi>{time(m.start)}–{time(m.end)}</bdi></span>)}</td><td>{s.room_id}</td><td>{professors[s.professor_id]?.name || s.professor_id}</td><td>{enrolled[s.id] ?? '—'} / {s.capacity}</td></tr>)}</tbody></table></div></>}
 
     {pending && pendingSection && <div className="tt-dock" role="region" aria-label={t('Proposed move','النقل المقترح')}>
       <div className="tt-dock-move"><span className={`tt-dot d${deptIndex(pendingSection) % 6}`}/><div><strong>{pendingSection.course_id} · {pendingSection.id}</strong><small>{days[pending.origin.day]} <bdi>{time(pending.origin.start)}</bdi> <Arrow size={12}/> {days[pending.target.day]} <bdi>{time(pending.target.start)}</bdi></small></div></div>
       <div className="tt-chips"><PreviewChips p={pendingPreview}/></div>
-      {pendingPreview && pendingPreview !== 'loading' && (pendingPreview as any).new_issues?.length > 0 && <div className="tt-issues">{(pendingPreview as any).new_issues.slice(0, 3).map((i:R, n:number) => <span key={n}><TriangleAlert size={12}/>{issueLabel(i.code)} · {i.records.slice(0, 3).join(', ')}</span>)}</div>}
+      {pendingPreview && pendingPreview !== 'loading' && (pendingPreview as any).new_issues?.length > 0 && <div className="tt-issues">{groupIssues((pendingPreview as any).new_issues).slice(0, 3).map((g, n:number) => <span key={n}><TriangleAlert size={12}/>{describe(g, ar)}</span>)}</div>}
       <input aria-label={t('Reason','السبب')} placeholder={t('Reason (optional)','السبب (اختياري)')} value={reason} onChange={e => setReason(e.target.value)} maxLength={1000}/>
       {error && <span className="tt-chip bad">{error}</span>}
       <div className="tt-dock-actions"><button className="secondary" onClick={() => setPending(null)}><Undo2 size={15}/>{t('Undo','تراجع')}</button>
-      <button className="primary" disabled={submitting || pendingPreview === 'loading'} onClick={() => void submit()}>{submitting ? <LoaderCircle size={15} className="spin"/> : (pendingPreview as any)?.feasible ? <Send size={15}/> : <Check size={15}/>}{(pendingPreview as any)?.feasible ? t('Submit change request','إرسال طلب التغيير') : t('Submit & see alternatives','إرسال وعرض البدائل')}</button></div>
-      <small className="tt-dock-note">{t('Nothing changes until the proposal is approved and published.','لا يتغير شيء حتى يُعتمد المقترح ويُنشر.')}</small>
+      {!(pendingPreview as any)?.feasible && pendingPreview !== 'loading' && <button className="secondary" onClick={() => { onOpenChanges(pending.sectionId, pending.mi, pending.target); setPending(null); }}>{t('See alternatives','عرض البدائل')}</button>}
+      <button className="primary" disabled={submitting || pendingPreview === 'loading'} onClick={() => void submit()}>{submitting ? <LoaderCircle size={15} className="spin"/> : (pendingPreview as any)?.feasible ? <Send size={15}/> : <Check size={15}/>}{(pendingPreview as any)?.feasible ? t('Send for review','إرسال للمراجعة') : t('Send anyway, marked as conflicting','إرسال رغم التعارض')}</button></div>
+      <small className="tt-dock-note">{t('This move is only on your screen until you send it. Nothing changes until the request is approved and published.','هذا النقل على شاشتك فقط حتى ترسله. لا يتغير شيء حتى يُعتمد الطلب ويُنشر.')}</small>
     </div>}
   </section>;
 }

@@ -38,27 +38,27 @@ Log in as **Administrator**.
 
    These values turn green.
 5. Scroll to **Proposed changes**. Example: **S040 moves from Monday/Wednesday 17:00 to 11:00**.
-6. Click **Approve proposal**, then open it again and click **Revalidate & publish locally**.
+6. Click **Approve proposal**. The dialog stays open ("Approved · not yet published"); click **Revalidate & publish locally**.
 
    > "The person decides. Publishing re-checks everything first."
 7. Optional, needs the model (about 1–2 min): open **Activity & evidence** → **Start collaboration**. The six agents run with the fine-tuned coordinator (LoRA badge). Impact review can send scheduling back for a revision, and nothing is published by the agents.
 
 ## 2 · Mid-semester adaptation (1.5 min)
 
-1. Open **Change requests**. The form defaults to **S001, Sunday, 10:00**. Type a reason, for example "Professor unavailable", and click **Evaluate change**.
-2. It's rejected with **77 conflicts**: professor, room and student overlaps, listed with their codes.
+1. Open **Change requests**. The form starts at **S001, Sunday 08:00**; set **New start time** to **10:00**, type a reason, for example "Professor unavailable", and click **Preview impact**. Previewing saves nothing.
+2. It shows **77 new conflicts**, grouped in plain language ("S001 and S0xx meet at the same time. N students are enrolled in both"), each with **Show on timetable**.
 
    > "Mizan shows exactly why it can't happen."
 3. Under **Feasible alternatives** there are 3 valid options. Click **Propose this** on the first, then **Approve proposal**.
 4. Optional: in **Semester lab**, drag a class in the weekly timetable. The ghost turns green or red live before you submit.
-5. Optional: in **Ask Mizan**, type your rehearsed sentence (Arabic works too). It shows what it understood, and nothing runs until you confirm.
+5. Optional: in **Ask Mizan**, type your rehearsed sentence (Arabic works too). Click **Draft interpretation**: it drafts what it thinks you mean for you to check and correct, and nothing runs until you confirm. Don't say it "understands" (7/30 fully correct on our handwritten test).
 
 ## 3 · Capacity shortage → recruitment (1.5 min)
 
 1. In the top bar, switch the scenario to **Staffing shortfall**, then open **Workforce**.
 2. It shows a **Verified capacity shortfall** in Machine Learning (course C080):
    - 3 sections needed, 2 covered
-   - **1 uncovered** and **112 students at risk** (red)
+   - **1 uncovered** and **36 students without a seat** (red), out of **112 who need the course**
    - an evidence box explaining the finding
 
    > "This is a proven shortage, not just an arrangement problem the solver couldn't fix."
@@ -73,7 +73,8 @@ Log in as **Administrator**.
 - Press **العربية**. Every screen switches to Arabic, right-to-left, with the same figures (a test checks this).
 
   > "Measure the cost, recommend a change, show the evidence. A person approves."
-- If asked about the AI: the fine-tuned coordinator scored **111/120** against **75/120** for the base model on our deployed evaluation.
+- If asked about the AI: "On a synthetic benchmark of 120 coordinator decisions (generated like the training data), a better prompt took the base model from 75 to 96 correct, and fine-tuning added about 10 more (106; 14 fixed, 4 broken, p ≈ 0.03), mainly on finishing changed timetables and resisting injected instructions. The model never decides a hard rule or the final outcome; code does."
+- If asked whether the numbers are real: "The demo semester is synthetic and its starting timetable is deliberately poor: every cohort waits 10 hours a week by construction, so the optimizer's first moves are obvious ones. The point is not the size of the number; it is that every change is checked by an independent validator and approved by a person."
 
 ## Say / don't say
 

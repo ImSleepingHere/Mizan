@@ -52,7 +52,7 @@ def test_import_optimize_and_export(client):
     assert r["issues"] == [] and r["sections"] == 3
     sid = r["id"]
     body = client.get(f"/api/scenarios/{sid}").json()
-    data = Semester.model_validate({k: v for k, v in body.items() if k not in ("id", "revision")})
+    data = Semester.model_validate({k: v for k, v in body.items() if k not in ("id", "revision", "enrollment")})
     assert data.kind == "edugate" and data.term == "2026/2027"
     assert {c.code_ar for c in data.courses} == {"تسق 201", "مال 202", "عرب 202"}
     assert {990, 1100 - 110} <= set(data.policy.allowed_starts) and data.policy.close_minute >= 1100
@@ -103,3 +103,31 @@ def test_export_reads_back_through_ocr():
     got = {r["code"]: (r["days"], r["start"], r["end"], r["room"]) for r in result["rows"]}
     assert got == {r["code"]: (r["days"], r["start"], r["end"], r["room"]) for r in ROWS}
     assert result["term"] == "2026/2027"
+
+
+def test_imported_timetable_needs_verified_data_to_publish(client):
+    """Strategic review #1: exploring is allowed with assumed data; publication needs verified rooms and instructors."""
+    login(client, "admin")
+    sid = client.post("/api/edugate/import", json=dict(student_id="T1", student_name="A", rows=ROWS)).json()["id"]
+    ready = client.get(f"/api/edugate/{sid}/readiness").json()
+    assert ready["verified"]["student_conflicts"] == 1 and ready["ready_to_publish"] is False
+    assert set(ready["assumed"]["rooms"]) == {"B-12", "A-03", "COED-02"} and len(ready["assumed"]["instructors"]) == 3
+    data = client.get(f"/api/scenarios/{sid}").json()
+    s = data["sections"][0]
+    move = next(dict(section_id=s["id"], meeting_index=0, day=d, start=st) for d in range(5) for st in range(480, 1100, 30)
+                if (d, st) != (s["meetings"][0]["day"], s["meetings"][0]["start"])
+                and client.post(f"/api/scenarios/{sid}/preview-change", json=dict(section_id=s["id"], meeting_index=0, day=d, start=st)).json().get("feasible"))
+    p = client.post(f"/api/scenarios/{sid}/changes", json=dict(move, reason="Try")).json()
+    assert p["status"] == "recommended"
+    assert client.post(f"/api/proposals/{p['id']}/approve").status_code == 200
+    blocked = client.post(f"/api/proposals/{p['id']}/publish")
+    assert blocked.status_code == 409 and "Verify instructors" in blocked.json()["detail"]
+    assert client.post(f"/api/edugate/{sid}/verify", json=dict(rooms=[dict(id="X-99", capacity=30)])).status_code == 422
+    done = client.post(f"/api/edugate/{sid}/verify", json=dict(
+        rooms=[dict(id=r, capacity=45) for r in ("B-12", "A-03", "COED-02")],
+        instructors=[dict(section_id=x["id"], name=f"Dr. Real {i}") for i, x in enumerate(data["sections"])])).json()
+    assert done["ready_to_publish"] is True and done["revision"] == 2
+    after = client.get(f"/api/scenarios/{sid}").json()
+    assert {r["capacity"] for r in after["rooms"]} == {45} and all(p["name"].startswith("Dr. Real") for p in after["professors"])
+    login(client, "chair")
+    assert client.post(f"/api/edugate/{sid}/verify", json=dict(rooms=[])).status_code == 403

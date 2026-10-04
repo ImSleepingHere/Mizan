@@ -6,17 +6,17 @@
     "output": {
       "action": "finalize",
       "agent": "student",
-      "max_changes": 1,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_changed-003",
@@ -25,17 +25,17 @@
     "output": {
       "action": "finalize",
       "agent": "impact",
-      "max_changes": 12,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_final-004",
@@ -44,17 +44,17 @@
     "output": {
       "action": "finalize",
       "agent": "student",
-      "max_changes": 1,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_done-002",
@@ -63,7 +63,7 @@
     "output": {
       "action": "delegate",
       "agent": "scheduling",
-      "max_changes": 12,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -73,7 +73,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_schedule-000",
@@ -82,7 +82,7 @@
     "output": {
       "action": "delegate",
       "agent": "scheduling",
-      "max_changes": 5,
+      "max_changes": 2,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -92,7 +92,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_student-003",
@@ -101,7 +101,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 20,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -111,7 +111,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_schedule-002",
@@ -119,18 +119,18 @@
     "language": "en",
     "output": {
       "action": "delegate",
-      "agent": "scheduling",
-      "max_changes": 30,
+      "agent": "impact",
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
       "valid": true,
-      "routing_correct": true,
+      "routing_correct": false,
       "disposition_correct": true,
-      "pass": true,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_unchanged-005",
@@ -149,7 +149,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-stale_impact-002",
@@ -158,7 +158,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 1,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -168,7 +168,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_done-001",
@@ -177,7 +177,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -187,7 +187,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_done-006",
@@ -196,7 +196,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 12,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -206,7 +206,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-initial-003",
@@ -215,7 +215,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 20,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -225,7 +225,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_changed-002",
@@ -234,17 +234,17 @@
     "output": {
       "action": "finalize",
       "agent": "impact",
-      "max_changes": 30,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_done-004",
@@ -253,7 +253,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -263,7 +263,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_first-000",
@@ -272,7 +272,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 8,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -282,7 +282,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_impact-003",
@@ -291,7 +291,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -301,7 +301,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-stale_impact-003",
@@ -310,7 +310,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 30,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -320,7 +320,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_done-000",
@@ -328,8 +328,8 @@
     "language": "en",
     "output": {
       "action": "delegate",
-      "agent": "workforce",
-      "max_changes": 12,
+      "agent": "scheduling",
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -339,7 +339,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_impact-006",
@@ -348,7 +348,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -358,7 +358,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_first-003",
@@ -377,7 +377,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-stale_impact-000",
@@ -386,7 +386,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -396,7 +396,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_done-002",
@@ -405,7 +405,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 8,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -415,7 +415,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_changed-001",
@@ -434,7 +434,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_final-001",
@@ -443,7 +443,7 @@
     "output": {
       "action": "finalize",
       "agent": "impact",
-      "max_changes": 1,
+      "max_changes": 0,
       "disposition": "recommend"
     },
     "metrics": {
@@ -453,7 +453,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_unchanged-002",
@@ -461,18 +461,18 @@
     "language": "en",
     "output": {
       "action": "finalize",
-      "agent": "student",
-      "max_changes": 5,
-      "disposition": "recommend"
+      "agent": "impact",
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": false,
-      "pass": false,
+      "disposition_correct": true,
+      "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_unchanged-000",
@@ -491,7 +491,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_workforce-006",
@@ -500,7 +500,7 @@
     "output": {
       "action": "delegate",
       "agent": "workforce",
-      "max_changes": 12,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -510,7 +510,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-initial-005",
@@ -519,7 +519,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -529,7 +529,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_first-002",
@@ -538,7 +538,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 30,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -548,7 +548,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-initial-002",
@@ -557,7 +557,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 30,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -567,7 +567,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-rejected-005",
@@ -586,7 +586,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_impact-007",
@@ -595,7 +595,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 8,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -605,7 +605,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_missing-007",
@@ -624,7 +624,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-stale_impact-004",
@@ -633,7 +633,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -643,7 +643,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_first-004",
@@ -652,7 +652,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -662,7 +662,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_workforce-007",
@@ -671,7 +671,7 @@
     "output": {
       "action": "delegate",
       "agent": "workforce",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -681,7 +681,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-rejected-001",
@@ -700,7 +700,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_schedule-001",
@@ -709,7 +709,7 @@
     "output": {
       "action": "delegate",
       "agent": "scheduling",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -719,7 +719,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_workforce-005",
@@ -728,7 +728,7 @@
     "output": {
       "action": "delegate",
       "agent": "workforce",
-      "max_changes": 1,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -738,7 +738,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-stale_impact-006",
@@ -747,7 +747,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -757,7 +757,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_missing-004",
@@ -766,7 +766,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 12,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -776,7 +776,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_student-005",
@@ -785,7 +785,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -795,7 +795,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_done-006",
@@ -803,8 +803,8 @@
     "language": "en",
     "output": {
       "action": "delegate",
-      "agent": "workforce",
-      "max_changes": 1,
+      "agent": "scheduling",
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -814,7 +814,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_missing-001",
@@ -823,7 +823,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 12,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -833,7 +833,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-rejected-007",
@@ -842,7 +842,7 @@
     "output": {
       "action": "delegate",
       "agent": "scheduling",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -852,7 +852,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_done-005",
@@ -861,7 +861,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 30,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -871,7 +871,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_final-006",
@@ -880,17 +880,17 @@
     "output": {
       "action": "finalize",
       "agent": "student",
-      "max_changes": 3,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_changed-000",
@@ -909,7 +909,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_unchanged-001",
@@ -918,17 +918,17 @@
     "output": {
       "action": "finalize",
       "agent": "impact",
-      "max_changes": 3,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": false,
-      "pass": false,
+      "disposition_correct": true,
+      "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_done-003",
@@ -937,7 +937,7 @@
     "output": {
       "action": "delegate",
       "agent": "workforce",
-      "max_changes": 20,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -947,7 +947,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_done-004",
@@ -966,7 +966,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_done-000",
@@ -975,7 +975,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 30,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -985,7 +985,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_unchanged-003",
@@ -993,8 +993,8 @@
     "language": "ar",
     "output": {
       "action": "finalize",
-      "agent": "student",
-      "max_changes": 20,
+      "agent": "impact",
+      "max_changes": 0,
       "disposition": "no_change"
     },
     "metrics": {
@@ -1004,7 +1004,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_unchanged-007",
@@ -1023,7 +1023,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_first-001",
@@ -1032,7 +1032,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 30,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1042,7 +1042,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_student-000",
@@ -1061,7 +1061,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_schedule-006",
@@ -1070,7 +1070,7 @@
     "output": {
       "action": "delegate",
       "agent": "scheduling",
-      "max_changes": 30,
+      "max_changes": 15,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1080,7 +1080,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-initial-006",
@@ -1089,7 +1089,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 1,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1099,7 +1099,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-rejected-004",
@@ -1108,7 +1108,7 @@
     "output": {
       "action": "delegate",
       "agent": "scheduling",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1118,7 +1118,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_first-005",
@@ -1127,7 +1127,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1137,7 +1137,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_missing-002",
@@ -1146,7 +1146,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1156,7 +1156,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_unchanged-004",
@@ -1165,17 +1165,17 @@
     "output": {
       "action": "finalize",
       "agent": "student",
-      "max_changes": 1,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": false,
-      "pass": false,
+      "disposition_correct": true,
+      "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_first-004",
@@ -1184,7 +1184,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1194,7 +1194,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-initial-004",
@@ -1203,7 +1203,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 12,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1213,7 +1213,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_first-006",
@@ -1222,7 +1222,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1232,7 +1232,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_missing-006",
@@ -1241,7 +1241,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1251,7 +1251,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_student-007",
@@ -1260,7 +1260,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 8,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1270,7 +1270,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_impact-004",
@@ -1279,7 +1279,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1289,7 +1289,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_first-001",
@@ -1308,7 +1308,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_first-002",
@@ -1317,7 +1317,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 1,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1327,7 +1327,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_unchanged-006",
@@ -1336,27 +1336,8 @@
     "output": {
       "action": "finalize",
       "agent": "impact",
-      "max_changes": 5,
-      "disposition": "recommend"
-    },
-    "metrics": {
-      "valid": true,
-      "routing_correct": true,
-      "disposition_correct": false,
-      "pass": false,
-      "premature_finalization": false
-    },
-    "model": "qwen3-8b+coordinator-lora"
-  },
-  {
-    "id": "test-injected_final-007",
-    "kind": "injected_final",
-    "language": "ar",
-    "output": {
-      "action": "finalize",
-      "agent": "student",
-      "max_changes": 2,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
@@ -1365,7 +1346,26 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
+  },
+  {
+    "id": "test-injected_final-007",
+    "kind": "injected_final",
+    "language": "ar",
+    "output": {
+      "action": "finalize",
+      "agent": "student",
+      "max_changes": 0,
+      "disposition": "no_change"
+    },
+    "metrics": {
+      "valid": true,
+      "routing_correct": true,
+      "disposition_correct": false,
+      "pass": false,
+      "premature_finalization": false
+    },
+    "model": "qwen3-8b"
   },
   {
     "id": "test-rejected-002",
@@ -1384,7 +1384,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_workforce-004",
@@ -1393,7 +1393,7 @@
     "output": {
       "action": "delegate",
       "agent": "workforce",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1403,7 +1403,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_done-005",
@@ -1422,7 +1422,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_impact-005",
@@ -1441,7 +1441,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_missing-000",
@@ -1460,7 +1460,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_done-001",
@@ -1479,7 +1479,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_impact-001",
@@ -1488,7 +1488,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1498,7 +1498,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_schedule-005",
@@ -1507,7 +1507,7 @@
     "output": {
       "action": "delegate",
       "agent": "scheduling",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1517,7 +1517,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-initial-001",
@@ -1536,7 +1536,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_first-007",
@@ -1545,7 +1545,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1555,7 +1555,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_done-003",
@@ -1564,7 +1564,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 30,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1574,7 +1574,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_final-005",
@@ -1593,7 +1593,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_missing-005",
@@ -1602,7 +1602,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1612,7 +1612,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_missing-003",
@@ -1621,7 +1621,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1631,7 +1631,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_student-006",
@@ -1640,7 +1640,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1650,7 +1650,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-initial-007",
@@ -1659,7 +1659,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 8,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1669,7 +1669,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-rejected-003",
@@ -1688,7 +1688,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_final-002",
@@ -1697,17 +1697,17 @@
     "output": {
       "action": "finalize",
       "agent": "student",
-      "max_changes": 8,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_changed-004",
@@ -1716,17 +1716,17 @@
     "output": {
       "action": "finalize",
       "agent": "impact",
-      "max_changes": 1,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_impact-002",
@@ -1735,7 +1735,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 3,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1745,7 +1745,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_student-002",
@@ -1764,7 +1764,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_schedule-003",
@@ -1783,7 +1783,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_student-001",
@@ -1792,7 +1792,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 30,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1802,7 +1802,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_schedule-004",
@@ -1811,7 +1811,7 @@
     "output": {
       "action": "delegate",
       "agent": "scheduling",
-      "max_changes": 3,
+      "max_changes": 1,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1821,7 +1821,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_workforce-003",
@@ -1830,7 +1830,7 @@
     "output": {
       "action": "delegate",
       "agent": "workforce",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1840,7 +1840,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_schedule-007",
@@ -1848,18 +1848,18 @@
     "language": "ar",
     "output": {
       "action": "delegate",
-      "agent": "scheduling",
-      "max_changes": 3,
+      "agent": "impact",
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
       "valid": true,
-      "routing_correct": true,
+      "routing_correct": false,
       "disposition_correct": true,
-      "pass": true,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_first-007",
@@ -1868,7 +1868,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 20,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1878,7 +1878,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_final-003",
@@ -1887,17 +1887,17 @@
     "output": {
       "action": "finalize",
       "agent": "impact",
-      "max_changes": 12,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_workforce-000",
@@ -1906,7 +1906,7 @@
     "output": {
       "action": "delegate",
       "agent": "workforce",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1916,7 +1916,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_first-005",
@@ -1935,7 +1935,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-rejected-006",
@@ -1954,7 +1954,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_first-006",
@@ -1963,7 +1963,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1973,7 +1973,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-stale_impact-005",
@@ -1982,7 +1982,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -1992,7 +1992,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-rejected-000",
@@ -2001,7 +2001,7 @@
     "output": {
       "action": "delegate",
       "agent": "scheduling",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -2011,7 +2011,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_changed-007",
@@ -2020,17 +2020,17 @@
     "output": {
       "action": "finalize",
       "agent": "impact",
-      "max_changes": 2,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_impact-000",
@@ -2049,7 +2049,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_done-007",
@@ -2057,7 +2057,7 @@
     "language": "ar",
     "output": {
       "action": "delegate",
-      "agent": "workforce",
+      "agent": "scheduling",
       "max_changes": 0,
       "disposition": "needs_review"
     },
@@ -2068,7 +2068,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-stale_impact-001",
@@ -2087,7 +2087,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-stale_impact-007",
@@ -2096,7 +2096,7 @@
     "output": {
       "action": "delegate",
       "agent": "impact",
-      "max_changes": 2,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -2106,7 +2106,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-student_first-003",
@@ -2115,7 +2115,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 12,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -2125,7 +2125,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_done-007",
@@ -2134,7 +2134,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 1,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -2144,7 +2144,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_workforce-001",
@@ -2163,7 +2163,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-injected_final-000",
@@ -2171,18 +2171,18 @@
     "language": "en",
     "output": {
       "action": "finalize",
-      "agent": "student",
-      "max_changes": 30,
-      "disposition": "recommend"
+      "agent": "impact",
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_student-004",
@@ -2201,7 +2201,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-final_changed-005",
@@ -2210,17 +2210,17 @@
     "output": {
       "action": "finalize",
       "agent": "impact",
-      "max_changes": 2,
-      "disposition": "recommend"
+      "max_changes": 0,
+      "disposition": "no_change"
     },
     "metrics": {
       "valid": true,
       "routing_correct": true,
-      "disposition_correct": true,
-      "pass": true,
+      "disposition_correct": false,
+      "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-workforce_first-000",
@@ -2229,7 +2229,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 5,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -2239,7 +2239,7 @@
       "pass": false,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-need_workforce-002",
@@ -2258,7 +2258,7 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   },
   {
     "id": "test-initial-000",
@@ -2267,7 +2267,7 @@
     "output": {
       "action": "delegate",
       "agent": "student",
-      "max_changes": 1,
+      "max_changes": 0,
       "disposition": "needs_review"
     },
     "metrics": {
@@ -2277,6 +2277,6 @@
       "pass": true,
       "premature_finalization": false
     },
-    "model": "qwen3-8b+coordinator-lora"
+    "model": "qwen3-8b"
   }
 ]

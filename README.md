@@ -14,7 +14,7 @@ Start with **[docs/HANDOVER.md](docs/HANDOVER.md)**: install on a new PC, check 
 
 ## Current status
 
-Ready for the Farq demo (27 September 2026). Six collaborating agents with a fine-tuned local coordinator, OR-Tools optimization with independent validation, change requests, professor requests (Ask Mizan, My classes, request rules, common free-slot finder), workforce evidence and recruitment assistance, in a bilingual "Information System" interface with graded metrics. 80 automated tests and two browser suites pass.
+Ready for the Farq demo (27 September 2026). Six collaborating agents with a fine-tuned local coordinator, OR-Tools optimization with independent validation, change requests, professor requests (Ask Mizan, My classes, request rules, common free-slot finder), workforce evidence and recruitment assistance, in a bilingual "Information System" interface with graded metrics. 99 automated tests and three browser suites pass (log: `docs/test-log-2026-10-04.txt`). The coordinator's evaluation separates the prompt from the fine-tuning (`training/coordinator/deployed_ablation.md`).
 
 ## Architecture
 

@@ -71,7 +71,7 @@ def test_shortage_is_a_capacity_proof_not_a_timeout():
     assert signal["status"]=="PROVEN_CAPACITY_SHORTFALL"
     assert signal["minimum_unservable_sections"]==1
     assert signal["additional_minutes_needed"]==120
-    assert signal["students_at_risk"]==112
+    assert signal["students_demanding"]==112 and signal["students_at_risk"]==36  # 112 want the course; 2 of 3 sections run (38 seats each)
 
 
 def test_placement_eligibility_and_resources():

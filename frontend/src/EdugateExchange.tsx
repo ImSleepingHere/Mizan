@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {FileUp, FileDown, LoaderCircle, TriangleAlert, Plus, X, ArrowRight, Info} from 'lucide-react';
 import {api, time} from './api';
+import {Readiness} from './Readiness';
 
 type R = Record<string, any>;
 const SHORT_DAYS = {en:['Su','Mo','Tu','We','Th'], ar:['أحد','اثنين','ثلاثاء','أربعاء','خميس']};
@@ -8,8 +9,8 @@ const toMinutes = (v:string) => { const [h, m] = v.split(':').map(Number); retur
 
 /** Al Yamamah schedules in and out: read an Edugate PDF or the phone-app screenshot, review, add to Mizan;
  *  print any timetable or proposal back in the Edugate "student schedule" layout. */
-export function EdugateExchange({sid, ar, days, role, students, proposals, kind, onImported}:{sid:string, ar:boolean, days:string[], role:string,
-  students:R[], proposals:R[], kind:string, onImported:(id:string)=>void}){
+export function EdugateExchange({sid, ar, days, role, students, proposals, kind, onImported, revision, onChanged}:{sid:string, ar:boolean, days:string[], role:string, revision?:number, onChanged?:()=>void,
+  students:R[], proposals:R[], kind:string, onImported:(id:string, notes?:string[])=>void}){
   const t = (en:string, arabic:string) => ar ? arabic : en;
   const canImport = role === 'admin' || role === 'registrar';
   const [busy, setBusy] = useState(''), [error, setError] = useState('');
@@ -38,16 +39,18 @@ export function EdugateExchange({sid, ar, days, role, students, proposals, kind,
     try {
       const r = await api('/edugate/import', {student_id:studentId.trim(), student_name:studentName.trim(), term:term || null,
         scenario_id:target || null, rows:rows.map(({warnings, ...row}) => row)});
-      setDoc(null); setRows([]); onImported(r.id);
+      setDoc(null); setRows([]); onImported(r.id, r.notes);
     } catch (e) { setError((e as Error).message); } finally { setBusy(''); }
   }
   const href = `/api/edugate/export?scenario_id=${encodeURIComponent(sid)}&student_id=${encodeURIComponent(exportStudent)}${source ? `&proposal_id=${source}` : ''}`;
   const exportable = proposals.filter(p => !['rejected', 'invalid'].includes(p.status));
 
+  if (role === 'student') return students[0] ? <a className="secondary eg-compact" href={href} target="_blank" rel="noreferrer"><FileDown size={16}/>{t('Download my schedule (Edugate PDF)','تنزيل جدولي (PDF بتنسيق البوابة)')}</a> : null;
   return <section className="panel ra eg">
     <div className="ra-head"><span className="ra-icon"><FileUp size={18}/></span><div><h2>{t('Edugate schedules','جداول البوابة الإلكترونية')}</h2>
       <p>{canImport ? t('Bring in a student schedule from Edugate (PDF) or the app (screenshot), optimize it, and print the result in the same Edugate layout.','استورد جدول طالب من البوابة (PDF) أو من التطبيق (لقطة شاشة)، ثم حسّنه واطبع النتيجة بنفس تنسيق البوابة.')
         : t('Print your timetable in the Edugate layout.','اطبع جدولك بتنسيق البوابة الإلكترونية.')}</p></div></div>
+    {kind === 'edugate' && <Readiness sid={sid} ar={ar} canEdit={canImport} revision={revision || 0} onChanged={() => onChanged?.()}/>}
     {error && <div className="ra-block bad" role="alert"><p><TriangleAlert size={15}/>{error}</p></div>}
 
     {canImport && !doc && <label className="eg-drop">
@@ -82,7 +85,7 @@ export function EdugateExchange({sid, ar, days, role, students, proposals, kind,
           <option value="">{t('A new Edugate timetable','جدول جديد من البوابة')}</option>
           {timetables.map(tt => <option key={tt.id} value={tt.id}>{tt.name} · {tt.students} {t('students','طلاب')}</option>)}</select></label>
       </div>
-      <p className="muted"><Info size={13}/>{t('Read on this PC; the file is not stored. Instructors, room sizes and other bookings are not in the schedule, so Mizan uses placeholders for them. Students who share a course and section share it here too.','تمت القراءة على هذا الجهاز ولا يُحفظ الملف. المحاضرون وسعة القاعات والحجوزات الأخرى غير موجودة في الجدول، لذا يستخدم ميزان قيماً افتراضية لها. الطلاب المشتركون في نفس المقرر والشعبة يتشاركونها هنا أيضاً.')}</p>
+      <p className="muted"><Info size={13}/>{t('Read on this PC; the uploaded file is not stored. What is saved: the student’s name, ID and courses in this timetable (the activity log keeps only a one-way code instead of the ID). Instructors, room sizes and other bookings are not in the schedule, so Mizan uses placeholders for them. Students who share a course and section share it here too.','تمت القراءة على هذا الجهاز ولا يُحفظ الملف المرفوع. ما يُحفظ: اسم الطالب ورقمه ومقرراته في هذا الجدول (ويحفظ سجل العمليات رمزاً أحادي الاتجاه بدلاً من الرقم). المحاضرون وسعة القاعات والحجوزات الأخرى غير موجودة في الجدول، لذا يستخدم ميزان قيماً افتراضية لها. الطلاب المشتركون في نفس المقرر والشعبة يتشاركونها هنا أيضاً.')}</p>
       <div className="ra-actions"><button className="primary" disabled={!!busy || incomplete || !studentId.trim() || !studentName.trim() || !rows.length} onClick={() => void add()}>
         {busy === 'import' ? <LoaderCircle className="spin" size={16}/> : <ArrowRight size={16}/>}{t('Add to Mizan and optimize','أضف إلى ميزان وحسّن')}</button></div>
       {incomplete && <p className="muted"><TriangleAlert size={13}/>{t('Fill in every highlighted time and day first.','أكمل الأوقات والأيام المظللة أولاً.')}</p>}

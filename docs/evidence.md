@@ -8,8 +8,8 @@ Checked 4 October 2026. Rule for the deck: a number is either **measured in Miza
 |---|---|---|
 | 15,000 gap hours / week | Built into the baseline generator (`backend/fixtures.py`): every cohort has 1-hour classes at 08, 10, 13, 15, 17 on two days → 5 h gaps/day → 10 h/week × 1,500 students. A deliberately poor starting timetable, not a real-world measurement. | "In our demo semester of 1,500 synthetic students, the starting timetable wastes 10 hours per student per week." |
 | 100% of students with a 2 h+ gap | Same construction (10:00→13:00 gap for everyone). | Only as a demo figure. |
-| 10% room use | 20 of 40 rooms used 10 of 50 weekly hours. Happens to match the low end of real UK data (§2.4). | "Demo campus: 10% — real UK buildings go as low as 10%, sector average about 20%." |
-| ≈ +1,800 h recovered, 0 students worse off (15 s run) | Measured by the solver, independently validated (`docs/demo-script.md`). About 12% of the demo gap hours. | "Mizan recovered ~1,800 student-hours a week in 15 seconds, and nobody's week got worse." |
+| 10% room use | 20 of 40 rooms used 10 of 50 weekly hours. Constructed, like the gaps; any resemblance to real figures (§2.4) is a coincidence, not validation. | Only as a demo figure: "In the demo campus, rooms are used 10% of the time." Quote the UK research separately, never as a comparison. |
+| ≈ +1,800 h recovered, 0 students worse off (15 s run) | Measured by the solver, independently validated (`docs/demo-script.md`). About 12% of the demo gap hours. Mechanical too: cohorts are identical, so one moved 17:00 section closes gaps for all 75 students of a group (≈ 225 students × 8 h). It shows the method, not real-world performance. | "Mizan recovered ~1,800 student-hours a week in 15 seconds, and nobody's week got worse." |
 
 ## 2. Published research
 
@@ -39,6 +39,10 @@ Kirby-Hawkins, H. *What time is good for you?* SRHE conference paper (University
 
 ### 2.5 Automated timetabling works at scale
 - UniTime at Purdue (39,000 students, ~9,000 classes, 570 rooms) has been used university-wide since 2007. https://help.unitime.org/student-scheduling — proof that solver-based timetabling is used in practice; Mizan's difference is human-approved changes, professor requests in Arabic/English, and fully local AI.
+
+### 2.6 Our fine-tuned coordinator (measured, synthetic benchmark)
+- `training/coordinator/deployed_ablation.md`: base + original prompt 75/120 → base + training prompt 96/120 → fine-tuned 106/120 (fine-tuning alone: 14 fixed / 4 broken, p ≈ 0.03). Same generator as the training data.
+- Say: "a better prompt did most of the work; fine-tuning added about 10 correct decisions out of 120". Do not use the older "111 vs 75" (it changed prompt and adapter together).
 
 ## 3. Not to use
 - "Registrars spend 4–8 weeks per timetable" and "12–18% of students hit a conflict in week one": from a vendor marketing page (OpenEduCat), no study behind them.

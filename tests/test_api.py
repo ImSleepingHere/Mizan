@@ -49,7 +49,11 @@ def test_student_isolation_and_server_authorization(client):
     client.post('/api/login',json={"username":"student","password":"Mizan-demo-2026!"})
     d=client.get('/api/scenarios/baseline').json()
     assert len(d["students"])==1 and d["students"][0]["id"]=="ST0001"
-    assert not d["professors"]
+    # Only the display names of the student's own instructors: no contracts, availability or other staff.
+    own={s["professor_id"] for s in d["sections"]}
+    assert d["professors"] and {p["id"] for p in d["professors"]}==own
+    assert all(set(p)=={"id","name","department"} for p in d["professors"])
+    assert set(d["enrollment"])==set(d["students"][0]["sections"]) and all(isinstance(v,int) for v in d["enrollment"].values())
     for route in ['/api/scenarios/baseline/export','/api/scenarios/baseline/metrics','/api/audit','/api/requisitions','/api/scenarios/baseline/workforce','/api/proposals?scenario_id=baseline']:
         assert client.get(route).status_code==403
     assert client.post('/api/scenarios/baseline/optimize',json={}).status_code==403

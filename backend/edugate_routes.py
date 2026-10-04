@@ -53,6 +53,12 @@ class ImportBody(StrictModel):
     rows: list[ImportRow] = Field(min_length=1, max_length=20)
 
 
+def _pseudonym(student_id):
+    """Audit rows identify a student by a short one-way hash, never the university ID."""
+    import hashlib
+    return "student#" + hashlib.sha256(student_id.encode()).hexdigest()[:10]
+
+
 def _rooms_window(open_minute, close_minute):
     return [Window(day=d, start=open_minute, end=close_minute) for d in range(5)]
 
@@ -133,10 +139,16 @@ def build(body: ImportBody, base: Semester | None):
     for s in students:
         for sid in s.sections:
             roster[sid] = roster.get(sid, 0) + 1
+    verified_rooms = set(data.verified.get("rooms", []))
     for sid, section in sections.items():
-        section.capacity = max(section.capacity, roster.get(sid, 0))
+        enrolled = roster.get(sid, 0)
         room = rooms[section.room_id]
-        room.capacity = max(room.capacity, section.capacity)
+        if enrolled > section.capacity and section.room_id not in verified_rooms:
+            notes.append(f"{sid}: {enrolled} imported students exceed the assumed {section.capacity} seats; seats raised to {enrolled} until real capacities are verified.")
+            section.capacity = enrolled
+        if section.capacity > room.capacity and section.room_id not in verified_rooms:
+            notes.append(f"Room {room.id}: assumed capacity raised from {room.capacity} to {section.capacity} for {sid}.")
+            room.capacity = section.capacity
     try:
         semester = Semester.model_validate(data.model_copy(update=dict(
             courses=list(courses.values()), rooms=list(rooms.values()), professors=list(professors.values()),
@@ -165,7 +177,7 @@ def import_schedule(body: ImportBody, u=Depends(user)):
             sid, revision = body.scenario_id, row["revision"] + 1
             con.execute("UPDATE scenarios SET revision=?,data=? WHERE id=?", (revision, payload, sid))
         con.execute("INSERT INTO versions VALUES(?,?,?,?)", (sid, revision, payload, now()))
-        audit(con, u["username"], "edugate_import", sid, {"student": body.student_id, "rows": len(body.rows), "revision": revision})
+        audit(con, u["username"], "edugate_import", sid, {"scenario_id": sid, "student": _pseudonym(body.student_id), "rows": len(body.rows), "revision": revision})
     return dict(id=sid, revision=revision, name=data.name, students=len(data.students), sections=len(data.sections),
                 notes=notes, issues=validate(data)[:50])
 
@@ -203,7 +215,7 @@ def export(scenario_id: str, student_id: str, proposal_id: str | None = None, u=
     except KeyError:
         raise HTTPException(404, "Student not in this timetable")
     with connect() as con:
-        audit(con, u["username"], "edugate_export", scenario_id, {"student": student_id, "proposal": proposal_id})
+        audit(con, u["username"], "edugate_export", scenario_id, {"scenario_id": scenario_id, "student": _pseudonym(student_id), "proposal": proposal_id})
     name = f"schedule-{student_id}" + (f"-proposal-{proposal_id[:6]}" if proposal_id else "") + ".pdf"
     return Response(pdf, media_type="application/pdf", headers={"Content-Disposition": f'inline; filename="{name}"'})
 
@@ -219,3 +231,69 @@ def timetables(u=Depends(user)):
         if data.get("kind") == "edugate":
             result.append(dict(id=r["id"], name=r["name"], revision=r["revision"], students=len(data["students"])))
     return result
+
+
+def readiness_of(data: Semester):
+    """What an imported timetable knows for certain, what it assumes, and what it cannot see (UX review: data readiness)."""
+    verified_rooms, verified_sections = set(data.verified.get("rooms", [])), set(data.verified.get("instructors", []))
+    used_rooms = {s.room_id for s in data.sections}
+    rooms_assumed = sorted(r for r in used_rooms if r not in verified_rooms)
+    sections_assumed = sorted(s.id for s in data.sections if s.id not in verified_sections)
+    return dict(students=len(data.students), sections=len(data.sections),
+                verified=dict(student_conflicts=len(data.students), rooms=len(used_rooms) - len(rooms_assumed), instructors=len(data.sections) - len(sections_assumed)),
+                assumed=dict(rooms=rooms_assumed, instructors=sections_assumed, availability=True),
+                missing=dict(other_bookings=True, other_students=True),
+                ready_to_publish=not rooms_assumed and not sections_assumed)
+
+
+@router.get("/{sid}/readiness")
+def readiness(sid: str, u=Depends(user)):
+    require(u, STAFF)
+    _, data = scenario(sid)
+    if data.kind != "edugate":
+        raise HTTPException(404, "Only imported timetables have a readiness report")
+    return readiness_of(data)
+
+
+class RoomFact(StrictModel):
+    id: str = Field(min_length=1, max_length=30)
+    capacity: int = Field(gt=0, le=2000)
+
+
+class InstructorFact(StrictModel):
+    section_id: str = Field(min_length=1, max_length=40)
+    name: str = Field(min_length=2, max_length=120)
+
+
+class VerifyBody(StrictModel):
+    rooms: list[RoomFact] = Field(default=[], max_length=500)
+    instructors: list[InstructorFact] = Field(default=[], max_length=500)
+
+
+@router.post("/{sid}/verify")
+def verify(sid: str, body: VerifyBody, u=Depends(user)):
+    """Record real room capacities and instructors for an imported timetable (a new version; earlier proposals become outdated)."""
+    require(u, IMPORTERS)
+    row, data = scenario(sid)
+    if data.kind != "edugate":
+        raise HTTPException(409, "Only imported timetables can be verified here")
+    rooms, sections = {r.id: r for r in data.rooms}, {s.id: s for s in data.sections}
+    unknown = [r.id for r in body.rooms if r.id.upper() not in rooms] + [i.section_id for i in body.instructors if i.section_id not in sections]
+    if unknown:
+        raise HTTPException(422, f"Not in this timetable: {', '.join(unknown[:10])}")
+    verified = {k: set(v) for k, v in data.verified.items()}
+    for fact in body.rooms:
+        rooms[fact.id.upper()].capacity = fact.capacity
+        verified.setdefault("rooms", set()).add(fact.id.upper())
+    professors = {p.id: p for p in data.professors}
+    for fact in body.instructors:
+        professors[sections[fact.section_id].professor_id].name = fact.name.strip()
+        verified.setdefault("instructors", set()).add(fact.section_id)
+    data.verified = {k: sorted(v) for k, v in verified.items()}
+    data = Semester.model_validate(data.model_dump())
+    payload, revision = data.model_dump_json(), row["revision"] + 1
+    with connect() as con:
+        con.execute("UPDATE scenarios SET revision=?,data=? WHERE id=?", (revision, payload, sid))
+        con.execute("INSERT INTO versions VALUES(?,?,?,?)", (sid, revision, payload, now()))
+        audit(con, u["username"], "edugate_verify", sid, {"scenario_id": sid, "rooms": len(body.rooms), "instructors": len(body.instructors), "revision": revision})
+    return dict(revision=revision, issues=validate(data)[:50], **readiness_of(data))

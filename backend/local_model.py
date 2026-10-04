@@ -61,6 +61,8 @@ def status():
 
 def structured(system,content,schema,timeout=90,adapter_id=None,compact=False):
     started=time.monotonic()
+    # MIZAN_MODEL_TIMEOUT raises the wait for slow hardware (scripts/start.ps1 sets it when the model runs on the CPU).
+    timeout=max(timeout,float(os.environ.get("MIZAN_MODEL_TIMEOUT") or 0))
     loaded=adapters()
     body={"model":MODEL,"stream":False,
           "messages":[{"role":"system","content":system},

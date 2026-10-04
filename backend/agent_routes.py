@@ -19,7 +19,7 @@ class RunRequest(StrictModel):
 
 @router.get('/status')
 def status(u=Depends(user)):
-    require(u,STAFF|{'hiring_manager'})
+    require(u,STAFF|{'hiring_manager','professor'})
     return dict(**local_model.status(),roles=agent_engine.ROLE_NAMES)
 
 

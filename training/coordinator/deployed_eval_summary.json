@@ -2,7 +2,7 @@
   "pretrained": {
     "mode": "pretrained",
     "count": 120,
-    "seconds": 77.6,
+    "seconds": 63.7,
     "metrics": {
       "valid": 120,
       "routing_correct": 112,
@@ -11,15 +11,27 @@
       "premature_finalization": 0
     }
   },
+  "pretrained-tunedprompt": {
+    "mode": "pretrained-tunedprompt",
+    "count": 120,
+    "seconds": 47.7,
+    "metrics": {
+      "valid": 120,
+      "routing_correct": 110,
+      "disposition_correct": 106,
+      "pass": 96,
+      "premature_finalization": 0
+    }
+  },
   "fine-tuned": {
     "mode": "fine-tuned",
     "count": 120,
-    "seconds": 47.1,
+    "seconds": 35.5,
     "metrics": {
       "valid": 120,
-      "routing_correct": 117,
+      "routing_correct": 112,
       "disposition_correct": 114,
-      "pass": 111,
+      "pass": 106,
       "premature_finalization": 0
     }
   }

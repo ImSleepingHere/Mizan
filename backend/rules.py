@@ -322,7 +322,7 @@ def _break_groups(data, rules, b):
     for st in data.students:
         if scope & set(st.sections):
             key = tuple(sorted(st.sections))
-            groups.setdefault(f"students {key[0]}…", [m for sid in key for m in sections[sid].meetings])
+            groups.setdefault(f"students {'|'.join(key)}", [m for sid in key for m in sections[sid].meetings])
     return groups
 
 
