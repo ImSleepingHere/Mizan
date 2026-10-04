@@ -6,7 +6,9 @@ Local-first university scheduling, workforce planning, and recruitment assistanc
 
 Start with **[docs/HANDOVER.md](docs/HANDOVER.md)**: install on a new PC, check readiness, run, reset, and the demo itself.
 
-- **[Project documentation v4 (as built)](docs/MIZAN%20-%20Project%20Documentation%20v4.md)**: the whole system in one place
+- **[Project documentation v5 (as built, 4 Oct 2026)](docs/MIZAN%20-%20Project%20Documentation%20v5.md)**: the whole system in one place
+- **[AI briefing](docs/AI-BRIEFING.md)**: context for an AI assistant that only sees this repository (situation, decisions, claim rules, open items)
+- **[Reviews](docs/reviews/README.md)**: three reviews from 4 Oct and the status of every finding
 - [Demo script (7 minutes)](docs/demo-script.md)
 - [Acceptance report: all spec criteria mapped to passing tests](docs/acceptance-report.md)
 - [Original design specification v3 / v3.1](docs/MIZAN%20-%20Project%20Documentation%20v3.md)

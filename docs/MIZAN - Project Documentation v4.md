@@ -1,6 +1,8 @@
 # MIZAN — ميزان
 ## Project documentation v4.0 (as built)
 
+> **Superseded on 4 October 2026 by [v5](MIZAN%20-%20Project%20Documentation%20v5.md).** Kept for history.
+
 **28 September 2026 · Farq hackathon, university-operations track**
 
 Mizan checks a university timetable before it's published. It measures what the timetable costs students and staff, recommends valid improvements, checks proposed changes, separates scheduling problems from real staffing shortages, and prepares recruitment only when a shortage is proven. A person approves every publication and every hiring step. Everything runs locally on one PC.

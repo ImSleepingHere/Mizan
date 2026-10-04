@@ -1,7 +1,7 @@
 # MIZAN — project notes for Claude Code
 
 Local-first university scheduling + workforce + recruitment assistant (Farq hackathon, university-operations track).
-Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tools, human approval). As-built documentation: `docs/MIZAN - Project Documentation v4.md` (keep it current when behaviour changes). Everything runs locally; no external AI APIs.
+Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tools, human approval). As-built documentation: `docs/MIZAN - Project Documentation v5.md` (keep it current when behaviour changes; v4 is history). Briefing for AI assistants that only see GitHub: `docs/AI-BRIEFING.md` (keep it current too). Everything runs locally; no external AI APIs.
 
 ## Layout
 - `backend/` FastAPI app (`backend.main:app`), SQLite in `data/mizan.sqlite3`. Agents: `agent_engine.py`; model client: `local_model.py`; solver: `solver.py` (OR-Tools); metrics/validation: `analysis.py`; recruitment: `recruitment.py`.
