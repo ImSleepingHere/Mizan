@@ -113,3 +113,4 @@ details.context,details.adverse{margin:14px 0}details.context>summary,details.ad
 @media(max-width:760px){.readiness-grid{grid-template-columns:1fr}}
 .ov-note{margin:6px 0 0;max-width:64ch;font-size:12.5px;line-height:1.45;color:inherit;opacity:.82}
 .tt-legend-item.lunch-key{cursor:help}.tt-legend-item.lunch-key i{display:inline-block;inline-size:12px;block-size:12px;background:repeating-linear-gradient(135deg,var(--line-2) 0 2px,transparent 2px 5px);border:1px solid var(--line-2)}
+.campus-overview .ov-note{color:#fff0db;opacity:1;text-shadow:0 1px 2px rgba(0,0,0,.55)}

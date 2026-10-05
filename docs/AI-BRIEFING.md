@@ -8,7 +8,7 @@ You can see this GitHub repository and nothing else. This file tells you what th
 2. `CLAUDE.md`: the running engineering notes (paths, commands, gotchas, decisions). `AGENTS.md` repeats conventions for other coding assistants.
 3. `docs/reviews/README.md`: every review finding (IDs like S01, I03, C02, COR-4, AI-1) with its status, fix and test.
 4. `docs/evidence.md`: which numbers may be used in the pitch, where each comes from, and which must not be used.
-5. `docs/demo-script.md`, `docs/HANDOVER.md`, `docs/acceptance-report.md`, `docs/test-log-2026-10-04.txt`.
+5. `docs/pitch-timing.md` (the 5-minute plan: who says what, when), `docs/demo-script.md`, `docs/HANDOVER.md`, `docs/acceptance-report.md`, `docs/test-log-2026-10-04.txt`.
 6. `training/coordinator/deployed_ablation.md`: the corrected AI result.
 
 ## 2. The situation
@@ -19,7 +19,7 @@ You can see this GitHub repository and nothing else. This file tells you what th
   - The pitch is a **PowerPoint** (not a video), sized "1600 × 3096 px": the deck assumes **3096 wide × 1600 tall**, which is not yet confirmed with the mentor.
   - **5 minutes** of pitch plus 2 minutes of questions; every team member presents; start with a short team and idea introduction. The four judges have never seen the idea.
   - Judging criteria: understanding of the problem, innovation, user need, fit of solution to problem, potential and value, technical aspects, presentation and role split.
-- **The deck:** `docs/Mizan-Farq-2026.pptx`, 8 slides, English, speaker notes on every slide. An Arabic version may be wanted later. Slide 1 holds the team names (edited by the owner).
+- **The deck:** `docs/Mizan-Farq-2026.pptx`, 6 slides, English, speaker notes with timings on every slide. The demo is not in the deck: after slide 4, Ali runs it live in the browser (its script is in slide 4's notes and `docs/pitch-timing.md`), then returns to slide 5. Arabic version: `docs/Mizan-Farq-2026-AR.pptx` (same content, right-to-left layout, Arabic charts and notes). Three presenters: Sultan (problem and research), Ali (AI, demo and optimization), Mishary (value and next steps).
 
 ## 3. What is NOT in the repository
 
@@ -70,7 +70,7 @@ These come from two expert reviews and were checked against the code and fresh m
 
 ## 7. Still open (as of 4 Oct, evening)
 
-- Confirm the slide size with the mentor; possibly an Arabic deck.
+- Confirm the slide size with the mentor; confirm the Arabic spelling of the team names in the Arabic deck.
 - Set up and rehearse on the Zenbook; run `Check Mizan Setup.cmd`; run Optimize once to confirm the figures; time one Ask Mizan request there.
 - Rehearse the whole demo once with the model stopped (review item DOC-3).
 - Re-record the demo video (the screens changed on 4 Oct).
