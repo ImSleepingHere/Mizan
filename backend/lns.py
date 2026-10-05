@@ -45,8 +45,8 @@ def _pattern_stats(signature, placement):
 
 
 class Context:
-    def __init__(self, data, max_changes, strategy):
-        self.data, self.max_changes, self.strategy = data, max_changes, strategy
+    def __init__(self, data, max_changes, strategy, max_worsened=None):
+        self.data, self.max_changes, self.strategy, self.max_worsened = data, max_changes, strategy, max_worsened
         self.original = {s.id: s for s in data.sections}
         counts = defaultdict(int)
         for student in data.students:
@@ -71,6 +71,8 @@ class Context:
         self.baseline_gap = sum(s["gap_minutes"] for s in student_metrics(data))
         self.minimum_saved = max(1, ceil(self.baseline_gap * .01))
         self.tail_count = max(1, ceil(len(data.students) * .1))
+        # Each pattern's (gap, days) in the official timetable: a student is worse off above either.
+        self.base_stats = [_pattern_stats(sig, self.original) for sig, _ in self.patterns]
 
     def score(self, placement, objective=None):
         """Exact value of the CP-SAT objective of `solver.optimize` for a placement."""
@@ -99,6 +101,11 @@ class Context:
                 break
         bound = self.population*(7200*7200+60*7200)+len(self.data.sections)
         return tail*(bound+1) + sum(g*g*c for (g, _), c in stats) + 60*gap_total + moved
+
+    def worsened(self, placement):
+        """Students with more gap minutes or campus days than in the official timetable (as compare() counts)."""
+        return sum(count for (sig, count), (bg, bd) in zip(self.patterns, self.base_stats)
+                   if any(x > y for x, y in zip(_pattern_stats(sig, placement), (bg, bd))))
 
     def gap_total(self, placement):
         return sum(_pattern_stats(sig, placement)[0]*count for sig, count in self.patterns)
@@ -151,7 +158,9 @@ def _round(ctx, options, placement, free, objective, enforce_saving, seconds, se
         signature, count = ctx.patterns[index]
         fixed_meetings = tuple(sorted((m.day, m.start, m.end) for sid in signature if sid not in free
                                       for m in placement[sid].meetings))
-        merged[(tuple(s for s in signature if s in free), fixed_meetings)] += count
+        # With a worse-off limit, patterns merge only when their official (gap, days) also match.
+        base = ctx.base_stats[index] if ctx.max_worsened is not None else None
+        merged[(tuple(s for s in signature if s in free), fixed_meetings, base)] += count
     # One choice variable per feasible combination of a free set's options. Each
     # pattern's weekly gap and campus days are then exact table lookups, so the
     # objective is linear in 0/1 variables (no min/max per day to relax).
@@ -188,14 +197,16 @@ def _round(ctx, options, placement, free, objective, enforce_saving, seconds, se
                 days[m.day].append((m.start, m.end))
         return sum(max(b for _, b in ms)-min(a for a, _ in ms)-sum(b-a for a, b in ms) for ms in days.values()), len(days)
 
-    groups = []   # (count, [(gap, days, var)], current gap)
-    for (free_sig, fixed_meetings), count in merged.items():
+    groups, worse_terms = [], []   # groups: (count, [(gap, days, var)], current gap)
+    for (free_sig, fixed_meetings, base), count in merged.items():
         table = []
         for opts_, var in combos[free_sig]:
             g, dcount = week(fixed_meetings, opts_)
             table.append((g, dcount, var))
         current = week(fixed_meetings, [placement[sid] for sid in free_sig])[0]
         groups.append((count, table, current))
+        if base is not None:
+            worse_terms += [count*var for g, dcount, var in table if g > base[0] or dcount > base[1]]
     untouched = [ctx.patterns[i] for i in range(len(ctx.patterns)) if i not in touched]
     const_stats = [(_pattern_stats(sig, placement), count) for sig, count in untouched]
     const_gap = sum(g*c for (g, _), c in const_stats)
@@ -203,6 +214,10 @@ def _round(ctx, options, placement, free, objective, enforce_saving, seconds, se
     totals = [sum(g*v for g, _, v in table) for _, table, _ in groups]
     gap_total = sum(c*g*v for c, table, _ in groups for g, _, v in table) + const_gap
     day_total = sum(c*d*v for c, table, _ in groups for _, d, v in table) + const_days
+    if ctx.max_worsened is not None and worse_terms:
+        const_worse = sum(c for i, (sig, c) in enumerate(ctx.patterns) if i not in touched
+                          and any(x > y for x, y in zip(_pattern_stats(sig, placement), ctx.base_stats[i])))
+        model.add(sum(worse_terms) + const_worse <= ctx.max_worsened)
     moved = [model.new_bool_var(f"moved_{sid}") for sid in free_list]
     for sid, mv in zip(free_list, moved):
         model.add(mv == sum(v for o, v in zip(*choice[sid]) if o != ctx.original[sid]))
@@ -296,8 +311,8 @@ def _potentials(ctx, options, placement):
     return gains
 
 
-def search(data, max_changes, seconds, strategy, options, started, seed):
-    ctx = Context(data, max_changes, strategy)
+def search(data, max_changes, seconds, strategy, options, started, seed, max_worsened=None):
+    ctx = Context(data, max_changes, strategy, max_worsened)
     deadline = started + seconds
     placement = dict(ctx.original)
     # Strategies require a minimum saving the official timetable lacks: reach it first
@@ -325,7 +340,7 @@ def search(data, max_changes, seconds, strategy, options, started, seed):
                                    min(ROUND_SECONDS, deadline - perf_counter()), seed + rounds)
         rounds += 1
         proven += status == cp_model.OPTIMAL
-        if result is not None and not validate(_semester(data, result)):
+        if result is not None and (ctx.max_worsened is None or ctx.worsened(result) <= ctx.max_worsened) and not validate(_semester(data, result)):
             value = ctx.score(result, objective)
             if value < current:
                 placement, current, since_improvement = result, value, 0
@@ -352,6 +367,8 @@ def search(data, max_changes, seconds, strategy, options, started, seed):
                   weights=data.policy.weights)
     if strategy is not None:
         report.update(strategy=strategy, minimum_saved_minutes=ctx.minimum_saved)
+    if max_worsened is not None:
+        report["max_worsened"] = max_worsened
     if not rounds or phase == "reach":
         # No round ran, or a strategy never reached its minimum saving.
         return dict(status="UNKNOWN", **report,

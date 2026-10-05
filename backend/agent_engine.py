@@ -135,7 +135,7 @@ def run_collaboration(run_id,sid,row,data,request,limits,user):
         elif decision.action=='optimize_schedule':
             max_changes=min(decision.max_changes,limits['max_changes'])
             # Request rules (spec §18.4) travel to the tools only, never into the coordinator's context.
-            result=optimize(data,max_changes,limits.get('solver_seconds',15),rules=rule_set)
+            result=optimize(data,max_changes,limits.get("solver_seconds",15),rules=rule_set,max_worsened=limits.get("max_worsened"))
             raw=result.pop('candidate',None)
             if raw:
                 candidate=Semester.model_validate(raw);candidate_revision+=1

@@ -57,9 +57,10 @@ def bounded_options(section, opts, keep_all=False):
     return primary+([room_extra] if room_extra else [])+day_extras[:2]
 
 
-def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy=None):
+def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy=None, max_worsened=None):
     """movable: optional set of section IDs that may change (e.g. a professor's own sections); all others stay fixed.
-    rules: optional RuleSet (spec §18.4) applied as hard constraints to its scope; candidates are re-checked independently."""
+    rules: optional RuleSet (spec §18.4) applied as hard constraints to its scope; candidates are re-checked independently.
+    max_worsened: optional hard limit on students with more gap minutes or campus days than now (as compare() counts them)."""
     from .rules import option_ok, split_options, needs_split, is_split, add_break_constraints, check_rules, split_reasons
     started = perf_counter()
     if rules is not None:
@@ -77,7 +78,7 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
         for section in data.sections:
             opts = bounded_options(section, options_for(data, section))
             options[section.id] = opts if section in opts else [section] + opts
-        return search(data, max_changes, seconds, strategy, options, started, data.seed)
+        return search(data, max_changes, seconds, strategy, options, started, data.seed, max_worsened)
     model = cp_model.CpModel()
     resource_intervals = defaultdict(list)
     choices, modified, option_counts = {}, [], []
@@ -142,9 +143,9 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
     # Hint every auxiliary variable with its value in the official timetable, so
     # CP-SAT holds a complete feasible solution from the start. With one group per
     # student (mixed rosters) a partial hint was not completed within 10-30 s.
-    gaps, days, irregular, baseline_totals = [], [], [], []
+    gaps, days, irregular, baseline_totals, worsened_terms = [], [], [], [], []
     for group,(signature,count) in enumerate(patterns.items()):
-        group_gaps, group_days, group_total = [], [], 0
+        group_gaps, group_days, group_total, group_base_days = [], [], 0, 0
         for day in range(5):
             terms = day_terms[(group,day)]
             if not terms:
@@ -168,6 +169,7 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
             model.add_hint(latest,max((e for _,e in base),default=0))
             model.add_hint(gap,base_gap)
             group_total+=base_gap
+            group_base_days+=bool(base)
             group_gaps.append(gap)
             group_days.append(active)
         total=model.new_int_var(0,7200,f"total_{group}")
@@ -176,6 +178,16 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
         baseline_totals.append(group_total)
         gaps.append((total,count))
         days.append((sum(group_days),count))
+        if max_worsened is not None:
+            # worse=0 forces this pattern's gaps and campus days to stay at or below today's values.
+            worse=model.new_bool_var(f"worse_{group}")
+            model.add(total<=group_total).only_enforce_if(worse.Not())
+            if group_days:
+                model.add(sum(group_days)<=group_base_days).only_enforce_if(worse.Not())
+            model.add_hint(worse,0)
+            worsened_terms.append(count*worse)
+    if max_worsened is not None:
+        model.add(sum(worsened_terms)<=max_worsened)
     worst=model.new_int_var(0,7200,"worst_gap")
     model.add_max_equality(worst,[v for v,c in gaps] or [0])
     model.add_hint(worst,max(baseline_totals,default=0))
@@ -249,6 +261,8 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
                 search_scope="Bounded candidate neighborhood: all approved starts on current days/room plus three alternatives per section; meeting spacing preserved and faculty fixed. Optimal applies only to this neighborhood.",
                 invariant_objectives=["Teaching-load balance and total room utilization are constant in this search because teaching assignments and instructional minutes are fixed."],
                 candidates=sum(option_counts), objective_version="1.0", weights=weights)
+    if max_worsened is not None:
+        report["max_worsened"]=max_worsened
     if strategy is not None:
         report.update(strategy=strategy, minimum_saved_minutes=minimum_saved,
                       objective_version="alternatives-1.0")
@@ -396,8 +410,8 @@ def common_slots(data, section_ids, duration, days=None, same_time_for_all=False
         cands = sorted((r for r in data.rooms if r.type == room_type and available(w, r.availability)
                         and not any(overlaps(w, m) for m in room_busy[r.id])), key=lambda r: (r.capacity, r.id))
         if merge or len(group) == 1 or not same_time_for_all:
-            total = sum(need.values()) if merge else max(need.values())
-            room = next((r for r in cands if r.capacity >= total), None)
+            # One session for all these students together (a merge, or one common time): seat every distinct student.
+            room = next((r for r in cands if r.capacity >= len(members)), None)
             return [room.id] if room else None
         chosen = []
         for sid, n in sorted(need.items(), key=lambda x: -x[1]):

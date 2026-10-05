@@ -56,8 +56,11 @@ def log(con,u,action,subject,detail):audit(con,u['username'],action,subject,deta
 def validate_criteria(body):
     if len({c.id for c in body.criteria})!=len(body.criteria):raise HTTPException(422,'Criterion IDs must be unique')
     # Explicit guard for common non-job-related attributes; hiring manager still reviews the final rubric.
-    forbidden=['gender','religion','nationality','marital','pregnan','ethnicity','race','disabil','date of birth','age limit','الجنس','الدين','الجنسية','الحالة الاجتماعية','العمر']
-    if any(word in c.description.lower() for c in body.criteria for word in forbidden):raise HTTPException(422,'Use job-related criteria only')
+    # Whole words (with endings): "race" must not reject "embraces" or "trace".
+    if any(FORBIDDEN_CRITERIA.search(c.description) for c in body.criteria):raise HTTPException(422,'Use job-related criteria only')
+
+FORBIDDEN_CRITERIA=re.compile(r"\b(genders?|religio\w*|nationalit\w*|marital|pregnan\w*|ethnic\w*|races?|racial\w*|disabil\w*|date of birth|age limits?)\b"
+                              r"|الجنس|الدين|الجنسية|الحالة الاجتماعية|العمر",re.I)
 
 @router.post('/requisitions/{rid}/approve')
 def approve_requisition(rid:str,body:JobInput,u=Depends(authorized)):

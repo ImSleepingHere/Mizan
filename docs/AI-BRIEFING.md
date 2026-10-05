@@ -103,6 +103,8 @@ Fresh verification: **118 pytest tests passed**, including 19 new comparison che
 **Solver on mixed rosters (5 Oct 2026).** Whole-semester optimization on *Faculty week* (1,499 distinct student timetables vs 20 in the baseline) used to end `UNKNOWN`: the full CP-SAT model spent 25–45 s in presolve. Such runs (no rules, no scope, >200 patterns) now use a large-neighbourhood search (`backend/lns.py`) with the identical objective: 5 s reaches the plan the full model proves optimal in 85 s (663 h saved, 5 changes), and all three plans succeed in 15 s. Results are reported as `FEASIBLE` (not proven optimal). Baseline-sized, rule and own-section runs are unchanged. pytest: 140 passed (`tests/test_lns.py` checks the objective equals the full model's for all four objectives).
 
 
+**Audit fixes (5 Oct 2026, 6.2).** Break rules now bind only pairs involving a section in the request's scope; rule requests already met return "no change is needed"; the agent `max_worsened` limit is a solver constraint (faculty week, 0 worse off: 686 h); whole-word hiring-criteria filter; Edugate import/verify return 409 on a concurrent change; common-time rooms seat all distinct students. pytest: 163 passed (`tests/test_audit_fixes.py`).
+
 ## 10. Current handover authority
 
 Read v6, CHANGELOG and release-verification first for the current delivered system. The three-plan comparison is implemented, not deferred. Instructor identities, resource availability, small-room reconciliation, readiness and non-ST redaction were corrected on 5 October. Yellow preview annotations are removed. Tests of real AI inference and the exact presentation laptop remain unverified for this release. The owner pushes the prepared folder; do not infer that it is already on GitHub.

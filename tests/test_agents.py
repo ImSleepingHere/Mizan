@@ -48,10 +48,10 @@ def test_impact_review_drives_a_scheduling_revision(tmp_path,monkeypatch):
     limits={'max_changes':5,'max_worsened':0,'solver_seconds':5}
     rid,row,data=queued_run(tmp_path,monkeypatch,'revise',limits)
     real,searches=ae.optimize,[]
-    def first_search_empty(d,m,s,rules=None):
+    def first_search_empty(d,m,s,rules=None,max_worsened=None):
         searches.append(m)
         if len(searches)==1:return {'status':'UNKNOWN','message':'No feasible improvement established; official timetable retained'}
-        return real(d,m,s,rules=rules)
+        return real(d,m,s,rules=rules,max_worsened=max_worsened)
     monkeypatch.setattr(ae,'optimize',first_search_empty)
     monkeypatch.setattr(ae,'model_decision',scripted)
     ae.run_collaboration(rid,'baseline',row,data,'Reduce student gaps',limits,dict(username='admin',**USERS['admin']))

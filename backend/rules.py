@@ -302,27 +302,32 @@ def check_rules(before, after, rules: RuleSet):
             if rules.day_to_empty and a.day == rules.day_to_empty.from_day:
                 add("day_to_empty", sid, f"Still meets on {DAY_EN[a.day]}")
     for k, b in enumerate(rules.breaks):
+        # A break rule binds only what the request can move: two meetings of sections outside the scope
+        # are fixed, so a short break between them is not this request's to fix.
         for label, groups in _break_groups(after, rules, b).items():
             for day in (b.days or range(5)):
-                ms = sorted((m for m in groups if m.day == day), key=lambda m: m.start)
-                gaps = [y.start - x.end for x, y in zip(ms, ms[1:])]
-                if b.kind == "between_each" and any(g < b.minutes for g in gaps):
+                ms = sorted(((sid, m) for sid, m in groups if m.day == day), key=lambda x: x[1].start)
+                if not any(sid in scope for sid, _ in ms):
+                    continue
+                pairs = list(zip(ms, ms[1:]))
+                if b.kind == "between_each" and any(y.start - x.end < b.minutes and (xs in scope or ys in scope) for (xs, x), (ys, y) in pairs):
                     add(f"break:{k}", None, f"{label}: a break shorter than {b.minutes} min on {DAY_EN[day]}")
-                if b.kind == "one_block" and len(ms) > 1 and max(gaps, default=0) < b.minutes:
+                if b.kind == "one_block" and len(ms) > 1 and max((y.start - x.end for (_, x), (_, y) in pairs), default=0) < b.minutes:
                     add(f"break:{k}", None, f"{label}: no free block of {b.minutes} min on {DAY_EN[day]}")
     return violations
 
 
 def _break_groups(data, rules, b):
+    """Meetings per break owner, as (section_id, meeting) pairs."""
     sections = {s.id: s for s in data.sections}
     if b.applies_to == "professor":
-        return {p: [m for s in data.sections if s.professor_id == p for m in s.meetings] for p in rules.professors}
+        return {p: [(s.id, m) for s in data.sections if s.professor_id == p for m in s.meetings] for p in rules.professors}
     scope = set(rules.scope_sections)
     groups = {}
     for st in data.students:
         if scope & set(st.sections):
             key = tuple(sorted(st.sections))
-            groups.setdefault(f"students {'|'.join(key)}", [m for sid in key for m in sections[sid].meetings])
+            groups.setdefault(f"students {'|'.join(key)}", [(sid, m) for sid in key for m in sections[sid].meetings])
     return groups
 
 
@@ -337,6 +342,7 @@ BREAK_GRID = 15
 
 def add_break_constraints(model, rules, data, intervals_by_section, groups_by_section=None):
     """CP-SAT constraints for minimum breaks. intervals_by_section[sid] = [(present, day, start, end), ...] for every option meeting."""
+    scope = set(rules.scope_sections)
     for b in rules.breaks:
         day_set = b.days or list(range(5))
         if b.applies_to == "professor":
@@ -346,12 +352,19 @@ def add_break_constraints(model, rules, data, intervals_by_section, groups_by_se
         for sids in owners:
             for day in day_set:
                 terms = [(present, start, end) for sid in sids for present, d, start, end in intervals_by_section.get(sid, []) if d == day]
-                if len(terms) < 2:
+                movable = [(present, start, end) for sid in sids if sid in scope
+                           for present, d, start, end in intervals_by_section.get(sid, []) if d == day]
+                if len(terms) < 2 or not movable:
                     continue
                 if b.kind == "between_each":
-                    ivs = [model.new_optional_fixed_size_interval_var(day * 1440 + start, end - start + b.minutes, present, "brk")
-                           for present, start, end in terms]
-                    model.add_no_overlap(ivs)
+                    # Only pairs with a section in scope: meetings outside it are fixed and not this request's to fix.
+                    fixed = [(start, end) for sid in sids if sid not in scope
+                             for _, d, start, end in intervals_by_section.get(sid, []) if d == day]
+                    model.add_no_overlap([model.new_optional_fixed_size_interval_var(day * 1440 + start, end - start + b.minutes, present, "brk")
+                                          for present, start, end in movable])
+                    for present, start, end in movable:
+                        if any(start < fe + b.minutes and fs < end + b.minutes for fs, fe in fixed):
+                            model.add(present == 0)
                 else:
                     blocks = []
                     for bs in range(data.policy.open_minute, data.policy.close_minute - b.minutes + 1, BREAK_GRID):
@@ -369,12 +382,22 @@ def add_break_constraints(model, rules, data, intervals_by_section, groups_by_se
                         blocks.append(y)
                     few = model.new_bool_var("few")
                     model.add(sum(p for p, s, e in terms) <= 1).only_enforce_if(few)
-                    model.add_bool_or([few, *blocks])
+                    # Binds only on days where a section in scope meets (a fully fixed day is left as it is).
+                    touched = model.new_bool_var("touched")
+                    model.add_max_equality(touched, [p for p, _, _ in movable])
+                    model.add_bool_or([few, *blocks]).only_enforce_if(touched)
 
 
 def optimize_with_rules(data, rules: RuleSet, seconds=10):
     """Scheduling tool with rules. When the rules cannot be met, find which single rules block them (spec §18.4)."""
     from .solver import optimize
+    from .analysis import validate, compare
+    if not check_rules(data, data, rules) and not validate(data):
+        # The official timetable already meets every rule (must_change/must_change_room fail on an unchanged
+        # timetable, so explicit move requests never stop here). A rule request is not an optimization request.
+        return dict(status="OPTIMAL", already_satisfied=True, runtime=0, candidates=0, rule_violations=[],
+                    comparison=compare(data, data), rule_set=rules.model_dump(), rule_items=rule_items(rules),
+                    message="The current timetable already meets these rules; no change is needed.")
     result = optimize(data, rules.max_changes, seconds, rules=rules)
     result["rule_set"] = rules.model_dump()
     result["rule_items"] = rule_items(rules)

@@ -166,6 +166,7 @@ Fresh verification for this update: **118 automated tests passed**, plus the new
 
 - **Loop (`agent_engine.run_collaboration`):** the coordinator delegates to pending specialists; a specialist must call its tool before reporting; if Change Impact rejects a candidate, scheduling and impact run again (the evidence-driven revision, covered by a test); a validation gate refuses to finalize while a review is missing or stale.
 - **The final outcome is computed by code** from the validated comparison (`recommend` saves a proposal and never publishes; `no_change`; `needs_review`), not taken from the model.
+- **Students worse off:** the run's `max_worsened` limit is passed to the solver as a hard constraint (a student counts as worse off with more gap minutes or campus days than now), so a revision can actually meet it; Change Impact still re-checks it.
 - **Budgets:** 24 model decisions, 12 tool calls, 10 coordinator rounds, wall-clock limit (360 s default). Cancellation is honoured before every step; an exhausted budget ends the run as `failed` with no conclusion.
 - **What the model sees:** the request, limits, summarised evidence and recent messages, with source data treated as untrusted.
 
@@ -184,11 +185,11 @@ Aggregates for the professor's own sections and **Improve my classes** (other se
 
 ### 8.3 Request-scoped rules (`rules.py`)
 
-Time windows, protected sections/meetings, locked days, keep day/time/room, breaks (professor or students), emptying a day, must change (room), maximum changes, scope. Split times only when a day-limited rule needs them ("times split by rule X"). Candidates pass an independent rule checker that groups students by their full enrolment pattern, exactly as the solver does. Infeasible rule sets are diagnosed by removing one rule at a time; `UNKNOWN` is reported as "not proven".
+Time windows, protected sections/meetings, locked days, keep day/time/room, breaks (professor or students), emptying a day, must change (room), maximum changes, scope. Split times only when a day-limited rule needs them ("times split by rule X"). Candidates pass an independent rule checker that groups students by their full enrolment pattern, exactly as the solver does. Infeasible rule sets are diagnosed by removing one rule at a time; `UNKNOWN` is reported as "not proven". Break rules bind only pairs that include a section in the request's scope (two fixed sections are not the request's to fix), and a one-free-block rule only days where a scoped section meets. When the official timetable already meets every rule, nothing runs and the answer is "no change is needed" (`already_satisfied`); explicit move or room requests always run (5 Oct audit).
 
 ### 8.4 Common time finder
 
-Ranks weekly slots (15-minute grid) for the students of chosen sections: students who can't attend, instructor free, free rooms with capacity, extra campus days, added gaps. Sections are picked by course name with search; results are cleared or marked out of date when the criteria change and state the criteria used; "All days" is explicit. Each slot can be copied or used to pre-fill a change request. It books nothing.
+Ranks weekly slots (15-minute grid) for the students of chosen sections: students who can't attend, instructor free, free rooms with capacity, extra campus days, added gaps. One session for several sections (a merge or one common time) needs a room seating every distinct student; "same time for all" needs one room per section. Sections are picked by course name with search; results are cleared or marked out of date when the criteria change and state the criteria used; "All days" is explicit. Each slot can be copied or used to pre-fill a change request. It books nothing.
 
 ### 8.5 Edugate schedules: import, readiness, export
 

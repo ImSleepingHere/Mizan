@@ -171,6 +171,9 @@ def import_schedule(body: ImportBody, u=Depends(user)):
     data, notes = build(body, base)
     payload = data.model_dump_json()
     with connect() as con:
+        con.execute("BEGIN IMMEDIATE")
+        if row is not None:
+            _same_revision(con, body.scenario_id, row["revision"])
         if row is None:
             sid, revision = identifier(), 1
             con.execute("INSERT INTO scenarios VALUES(?,?,?,?)", (sid, data.name, 1, payload))
@@ -181,6 +184,13 @@ def import_schedule(body: ImportBody, u=Depends(user)):
         audit(con, u["username"], "edugate_import", sid, {"scenario_id": sid, "student": _pseudonym(body.student_id), "rows": len(body.rows), "revision": revision})
     return dict(id=sid, revision=revision, name=data.name, students=len(data.students), sections=len(data.sections),
                 notes=notes, issues=validate(data)[:50])
+
+
+def _same_revision(con, sid, revision):
+    """Inside the write transaction: refuse when the timetable changed since it was read (e.g. a publish meanwhile)."""
+    current = con.execute("SELECT revision FROM scenarios WHERE id=?", (sid,)).fetchone()
+    if not current or current["revision"] != revision:
+        raise HTTPException(409, "The timetable changed while this was prepared. Refresh and try again.")
 
 
 def _first_version_with(sid, student_id):
@@ -329,6 +339,8 @@ def verify(sid: str, body: VerifyBody, u=Depends(user)):
     data = Semester.model_validate(data.model_dump())
     payload, revision = data.model_dump_json(), row["revision"] + 1
     with connect() as con:
+        con.execute("BEGIN IMMEDIATE")
+        _same_revision(con, sid, row["revision"])
         con.execute("UPDATE scenarios SET revision=?,data=? WHERE id=?", (revision, payload, sid))
         con.execute("INSERT INTO versions VALUES(?,?,?,?)", (sid, revision, payload, now()))
         audit(con, u["username"], "edugate_verify", sid, {"scenario_id": sid, "rooms": len(body.rooms), "instructors": len(body.instructors), "revision": revision})
