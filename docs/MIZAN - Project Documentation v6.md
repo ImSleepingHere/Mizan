@@ -136,6 +136,7 @@ Weekly student gap hours, students with 2h+/4h+ gaps, campus days, daily span, w
 - **Limits:** maximum changed sections (0–30), time budget (1–60 s; 15 s in the UI). Fixed random seed and 4 workers, so a run repeats on the same machine.
 - **Outcomes:** `OPTIMAL` (best within the search space), `FEASIBLE`, `INFEASIBLE`, `UNKNOWN` (no proposal; timetable kept), `INVALID_BASELINE`.
 - Every candidate is re-validated and, under request rules, re-checked by the rule checker.
+- **Large mixed-roster semesters (`lns.py`, 5 Oct 2026):** the full model tracks every distinct enrolment pattern per day. *Faculty week* has 1,499 patterns (baseline: 20), so the full model (~32k variables) spent 25–45 s in presolve and ended `UNKNOWN`. Whole-semester runs (no rules, no scope) with more than 200 patterns therefore use a large-neighbourhood search: repeated exact solves over ~24 sections (grown ×1.5 at a local optimum) with every other section fixed. Fixed meetings become constants, clashing options are dropped up front, and each pattern's weekly gap and campus days are exact table lookups over its free sections' option combinations, so the objective is linear in 0/1 choices. The objective is identical to the full model's (tests check equality for all four objectives); only the search is staged, so results are `FEASIBLE`, never claimed optimal. Measured on *Faculty week*: 5 s reaches the objective the full model proves optimal in 85 s (663 h, 5 changes); the three plans in 15 s give 1,251 h / 325 h with 1 change / 870 h. Baseline-sized, rule and own-section runs keep the full model.
 
 ### 6.3a Three-plan comparison (4 October update)
 
@@ -331,7 +332,7 @@ The table above records historical 4 October evidence, not a fresh live-model ru
 ## 18. Known limitations
 
 - **Synthetic demo data** with a deliberately poor start; no institutional deployment is claimed. The optimizer has not been measured on a real department's full timetable.
-- **Time-limited search:** results are optimal only within the searched options; whole-semester optimization on *Faculty week* hits its limit (`UNKNOWN`), own-section runs finish in about 1 s.
+- **Time-limited search:** results are optimal only within the searched options; whole-semester optimization on *Faculty week* uses the large-neighbourhood search (§6.3) and returns a validated but unproven plan; own-section runs finish in about 1 s.
 - **Instructor assignments are fixed** during optimization.
 - **Ask Mizan** drafts at 7/30 strict accuracy; it waits while an agent run uses the model (one model server, one request at a time).
 - **Coordinator evaluation** is on generator-made cases.

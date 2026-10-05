@@ -100,6 +100,8 @@ Implemented deterministic **Compare three plans** on Recommendations and the opt
 
 Fresh verification: **118 pytest tests passed**, including 19 new comparison checks. `tests/browser-plans.cjs` covers real solver comparison, English/Arabic parity, mobile, selection, approval, publication and staleness. This update's count supersedes historical 99/80-test counts above; existing AI logs were not rerun. Interpreter benchmark integrity now normalizes LF/CRLF before hashing; cases and saved results are unchanged. The 5 October release additionally resolves the reproduced import, redaction and preview defects; see the current release report.
 
+**Solver on mixed rosters (5 Oct 2026).** Whole-semester optimization on *Faculty week* (1,499 distinct student timetables vs 20 in the baseline) used to end `UNKNOWN`: the full CP-SAT model spent 25–45 s in presolve. Such runs (no rules, no scope, >200 patterns) now use a large-neighbourhood search (`backend/lns.py`) with the identical objective: 5 s reaches the plan the full model proves optimal in 85 s (663 h saved, 5 changes), and all three plans succeed in 15 s. Results are reported as `FEASIBLE` (not proven optimal). Baseline-sized, rule and own-section runs are unchanged. pytest: 140 passed (`tests/test_lns.py` checks the objective equals the full model's for all four objectives).
+
 
 ## 10. Current handover authority
 

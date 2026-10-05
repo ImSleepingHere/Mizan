@@ -6,8 +6,10 @@ from ortools.sat.python import cp_model
 from .models import Window, Section
 from .analysis import available, overlaps, indexes, validate, compare, eligible_students, student_metrics
 
-# Above this many distinct enrollment patterns a whole-semester search uses light presolve.
-LIGHT_PRESOLVE_PATTERNS = 200
+# Above this many distinct enrollment patterns a whole-semester search runs as a
+# large-neighbourhood search (backend/lns.py): with mixed rosters the full model's
+# presolve alone outlasted interactive time limits (faculty week: 25-45 s).
+LNS_PATTERNS = 200
 
 
 def options_for(data, section, room_limit=3):
@@ -35,6 +37,26 @@ def options_for(data, section, room_limit=3):
     return options
 
 
+def bounded_options(section, opts, keep_all=False):
+    """Bounded neighborhood keeps the interactive run small. Preserve every approved
+    start on the current days/room, plus a few day/room alternatives and baseline."""
+    current_days=[m.day for m in section.meetings]
+    opts=sorted(opts, key=lambda o:(o != section, [m.day for m in o.meetings] != current_days,
+                                    o.room_id != section.room_id, abs(o.meetings[0].start-section.meetings[0].start)))
+    if keep_all:
+        return opts
+    primary=[o for o in opts if [m.day for m in o.meetings]==current_days and o.room_id==section.room_id]
+    room_extra=next((o for o in opts if [m.day for m in o.meetings]==current_days and o.room_id!=section.room_id),None)
+    day_extras=[]
+    seen_days=set()
+    for o in opts:
+        pattern=tuple(m.day for m in o.meetings)
+        if list(pattern)!=current_days and pattern not in seen_days and o.room_id==section.room_id:
+            day_extras.append(o)
+            seen_days.add(pattern)
+    return primary+([room_extra] if room_extra else [])+day_extras[:2]
+
+
 def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy=None):
     """movable: optional set of section IDs that may change (e.g. a professor's own sections); all others stay fixed.
     rules: optional RuleSet (spec §18.4) applied as hard constraints to its scope; candidates are re-checked independently."""
@@ -49,6 +71,13 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
         return dict(status="INVALID_BASELINE", message="Resolve hard violations before optimization", issues=issues[:30])
     if strategy not in {None, "time_saved", "fewest_changes", "balanced"}:
         raise ValueError("Unknown optimization strategy")
+    if rules is None and movable is None and len({tuple(sorted(s.sections)) for s in data.students}) > LNS_PATTERNS:
+        from .lns import search
+        options = {}
+        for section in data.sections:
+            opts = bounded_options(section, options_for(data, section))
+            options[section.id] = opts if section in opts else [section] + opts
+        return search(data, max_changes, seconds, strategy, options, started, data.seed)
     model = cp_model.CpModel()
     resource_intervals = defaultdict(list)
     choices, modified, option_counts = {}, [], []
@@ -81,22 +110,7 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
                             message=f"No placement of {section.id} satisfies the rules", candidates=0)
         else:
             opts = options_for(data,section)
-        # Bounded neighborhood keeps the interactive run small. Preserve every approved
-        # start on the current days/room, plus a few day/room alternatives and baseline.
-        current_days=[m.day for m in section.meetings]
-        opts.sort(key=lambda o:(o != section, [m.day for m in o.meetings] != current_days,
-                               o.room_id != section.room_id, abs(o.meetings[0].start-section.meetings[0].start)))
-        primary=[o for o in opts if [m.day for m in o.meetings]==current_days and o.room_id==section.room_id]
-        room_extra=next((o for o in opts if [m.day for m in o.meetings]==current_days and o.room_id!=section.room_id),None)
-        day_extras=[]
-        seen_days=set()
-        for o in opts:
-            pattern=tuple(m.day for m in o.meetings)
-            if list(pattern)!=current_days and pattern not in seen_days and o.room_id==section.room_id:
-                day_extras.append(o)
-                seen_days.add(pattern)
-        if not (rules is not None and section.id in movable):
-            opts=primary+([room_extra] if room_extra else [])+day_extras[:2]
+        opts=bounded_options(section, opts, keep_all=rules is not None and section.id in movable)
         option_counts.append(len(opts))
         if not opts:
             return dict(status="INFEASIBLE", message="No feasible option in the configured candidate neighborhood")
@@ -229,14 +243,6 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
     solver=cp_model.CpSolver()
     solver.parameters.max_time_in_seconds=seconds
     solver.parameters.num_search_workers=4
-    # Mixed rosters create one gap group per student. On a whole-semester search
-    # (faculty week) full presolve's probing alone took 25-45 s, so even 60 s runs
-    # often ended UNKNOWN without searching. One light pass returns a validated plan
-    # every time. Scoped/rule runs stay small and need full presolve to prove
-    # infeasibility fast, so they keep it.
-    if movable is None and len(patterns) > LIGHT_PRESOLVE_PATTERNS:
-        solver.parameters.cp_model_probing_level=0
-        solver.parameters.max_presolve_iterations=1
     solver.parameters.random_seed=data.seed
     status=solver.solve(model)
     report=dict(status=solver.status_name(status), runtime=round(perf_counter()-started,3),
