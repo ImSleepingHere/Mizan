@@ -6,6 +6,9 @@ from ortools.sat.python import cp_model
 from .models import Window, Section
 from .analysis import available, overlaps, indexes, validate, compare, eligible_students, student_metrics
 
+# Above this many distinct enrollment patterns a whole-semester search uses light presolve.
+LIGHT_PRESOLVE_PATTERNS = 200
+
 
 def options_for(data, section, room_limit=3):
     courses, profs, rooms = indexes(data)
@@ -102,6 +105,7 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
         choices[section.id] = (opts,variables)
         moved = model.new_bool_var(f"moved_{section.id}")
         model.add(moved == sum(v for o,v in zip(opts,variables) if o != section))
+        model.add_hint(moved, 0)
         modified.append(moved)
         for oi,(opt,present) in enumerate(zip(opts,variables)):
             model.add_hint(present, int(opt==section))
@@ -115,21 +119,24 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
                 resource_intervals[("prof",opt.professor_id)].append(interval)
                 for group in memberships[section.id]:
                     resource_intervals[("group",group)].append(interval)
-                    day_terms[(group,m.day)].append((present,m.start,m.end))
+                    day_terms[(group,m.day)].append((present,m.start,m.end,opt==section))
     for intervals in resource_intervals.values():
         model.add_no_overlap(intervals)
     model.add(sum(modified) <= max_changes)
     if rules is not None:
         add_break_constraints(model, rules, data, intervals_by_section)
-    gaps, days, irregular = [], [], []
+    # Hint every auxiliary variable with its value in the official timetable, so
+    # CP-SAT holds a complete feasible solution from the start. With one group per
+    # student (mixed rosters) a partial hint was not completed within 10-30 s.
+    gaps, days, irregular, baseline_totals = [], [], [], []
     for group,(signature,count) in enumerate(patterns.items()):
-        group_gaps, group_days = [], []
+        group_gaps, group_days, group_total = [], [], 0
         for day in range(5):
             terms = day_terms[(group,day)]
             if not terms:
                 continue
             starts, ends, active = [], [], model.new_bool_var(f"active_{group}_{day}")
-            for k,(present,start,end) in enumerate(terms):
+            for k,(present,start,end,_) in enumerate(terms):
                 # Unselected candidates cannot affect extrema.
                 starts.append(1440+(start-1440)*present)
                 ends.append(end*present)
@@ -139,15 +146,25 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
             model.add_min_equality(earliest,starts)
             model.add_max_equality(latest,ends)
             gap=model.new_int_var(0,1440,f"gap_{group}_{day}")
-            model.add(gap == latest-earliest+1440*(1-active)-sum((end-start)*present for present,start,end in terms))
+            model.add(gap == latest-earliest+1440*(1-active)-sum((end-start)*present for present,start,end,_ in terms))
+            base=[(start,end) for _,start,end,current in terms if current]
+            base_gap=max(e for _,e in base)-min(s for s,_ in base)-sum(e-s for s,e in base) if base else 0
+            model.add_hint(active,int(bool(base)))
+            model.add_hint(earliest,min((s for s,_ in base),default=1440))
+            model.add_hint(latest,max((e for _,e in base),default=0))
+            model.add_hint(gap,base_gap)
+            group_total+=base_gap
             group_gaps.append(gap)
             group_days.append(active)
         total=model.new_int_var(0,7200,f"total_{group}")
         model.add(total==sum(group_gaps))
+        model.add_hint(total,group_total)
+        baseline_totals.append(group_total)
         gaps.append((total,count))
         days.append((sum(group_days),count))
     worst=model.new_int_var(0,7200,"worst_gap")
     model.add_max_equality(worst,[v for v,c in gaps] or [0])
+    model.add_hint(worst,max(baseline_totals,default=0))
     weights=data.policy.weights
     population=max(1,len(data.students))
     # Exact common integer scale preserves the configured weight ratios.
@@ -185,18 +202,22 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
             # The threshold formulation also works when the decile splits a group.
             tail_count = max(1, ceil(len(data.students)*.1))
             threshold = model.new_int_var(0,7200,"tail_threshold")
+            model.add_hint(threshold,0)
             excess = []
             for index,(total,count) in enumerate(gaps):
                 over = model.new_int_var(0,7200,f"tail_excess_{index}")
                 model.add_max_equality(over,[total-threshold,0])
+                model.add_hint(over,baseline_totals[index])
                 excess.append(count*over)
             tail_sum = tail_count*threshold+sum(excess)
             tail = model.new_int_var(0,tail_count*7200,"tail_sum")
             model.add(tail == tail_sum)
+            model.add_hint(tail,sum(c*b for (_,c),b in zip(gaps,baseline_totals)))
             squares = []
             for index,(total,count) in enumerate(gaps):
                 square = model.new_int_var(0,7200*7200,f"gap_square_{index}")
                 model.add_multiplication_equality(square,[total,total])
+                model.add_hint(square,baseline_totals[index]**2)
                 squares.append(count*square)
             # Worst-decile sum first, then squared gaps favor spreading relief
             # instead of improving just a few identical cohorts. Include overall
@@ -208,6 +229,14 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
     solver=cp_model.CpSolver()
     solver.parameters.max_time_in_seconds=seconds
     solver.parameters.num_search_workers=4
+    # Mixed rosters create one gap group per student. On a whole-semester search
+    # (faculty week) full presolve's probing alone took 25-45 s, so even 60 s runs
+    # often ended UNKNOWN without searching. One light pass returns a validated plan
+    # every time. Scoped/rule runs stay small and need full presolve to prove
+    # infeasibility fast, so they keep it.
+    if movable is None and len(patterns) > LIGHT_PRESOLVE_PATTERNS:
+        solver.parameters.cp_model_probing_level=0
+        solver.parameters.max_presolve_iterations=1
     solver.parameters.random_seed=data.seed
     status=solver.solve(model)
     report=dict(status=solver.status_name(status), runtime=round(perf_counter()-started,3),
@@ -218,6 +247,8 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
         report.update(strategy=strategy, minimum_saved_minutes=minimum_saved,
                       objective_version="alternatives-1.0")
     if status not in [cp_model.OPTIMAL,cp_model.FEASIBLE]:
+        if status==cp_model.UNKNOWN:
+            return dict(**report,message="Time limit reached before any plan was confirmed; official timetable retained. Try a longer search or a smaller scope.")
         return dict(**report,message="No feasible improvement established; official timetable retained")
     candidate=data.model_copy(deep=True)
     candidate.sections=[next(o for o,v in zip(*choices[s.id]) if solver.value(v)) for s in data.sections]
@@ -232,7 +263,9 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
         report["split_times"]=[dict(section_id=s.id,reasons=split_reasons(rules,before[s.id],s)) for s in candidate.sections if is_split(before[s.id],s)]
     diff=compare(data,candidate)
     return dict(**report,objective=solver.objective_value,best_bound=solver.best_objective_bound,
-                comparison=diff,candidate=candidate.model_dump(),message="Candidate independently validated" if diff["changes"] else "No change recommended")
+                comparison=diff,candidate=candidate.model_dump(),message="Candidate independently validated" if diff["changes"]
+                else "No change recommended" if status==cp_model.OPTIMAL
+                else "No improvement found within the time limit; official timetable retained. A longer search may find one.")
 
 
 def placement(data, course_id, capacity=80):
