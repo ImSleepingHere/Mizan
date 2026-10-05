@@ -1,0 +1,16 @@
+.plan-comparison>p{margin-block:12px;color:var(--muted)}
+.plan-controls{display:flex;gap:16px;align-items:end;flex-wrap:wrap;margin-block:18px}
+.plan-controls label{flex:1;min-width:150px}.plan-controls input{width:100%}
+.plan-summary{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;margin-block:20px}
+.plan-summary span{display:flex;align-items:center;gap:6px;color:var(--green-ink)}
+.plan-table-scroll{overflow:auto;border:1px solid var(--line);border-radius:6px;margin-block:16px}
+.plan-table{width:100%;min-width:800px;table-layout:fixed;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.plan-table th,.plan-table td{padding:14px 12px;text-align:start;border-block-end:1px solid var(--line);vertical-align:top}
+.plan-table th,.plan-table td{white-space:normal;overflow-wrap:anywhere}
+.plan-table th:first-child{width:22%}.plan-table thead th:nth-child(2){width:9%}.plan-table thead th:not(:first-child):not(:nth-child(2)){width:23%}
+.plan-table thead{background:var(--sunk)}.plan-table h3{font-size:16px;margin:0 0 8px}.plan-table p{font-weight:400;font-size:12px;line-height:1.65;margin:8px 0}
+.plan-table small{font-weight:400;color:var(--muted)}.plan-table tbody th{font-weight:500}.plan-table tbody td{font-size:17px}
+.plan-table th[data-plan=time_saved]{border-block-start:3px solid var(--blue)}.plan-table th[data-plan=fewest_changes]{border-block-start:3px solid var(--orange)}.plan-table th[data-plan=balanced]{border-block-start:3px solid var(--green)}
+.plan-harm{color:var(--red-ink);font-weight:600}.plan-identical{color:var(--orange-ink)}
+.plan-table tfoot td,.plan-table tfoot th{border:0}.plan-change{display:flex;flex-direction:column;gap:5px;padding-block:10px;border-block-end:1px solid var(--line)}
+.plan-comparison details{margin-block:18px}.plan-comparison summary{cursor:pointer;font-weight:600}

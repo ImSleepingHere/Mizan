@@ -1,0 +1,13 @@
+PLANS
+PASS three plans: real solver, read-only search, EN/AR, mobile, selection, approval, publication, staleness
+
+SMOKE
+PASS placement -> approval -> publication
+PASS conflict rejection -> valid alternative
+PASS shortage -> draft requisition
+PASS full-scale optimization -> evidence review
+PASS student UI and backend authorization
+PASS all browser checks
+
+EDUGATE
+PASS edugate pdf: 4 rows read, imported, optimized, exported

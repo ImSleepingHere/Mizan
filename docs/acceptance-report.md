@@ -1,3 +1,5 @@
+> Release note — 5 October 2026: this document retains earlier review/evidence context. Current delivered behavior and fresh verification are in [release-verification.md](release-verification.md). Three-plan comparison and subsequent import/privacy/preview fixes are implemented. Historical live-AI results were not rerun.
+
 # MIZAN — acceptance report (spec §13 and §18.7)
 
 Checked on 27 September 2026 against branch `redesign/v4`; re-checked on 4 October 2026 (evening) on `main` plus the Edugate exchange and the UX-review fixes. Every result below comes from one run recorded in [test-log-2026-10-04.txt](test-log-2026-10-04.txt).

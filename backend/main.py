@@ -31,6 +31,8 @@ async def lifespan(app):
     init_recruitment()
     from .request_routes import init_requests
     init_requests()
+    from .plan_routes import init_plans
+    init_plans()
     yield
 
 
@@ -86,7 +88,9 @@ def redact(u,obj):
                 if k=="adverse_students":
                     out["adverse_count"]=len(v)
                 elif k=="records" and isinstance(v,list):
-                    out[k]=[r for r in v if not str(r).startswith("ST")]
+                    # Validator student issues always put the identity first, regardless of ID format.
+                    student_issue=x.get("code", "").startswith("STUDENT_") or x.get("code")=="PREREQUISITE"
+                    out[k]=v[1:] if student_issue else [r for r in v if not str(r).startswith("ST")]
                     hidden=len(v)-len(out[k])
                     if hidden: out["student_count"]=hidden
                 else:
@@ -629,6 +633,8 @@ from .request_routes import router as request_router
 app.include_router(request_router)
 from .edugate_routes import router as edugate_router
 app.include_router(edugate_router)
+from .plan_routes import router as plan_router
+app.include_router(plan_router)
 
 DIST=ROOT/"frontend"/"dist"
 if DIST.exists():

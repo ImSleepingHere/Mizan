@@ -210,6 +210,8 @@ def test_scoring_strict_fields_acceptable_values_and_silent_guesses():
 def test_frozen_test_set_is_unchanged():
     import hashlib
     path = Path(__file__).resolve().parents[1] / "training" / "interpreter" / "handwritten_test.jsonl"
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == "74f827453cdfff631fc0942aa106fc73c3a0de8e34fdd17889a384158c1ae868"
+    # Git ZIPs use LF while Windows checkouts may use CRLF. Freeze content,
+    # not the checkout's newline convention; benchmark cases remain unchanged.
+    assert hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest() == "c28ce2a667fc3617107abe14543ae19ad8b3af6525075243a007ed61fd73a765"
     cases = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
     assert len(cases) == 30 and all(c["context"]["requester_role"] == "professor" for c in cases)

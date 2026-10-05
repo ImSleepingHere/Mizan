@@ -1,3 +1,5 @@
+> Release note — 5 October 2026: this document retains earlier review/evidence context. Current delivered behavior and fresh verification are in [release-verification.md](release-verification.md). Three-plan comparison and subsequent import/privacy/preview fixes are implemented. Historical live-AI results were not rerun.
+
 # MIZAN — evidence behind the pitch numbers
 
 Checked 4 October 2026. Rule for the deck: a number is either **measured in Mizan on the synthetic demo semester** (say so on the slide) or **from a cited source** below. Nothing else.

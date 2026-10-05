@@ -1,5 +1,7 @@
 """Edugate exchange routes: read (no writes) -> user reviews rows -> import into an Edugate timetable; export a PDF."""
 import json
+import hashlib
+import unicodedata
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Response
 from pydantic import Field
@@ -102,8 +104,7 @@ def build(body: ImportBody, base: Semester | None):
             allowed_starts=sorted({s for s in data.policy.allowed_starts + starts if open_minute <= s < close_minute})))
         data.term = data.term or body.term
     window = _rooms_window(data.policy.open_minute, data.policy.close_minute)
-    for res in [*data.rooms, *data.professors]:
-        res.availability = window
+    # Existing availability is an input constraint, never replaced by another student's import.
     courses, rooms = {c.id: c for c in data.courses}, {r.id: r for r in data.rooms}
     sections, professors = {s.id: s for s in data.sections}, {p.id: p for p in data.professors}
     chosen = []
@@ -239,11 +240,14 @@ def readiness_of(data: Semester):
     used_rooms = {s.room_id for s in data.sections}
     rooms_assumed = sorted(r for r in used_rooms if r not in verified_rooms)
     sections_assumed = sorted(s.id for s in data.sections if s.id not in verified_sections)
-    return dict(students=len(data.students), sections=len(data.sections),
+    conflict_count = len(validate(data))
+    facts_verified = not rooms_assumed and not sections_assumed
+    return dict(students=len(data.students), sections=len(data.sections), conflict_count=conflict_count,
+                facts_verified=facts_verified,
                 verified=dict(student_conflicts=len(data.students), rooms=len(used_rooms) - len(rooms_assumed), instructors=len(data.sections) - len(sections_assumed)),
                 assumed=dict(rooms=rooms_assumed, instructors=sections_assumed, availability=True),
                 missing=dict(other_bookings=True, other_students=True),
-                ready_to_publish=not rooms_assumed and not sections_assumed)
+                ready_to_publish=facts_verified and conflict_count == 0)
 
 
 @router.get("/{sid}/readiness")
@@ -263,11 +267,18 @@ class RoomFact(StrictModel):
 class InstructorFact(StrictModel):
     section_id: str = Field(min_length=1, max_length=40)
     name: str = Field(min_length=2, max_length=120)
+    instructor_id: str | None = Field(default=None, min_length=1, max_length=60, pattern=r"^[A-Za-z0-9_-]+$")
+
+
+class SectionFact(StrictModel):
+    id: str = Field(min_length=1, max_length=40)
+    capacity: int = Field(gt=0, le=2000)
 
 
 class VerifyBody(StrictModel):
     rooms: list[RoomFact] = Field(default=[], max_length=500)
     instructors: list[InstructorFact] = Field(default=[], max_length=500)
+    sections: list[SectionFact] = Field(default=[], max_length=500)
 
 
 @router.post("/{sid}/verify")
@@ -278,17 +289,42 @@ def verify(sid: str, body: VerifyBody, u=Depends(user)):
     if data.kind != "edugate":
         raise HTTPException(409, "Only imported timetables can be verified here")
     rooms, sections = {r.id: r for r in data.rooms}, {s.id: s for s in data.sections}
-    unknown = [r.id for r in body.rooms if r.id.upper() not in rooms] + [i.section_id for i in body.instructors if i.section_id not in sections]
+    unknown = [r.id for r in body.rooms if r.id.upper() not in rooms] + [i.section_id for i in body.instructors if i.section_id not in sections] + [s.id for s in body.sections if s.id not in sections]
     if unknown:
         raise HTTPException(422, f"Not in this timetable: {', '.join(unknown[:10])}")
     verified = {k: set(v) for k, v in data.verified.items()}
     for fact in body.rooms:
         rooms[fact.id.upper()].capacity = fact.capacity
         verified.setdefault("rooms", set()).add(fact.id.upper())
+        for section in data.sections:
+            if section.room_id == fact.id.upper() and section.id not in verified.get("section_capacities", set()):
+                # Replace placeholder seats; enrollment overflow remains visible to validation.
+                section.capacity = min(section.capacity, fact.capacity)
+    for fact in body.sections:
+        sections[fact.id].capacity = fact.capacity
+        verified.setdefault("section_capacities", set()).add(fact.id)
     professors = {p.id: p for p in data.professors}
+    courses = {c.id: c for c in data.courses}
     for fact in body.instructors:
-        professors[sections[fact.section_id].professor_id].name = fact.name.strip()
+        name = fact.name.strip()
+        if len(name) < 2:
+            raise HTTPException(422, "Instructor name must contain at least two non-space characters")
+        section = sections[fact.section_id]
+        current = professors[section.professor_id]
+        normalized = " ".join(unicodedata.normalize("NFKC", name).casefold().split())
+        # A shared explicit ID is preferred; equal normalized names conservatively share an identity.
+        pid = fact.instructor_id or "VER-" + hashlib.sha256(normalized.encode()).hexdigest()[:20]
+        if pid not in professors:
+            professors[pid] = current.model_copy(deep=True, update={"id": pid, "name": name})
+        else:
+            # Preserve existing availability and contracted hours when linking another section.
+            if " ".join(unicodedata.normalize("NFKC", professors[pid].name).casefold().split()) != normalized:
+                raise HTTPException(422, "The instructor ID already belongs to a different name")
+        professors[pid].competencies = sorted(set(professors[pid].competencies + [courses[section.course_id].competency]))
+        section.professor_id = pid
         verified.setdefault("instructors", set()).add(fact.section_id)
+    used_professors = {s.professor_id for s in data.sections}
+    data.professors = [p for pid, p in professors.items() if pid in used_professors]
     data.verified = {k: sorted(v) for k, v in verified.items()}
     data = Semester.model_validate(data.model_dump())
     payload, revision = data.model_dump_json(), row["revision"] + 1

@@ -1,11 +1,11 @@
 # MIZAN — ميزان
-## Project documentation v5.1 (updated 5 October 2026; see v6 for current release)
+## Project documentation v6.0 — GitHub handover release
 
 **5 October 2026 · Farq hackathon, university-operations track · Al Yamamah University**
 
 Mizan checks a university timetable before it's published. It measures what the timetable costs students and staff, recommends valid improvements, checks proposed changes before they happen, separates scheduling problems from real staffing shortages, and prepares recruitment only when a shortage is proven. It can read a real Al Yamamah student schedule (Edugate PDF or phone-app screenshot), improve it, and print it back in the Edugate layout. A person approves every publication and every hiring step. Everything runs locally on one PC.
 
-This document describes the system **as built with the 5 October release updates; historical model evidence remains dated 4 October**. It replaces v4 (kept for history). The design specification, [`MIZAN - Project Documentation v3.md`](MIZAN%20-%20Project%20Documentation%20v3.md), remains the record of what was planned and why; where they differ, this document describes the software.
+This document describes the system **as built with the 5 October release updates; historical model evidence remains dated 4 October**. It supersedes v5; v3/v4 and dated logs remain historical records. The design specification, [`MIZAN - Project Documentation v3.md`](MIZAN%20-%20Project%20Documentation%20v3.md), remains the record of what was planned and why; where they differ, this document describes the software.
 
 | | |
 |---|---|

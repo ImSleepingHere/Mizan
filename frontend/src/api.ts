@@ -18,6 +18,8 @@ const AR_ERRORS: [RegExp, string][] = [
   [/^Section not found/, 'الشعبة غير موجودة'],
   [/^Only single meeting changes can be re-evaluated/, 'يمكن إعادة تقييم تغييرات المحاضرة الواحدة فقط. شغّل تحسيناً جديداً بدلاً من ذلك.'],
   [/^Verify instructors and room capacities/, 'تحقق من المحاضرين وسعة القاعات قبل النشر'],
+  [/^Instructor name must contain/, 'يجب أن يحتوي اسم المحاضر على حرفين على الأقل دون احتساب المسافات'],
+  [/^The instructor ID already belongs to a different name/, 'رقم المحاضر مرتبط باسم مختلف؛ راجع الرقم والاسم'],
 ];
 
 export function localizeError(message: string) {

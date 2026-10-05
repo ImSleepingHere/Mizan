@@ -1,65 +1,28 @@
-# MIZAN — project notes for Codex
+# MIZAN engineering context — 5 October 2026
 
-Local-first university scheduling + workforce + recruitment assistant (Farq hackathon, university-operations track).
-Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tools, human approval). Everything runs locally; no external AI APIs.
+Current specification: `docs/MIZAN - Project Documentation v6.md`. Historical v3/v4/v5 context remains in docs. Current release evidence: `docs/release-verification.md`; change log: `CHANGELOG.md`. Do not present historical model results as fresh tests.
 
-## Layout
-- `backend/` FastAPI app (`backend.main:app`), SQLite in `data/mizan.sqlite3`. Agents: `agent_engine.py`; model client: `local_model.py`; solver: `solver.py` (OR-Tools); metrics/validation: `analysis.py`; recruitment: `recruitment.py`.
-- `frontend/` React 19 + Vite 7 + TS (pnpm). Built output `frontend/dist/` is what the app serves. Rebuild: `cd frontend; pnpm install; pnpm build`. Node.js 24.19 LTS (with npm/npx) was installed system-wide on 2026-09-27 (`C:\Program Files\nodejs`); pnpm is not installed globally, so run it via `npx pnpm` or the older bundled copy (`C:\Users\Admin\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\node_modules\pnpm\bin\pnpm.cjs`). Set `CI=true` (pnpm aborts without a TTY otherwise). In PowerShell use `npx.cmd` if script execution is disabled.
-- `.models/qwen3-8b.gguf` live model; `.models/mizan-coordinator-lora.gguf` fine-tuned coordinator adapter.
-- `.runtime/ollama/lib/ollama/llama-server.exe` — bundled llama.cpp server (Ollama daemon is NOT used; `ollama` CLI is not on PATH).
-- `training/coordinator/` — coordinator fine-tuning experiment (see below). `base/`, `checkpoints/`, `cache/` are git-ignored.
-- `.venv` = app env (Python 3.12). `.training-venv` = training env (torch 2.8.0+cu128, bitsandbytes, peft, transformers 4.57).
+## Layout and conventions
 
-## Run
-- `Start Mizan.cmd` → `scripts/start.ps1` → starts model (`scripts/start-model.ps1`, port 11435) + app on http://127.0.0.1:8000. Demo password `Mizan-demo-2026!`; roles admin, registrar, chair, professor, hiring_manager, student.
-- `scripts/restart-model.ps1` restarts llama-server (reloads adapter). `Apply Mizan Update.cmd` → `scripts/apply-update.ps1` restarts model, runs deployed eval, restarts app.
-- Tests: `scripts/test.ps1` (pytest on `tests/`, 80 tests incl. `tests/test_acceptance.py`, `tests/test_update_v3.py`, `tests/test_interpreter.py`, `tests/test_scope.py`, `tests/test_rules.py`, `tests/test_finder.py`; the script passes `tests` so pytest no longer crawls unreadable `work/` folders). Browser e2e: start a server on port 8001 with `MIZAN_DB` pointing to a fresh file under `work/`, then `node tests/browser-smoke.cjs` (5 checks + EN/AR overview parity; passed 2026-09-27). `node tests/browser-phase2.cjs` (port 8001, needs the live model: agent run + recruitment; passed 2026-09-27).
-- Demo reset: `Reset Mizan Demo.cmd` → `scripts/reset-demo.ps1` (refuses while the app runs; moves `data/mizan.sqlite3` to `data/backups/` and reseeds; `-Database <path>` for a scratch copy).
-- GPU: RTX 4080 SUPER 16 GB. llama-server holds ~5 GB RAM + VRAM; stop it before training.
+- FastAPI `backend.main:app`; SQLite defaults to `data/mizan.sqlite3`. `MIZAN_DB` selects an isolated database.
+- OR-Tools objectives: `backend/solver.py`; independent validation/metrics: `analysis.py`; comparison API: `plan_routes.py`.
+- React 19/TypeScript/Vite; build via `npx.cmd --yes pnpm@12.9.1 run build` inside frontend. Frozen dependency installation required.
+- Python 3.12 and Node 24; `scripts/setup.ps1`, `scripts/start.ps1`, `scripts/test.ps1`.
+- All UI wording in English and Arabic; logical CSS properties for RTL. Preserve `DESIGN.md` and `PRODUCT.md`.
+- All inference stays on loopback. AI model output never replaces deterministic validation. Approval and publication remain human actions.
+- Never commit personal imports, databases, credentials, model runtime, base model or dependencies.
+- Browser tests create and publish fictional proposals; use a fresh `MIZAN_DB` and separate port.
 
-## Fine-tuned coordinator (done, live since 2026-09-24)
-- Protocol frozen in `training/coordinator/PROTOCOL.md`: Qwen3-8B NF4, attention-only LoRA r8/α16, 2 epochs, 480 train / 60 val / 120 test synthetic cases (balanced EN/AR). Runner: `run_experiment.ps1`; report: `coordinator_report.md`.
-- Paired NF4 test: pretrained 73/120 pass → fine-tuned 116/120 (44 fixed / 1 broken). Epoch 2 selected (val loss 0.0258). Training took 12.6 min.
-- Deployed (live GGUF + production JSON schema, `deployed_eval.py`): pretrained 75/120 → fine-tuned 111/120 (42 fixed / 6 broken, p≈1e-7). `deployed_eval_summary.json`.
-- Remaining errors: says "recommend" for unchanged final candidates (harmless in app — `run_collaboration` computes disposition itself) and sometimes ignores "start with teaching capacity".
-- Adapter applies ONLY to coordinator calls: `local_model.structured()` always sends per-request `lora` scales (1.0 for coordinator, 0.0 otherwise); coordinator uses `COORDINATOR_TUNED_PROMPT` (exact training prompt) + compact JSON. Rollback: env `MIZAN_COORDINATOR_ADAPTER=0`.
-- Caveat: test set comes from the same generator as training data → measures in-workflow generalization only. More epochs NOT recommended; next is varied data + a hand-written messy EN/AR test set.
-- Fixes made along the way: training venv torch had been overwritten with 2.14.0+cpu (repaired to 2.8.0+cu128); `train.py` lm_head dtype mismatch fixed with a forward pre-hook; `benchmark.grade` catches AttributeError.
+## Current features
 
-## Frontend v3 (done 2026-09-24)
-- New "Najd Night" theme (indigo sidebar, violet→saffron gradient, Sora headings), motion (page/card entrance, count-ups, animated bars, reduced-motion respected), overview hero.
-- `frontend/src/InteractiveTimetable.tsx`: drag-and-drop meetings with live `POST /api/scenarios/{sid}/preview-change` (no DB write, ~70 ms), dock to submit as change request (`/changes`), detail drawer with keyboard move form, filters (cohort/room/faculty/department/search), lane layout for overlaps, Riyadh now-line. Professors edit only own sections; students read-only.
-- Agent panel shows roster, LoRA-tagged coordinator events, fine-tuned badge; Settings shows real model/coordinator status.
+Three-plan comparison: time saved, fewest changes, balanced impact; same revision, independent validation, persistence, duplicate/stale disclosure, explicit proposal selection. No external AI needed.
 
-## Frontend v4 redesign (2026-09-27, merged to main)
-- Replaced Najd Night with an "Information System" world: paper #f6f6f3, ink sidebar, four flat signal colours, light Archivo numerals + Noto Kufi Arabic. Rules live in `DESIGN.md` (+ `.impeccable/design.json`); product truth in `PRODUCT.md`.
-- User direction: calm/small type but colourful and alive; numbers graded continuously red→amber→green per metric (`frontend/src/grade.ts`, no hard thresholds). Faculty workload is deliberately not graded (only overload is red).
-- Scenario select + "Fall semester 2026" live in the topbar. Smoke test (5/5) and pytest (71) pass on the branch.
-- Figma: https://www.figma.com/design/AqHJqn2UaIKJ9iyFb1UeOZ (Foundations, editable Overview, all page screenshots EN/AR/mobile).
+Edugate verification: shared instructor IDs (optional explicit ID, normalized-name fallback); preserve availability; reconcile assumed capacity; distinguish facts verified from valid readiness. Names can be ambiguous: explicit IDs are preferred. Institutional qualifications/contracts and other bookings remain incomplete.
 
-## Spec v3.1: professor requests (plan approved 2026-09-27; spec §18)
-- Why: 30 real professor requests; ~5/30 supported before. Items 1→4 in order, commit after each: 1 request interpreter, 2 "my classes" scope, 3 optimizer rules, 4 common free-slot finder. Later (after Farq): term calendar/dated changes, session length, online, merged dated sessions, room locations, approval levels, notices.
-- User decisions: §18 lives inside the v3 spec file. Per-meeting different start times ONLY when a rule requires it; same-time default + soft penalty for split times + proposal shows "times split by rule X". New realistic demo scenario (NEW; existing scenarios/tests untouched): professor account owning S087–S091, mixed rosters, some Mon/Wed meetings, a few 75/90-min courses. No EXAM_SCOPE: finding a slot for a quiz/revision is the weekly free-slot finder; booking on a date is EXTRA_SESSION or DATED_CHANGE; finding with any date wording is in scope with `date_note`.
-- Item 1 (done 2026-09-27): `backend/interpreter.py` — the model extracts fields only; code normalizes, applies conventions, decides support (bilingual reasons), asks questions, runs a date lexicon backstop that can only make scope more cautious, and resolves scope/permissions. `backend/request_routes.py` — `/api/requests/interpret`, `/{id}/revise`, `/{id}/confirm`, `/{id}/cancel`; table `request_interpretations`; audited; confirm runs only a read-only preview for exact single moves. Base model only (adapter scale 0; own_sections are not shown to the model). UI: `frontend/src/RequestAssistant.tsx` ("Ask Mizan" on Semester lab for admin/registrar/chair/professor).
-- Item 2 (done 2026-09-27): new scenario `faculty` ("Faculty week · mixed rosters", `fixtures.generate_faculty`, seed 2027, valid by construction; seeded by `init_db` next to the other three). The `professor` account (P001) owns S087–S091 there (35 students each, capacity 35) (Sun/Tue, Tue/Thu, Mon/Wed, Sun/Thu; C047 75 min in S087+S089 = two sections of one course; C050 90 min); R040 hall seats 200 for merges. `solver.optimize(..., movable=)` fixes all other sections. Professors may call `/optimize` (own sections only, max_changes capped, proposal kind `own_optimization`, still needs committee approval) and `GET /scenarios/{sid}/my-classes` (aggregates). `main.redact()` strips student IDs from every professor response (preview, changes, proposals, optimize, request confirm) — this also fixed an existing leak of `adverse_students` to professors. UI: `frontend/src/MyClasses.tsx` on Semester lab. Whole-semester optimize on `faculty` hits the 10 s limit (UNKNOWN); own-scope runs OPTIMAL in ~1 s.
-- Item 3 (done 2026-09-27): `backend/rules.py` — `RuleSet` (windows global/per-day, protected sections/meetings, locked days, keep day/time/room, breaks between_each|one_block for professor/students (one_block students not supported), day_to_empty, must_change, must_change_room, max_changes, scope), `from_interpretation`, option filter, per-meeting split options only when a rule is day-limited (`needs_split`), CP-SAT break constraints, independent `check_rules`, `split_reasons` ("times split by rule X"), and `optimize_with_rules` (on INFEASIBLE removes one rule at a time → `diagnosis.blocking_rules`; UNKNOWN is reported as not proven). `solver.optimize(rules=)` filters options, adds a split penalty (2× irregular weight) and re-checks candidates. Confirm of reschedule/room/inexact moves runs it and saves a `rule_change` proposal (chair: result only). Any request with DATED_CHANGE/DURATION/ONLINE/UNDEFINED never runs (`BLOCKING_CODES`); the user must correct "When" explicitly. Agent runs accept `limits['rules']` (tools only; Change Impact rejects rule violations). Realism note: in `faculty` many rules are genuinely INFEASIBLE because every alternative slot clashes with some students; the diagnosis says which rule. Protected/locked meetings also block room changes (bug caught by tests).
-- Item 4 (done 2026-09-27): `solver.common_slots()` — ranked, non-overlapping weekly slots for the students of given sections (15-min grid): students who can't attend (count), professor free, free room with capacity (one room for a merge; one per section for "same time"), extra campus days, added gaps; a merge frees the merged sections' own meetings. `POST /api/scenarios/{sid}/free-slots` (admin/registrar/chair/professor; professors own sections only; audited; books nothing). Confirmed find/merge/add-session requests run it (merge keeps the section's length). UI: `frontend/src/FreeSlotFinder.tsx` ("Find a common time" panel + `SlotList` reused in Ask Mizan). Not built: ghost slots on the timetable.
-- Interpreter eval: `training/interpreter/` — frozen 30-case `handwritten_test.jsonl` (sha 74f8…e868; score ONCE after items 1–4 with `eval_interpreter.py --set test --final`), dev set of 40 (`dev_set.py`). Dev after prompt work: 18/40 strict, per-field 35–40/40, 0 silent guesses, 4 false flags (base Qwen3-8B). Prompt tuning stopped there on purpose. **Test set scored once (2026-09-27): 7/30 strict (ar 5/19, en 1/6, mixed 1/5), per-field 22–30/30, 3 silent-guess cases by the metric but none would change the timetable (H12/H23 still blocked by DATED_CHANGE; H09 runs the read-only finder). `results_test.json` exists, so the script refuses to rescore.** Weakest field: time windows (22/30).
+Professor redaction strips identity-bearing student conflict records regardless of ID format. Ask Mizan preview accounts for invalid baselines. Frozen benchmark hashes normalize LF/CRLF. No temporary feature-tour CSS is shipped.
 
-## Tooling notes (2026-09-27)
-- Git: all work through v3.1 is on `origin/main` (3b08095); `v3.1-professor-requests` is a redundant remote branch. GitHub CLI `gh` is NOT installed, so PRs must be opened by the user in the web UI.
-- Design skills available: `impeccable` (plugin), `design-taste-frontend` (account skill), `emil-design-eng` (project `.Codex/skills`). Priority for Mizan not yet decided by the user; the existing "Najd Night" theme and bilingual/RTL rules take precedence over any skill.
-- Installing skills/plugins or editing Codex config is blocked for Codex by the auto-mode safety check ("self-modification"): give the user the command instead. Leftovers from the user's npx install: `.agents/skills/design-taste-frontend/` and `skills-lock.json` (untracked, redundant).
-- Playwright plugin (Microsoft) was enabled 2026-09-27 but failed to connect in the session where it was added (Codex app started before Node was installed); restart the Codex app.
+## Claims and remaining work
 
-## Project status / next steps
-- Phase 1 approved; Phase 2 (six agents + recruitment) under user review; Phase 3 done 2026-09-27: `docs/acceptance-report.md` (all 15 criteria of §13 + §18.7 mapped to passing tests; gaps closed with `tests/test_acceptance.py` + two agent tests; recruitment now rejects instruction-like CV quotes and flags such CVs), `docs/demo-script.md` (figures measured on a fresh reset DB), reset script, deck (Codex.ai artifact https://Codex.ai/artifact/7HQp54eBHaf9ka8Qk975uW, private until shared).
-- Demo facts (fresh DB): baseline 15,000 gap h/week, quality 45, 100% students with 2h+ gaps, room use 10%; 15 s optimize ≈ +1,800 h, 225 benefit, 0 worse (FEASIBLE, varies slightly per run); S001→Sun 10:00 = 77 conflicts + 3 alternatives; shortfall C080: 3 needed / 2 covered / 1 uncovered / 112 at risk.
-- Known minor: Activity page audit trail refreshes only on reload after an agent run.
-- Housekeeping: ask the user before deleting `work/ollama-0.34.3.zip` (1.4 GB) or `training/coordinator/checkpoints/epoch-*`.
+Historical deployed coordinator evidence: base/original prompt 75/120, base/training prompt 96/120, tuned 106/120; attribute only the final increment to tuning. Recorded interpreter score is 7/30 strict, an experimental draft assistant. These were not freshly rerun on this release. Zero harm is a measured run result, not an ordinary optimization constraint.
 
-## Conventions
-- Keep everything local; loopback-only model URL is enforced in `local_model.base_url()`.
-- Hard constraints are enforced by code, never by the model; no publication/hiring without human approval.
-- Arabic + English parity for every UI string (`t(en, ar)` helper); use logical CSS properties for RTL.
+Exact Zenbook rehearsal, university authentication, department-scoped permissions, calendar/dated sessions, notifications, individual-harm constraints, full accessibility/language review, richer institutional data and live-model regression remain separate work. GitHub workflow is provided but its hosted run is only confirmed after pushing.

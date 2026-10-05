@@ -18,7 +18,7 @@ sys.path.insert(0, str(HERE))
 from backend import interpreter, local_model  # noqa: E402
 from scoring import score_case, summarize  # noqa: E402
 
-FROZEN_TEST_SHA256 = "74f827453cdfff631fc0942aa106fc73c3a0de8e34fdd17889a384158c1ae868"
+FROZEN_TEST_SHA256 = "c28ce2a667fc3617107abe14543ae19ad8b3af6525075243a007ed61fd73a765"  # canonical LF, same cases
 
 
 def main():
@@ -34,7 +34,7 @@ def main():
             sys.exit("The handwritten test set is scored once, at the end. Pass --final to do that.")
         if out.exists():
             sys.exit(f"{out.name} already exists; the test set has been scored.")
-        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        digest = hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
         if digest != FROZEN_TEST_SHA256:
             sys.exit("handwritten_test.jsonl differs from the frozen version; refusing to score.")
         if args.only:

@@ -199,3 +199,7 @@ training/coordinator/base/
 training/coordinator/checkpoints/
 training/coordinator/cache/
 training/coordinator/tmp/
+
+# Local credentials and environment overrides
+.env.*
+!.env.example

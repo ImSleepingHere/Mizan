@@ -39,7 +39,11 @@ const path = require('node:path');
  await add.click();
  await page.getByRole('button',{name:'Run optimization'}).click();
  await page.getByRole('heading',{name:/Better schedules, backed by evidence/}).waitFor({timeout:60000});
+ // Navigation can appear before the proposal refresh completes. Close the
+ // actual review dialog, rather than sending Escape during that async gap.
+ await page.getByRole('dialog',{name:'Review the evidence',exact:true}).waitFor({timeout:60000});
  await page.keyboard.press('Escape');
+ await page.getByRole('dialog',{name:'Review the evidence',exact:true}).waitFor({state:'hidden'});
  await page.getByRole('button',{name:'Semester lab',exact:true}).click();
  await page.screenshot({path:path.join(out,`edugate-before-export-${tag}.png`)});
  await page.getByLabel('Timetable to export').selectOption({index:1});

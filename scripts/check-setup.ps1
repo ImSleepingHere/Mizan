@@ -11,8 +11,8 @@ function Report([bool]$ok, [string]$what, [string]$fix, [switch]$optional) {
 Write-Host "Mizan setup check`n"
 Report (Test-Path '.venv\Scripts\python.exe') 'Python environment (.venv)' 'run scripts\setup.ps1'
 Report (Test-Path 'frontend\dist\index.html') 'Built website (frontend\dist)' 'run scripts\setup.ps1'
-Report (Test-Path '.runtime\ollama\lib\ollama\llama-server.exe') 'Model runtime (.runtime)' 'run: .venv\Scripts\python.exe scripts\install_model_runtime.py'
-Report (Test-Path '.models\qwen3-8b.gguf') 'Base model Qwen3-8B (.models\qwen3-8b.gguf, 5.2 GB)' 'run: .venv\Scripts\python.exe scripts\install_model_runtime.py'
+Report (Test-Path '.runtime\ollama\lib\ollama\llama-server.exe') 'Optional AI runtime (.runtime)' 'AI features need: .venv\Scripts\python.exe scripts\install_model_runtime.py' -optional
+Report (Test-Path '.models\qwen3-8b.gguf') 'Optional AI model Qwen3-8B (.models\qwen3-8b.gguf, 5.2 GB)' 'AI features need: .venv\Scripts\python.exe scripts\install_model_runtime.py' -optional
 Report (Test-Path '.models\mizan-coordinator-lora.gguf') 'Fine-tuned coordinator adapter' 'pull the latest code from GitHub (it is in the repository)'
 $gpu = $null
 try { $gpu = (& nvidia-smi --query-gpu=name,memory.total --format=csv,noheader 2>$null) } catch { }

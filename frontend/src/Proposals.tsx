@@ -4,6 +4,7 @@ import {time, number, useDraft} from './api';
 import {SCALES, gradeVars} from './grade';
 import {Metric, Delta, Badge, Stations} from './ui';
 import {ConflictList} from './Conflicts';
+import {planName} from './PlanComparison';
 
 type R = Record<string, any>;
 
@@ -28,7 +29,7 @@ export function headline(p:R, ar:boolean, days:string[], courseName:(id:string)=
     return `${days[a.day]} ${time(a.start)} → ${days[b.day]} ${time(b.start)}`;
   };
   switch (p.kind) {
-    case 'optimization': return {title:t('Semester improvement','تحسين الفصل الدراسي'), line:t(`${changes.length} sections move`, `${changes.length} شعب تتغير`)};
+    case 'optimization': return {title:p.analysis?.strategy ? planName(p.analysis.strategy,ar) : t('Semester improvement','تحسين الفصل الدراسي'), line:t(`${changes.length} sections move`, `${changes.length} شعب تتغير`)};
     case 'own_optimization': return {title:t(`${who}: improve own classes`, `${who}: تحسين مقرراته`), line:changes.map(c => `${c.section_id} ${moved(c)}`).join(' · ')};
     case 'placement': return {title:t(`New section of ${first ? courseName(first.after.course_id) : ''}`, `شعبة جديدة من ${first ? courseName(first.after.course_id) : ''}`), line:first ? moved(first) : ''};
     default: return {title:first ? t(`${who} asks to move ${courseName(first.after.course_id)} (${first.section_id})`, `${who} يطلب نقل ${courseName(first.after.course_id)} (${first.section_id})`) : t('Meeting change','تغيير موعد'),

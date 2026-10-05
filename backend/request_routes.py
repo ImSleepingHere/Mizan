@@ -192,9 +192,12 @@ def preview(data, row, meeting, target):
         return dict(**meeting, target=target, feasible=False, new_issue_count=0, error="Meeting would extend past midnight")
     section.meetings[meeting["meeting_index"]] = Window(day=target["day"], start=target["start"], end=target["start"] + duration)
     existing = baseline_issue_keys(row["id"], row, data)
-    introduced = [i for i in validate(candidate) if (i["code"], tuple(i["records"])) not in existing]
+    issues = validate(candidate)
+    introduced = [i for i in issues if (i["code"], tuple(i["records"])) not in existing]
     diff = compare(data, candidate)
-    return dict(**meeting, target=dict(**target, end=target["start"] + duration), feasible=not introduced, new_issues=introduced[:20],
+    return dict(**meeting, target=dict(**target, end=target["start"] + duration), feasible=not introduced and not existing,
+                unchanged=(meeting["day"], meeting["start"]) == (target["day"], target["start"]),
+                existing_issue_count=len(existing), blocked_by_existing=bool(existing) and not introduced, new_issues=introduced[:20],
                 new_issue_count=len(introduced), recovered_hours=diff["recovered_hours"], worsened=diff["worsened"])
 
 

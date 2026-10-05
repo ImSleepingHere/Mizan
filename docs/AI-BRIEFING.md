@@ -1,14 +1,14 @@
 # Briefing for an AI assistant joining the Mizan project
 
-You can see this GitHub repository and nothing else. This file tells you what the repository can't: the situation, the decisions already made, what lives only on the owner's computers, the rules for claims, and what is still open. Written 4 October 2026, the night before the Farq final.
+You can see this GitHub repository and nothing else. This file tells you what the repository can't: the situation, the decisions already made, what lives only on the owner's computers, the rules for claims, and what is still open. Updated 5 October 2026 for the GitHub handover; original event and machine context follows.
 
 ## 1. Read these first, in this order
 
-1. `docs/MIZAN - Project Documentation v5.md`: what the system is and does today (authoritative; v4 and v3 are history).
+1. `docs/MIZAN - Project Documentation v6.md`: what the system is and does today (authoritative; v4 and v3 are history).
 2. `CLAUDE.md`: the running engineering notes (paths, commands, gotchas, decisions). `AGENTS.md` repeats conventions for other coding assistants.
 3. `docs/reviews/README.md`: every review finding (IDs like S01, I03, C02, COR-4, AI-1) with its status, fix and test.
 4. `docs/evidence.md`: which numbers may be used in the pitch, where each comes from, and which must not be used.
-5. `docs/pitch-timing.md` (the 5-minute plan: who says what, when), `docs/demo-script.md`, `docs/HANDOVER.md`, `docs/acceptance-report.md`, `docs/test-log-2026-10-04.txt`.
+5. `docs/demo-script.md`, `docs/HANDOVER.md`, `docs/acceptance-report.md`, `docs/test-log-2026-10-04.txt`.
 6. `training/coordinator/deployed_ablation.md`: the corrected AI result.
 
 ## 2. The situation
@@ -19,7 +19,7 @@ You can see this GitHub repository and nothing else. This file tells you what th
   - The pitch is a **PowerPoint** (not a video), sized "1600 × 3096 px": the deck assumes **3096 wide × 1600 tall**, which is not yet confirmed with the mentor.
   - **5 minutes** of pitch plus 2 minutes of questions; every team member presents; start with a short team and idea introduction. The four judges have never seen the idea.
   - Judging criteria: understanding of the problem, innovation, user need, fit of solution to problem, potential and value, technical aspects, presentation and role split.
-- **The deck:** `docs/Mizan-Farq-2026.pptx`, 6 slides, English, speaker notes with timings on every slide. The demo is not in the deck: after slide 4, Ali runs it live in the browser (its script is in slide 4's notes and `docs/pitch-timing.md`), then returns to slide 5. Arabic version: `docs/Mizan-Farq-2026-AR.pptx` (same content, right-to-left layout, Arabic charts and notes). Three presenters: Sultan (problem and research), Ali (AI, demo and optimization), Mishary (value and next steps).
+- **The deck:** `docs/Mizan-Farq-2026.pptx`, 8 slides, English, speaker notes on every slide. An Arabic version may be wanted later. Slide 1 holds the team names (edited by the owner).
 
 ## 3. What is NOT in the repository
 
@@ -64,22 +64,22 @@ These come from two expert reviews and were checked against the code and fresh m
 - **Bilingual parity:** every UI string through `t(en, ar)`; logical CSS properties for right-to-left.
 - **Safety model:** hard constraints are enforced by code, never by the model; no publication or hiring without a person; everything local (the model client refuses non-loopback URLs).
 - **Edugate:** imports create a separate "Edugate timetable", not mixed into the synthetic semester; placeholders until verified; publishing an import needs verified rooms and instructors.
-- **Scope tonight:** all usability-review items and all expert-review findings that could be fixed were fixed. The remaining strategic items (semester calendar, approval stages and notifications, joint staffing optimization, alternative plans, travel time, pilot foundations) are **after the final**.
+- **Scope tonight:** all usability-review items and all expert-review findings that could be fixed were fixed. The remaining strategic items (semester calendar, approval stages and notifications, joint staffing optimization, travel time, pilot foundations) are **after the final**.
 - **Git:** the owner commits and pushes. Don't commit, push, or open pull requests unless asked. GitHub CLI (`gh`) is not installed.
 - **Housekeeping:** ask before deleting large local files (`work/ollama-0.34.3.zip`, training checkpoints).
 
 ## 7. Still open (as of 4 Oct, evening)
 
-- Confirm the slide size with the mentor; confirm the Arabic spelling of the team names in the Arabic deck.
+- Confirm the slide size with the mentor; possibly an Arabic deck.
 - Set up and rehearse on the Zenbook; run `Check Mizan Setup.cmd`; run Optimize once to confirm the figures; time one Ask Mizan request there.
 - Rehearse the whole demo once with the model stopped (review item DOC-3).
 - Re-record the demo video (the screens changed on 4 Oct).
 - Waiting on the owner: whether to change the timetable details drawer to slide in with a transform instead of animating its width (a design-tool warning on `frontend/src/style.css`, line ~329; it predates this work).
-- Known open findings with no fix yet: AI-4 (one model request at a time), CODE-1 (typed API models, splitting long files), allow-list redaction for professors, optimization cancel and best-so-far progress, filters in links, a full Arabic language and screen-reader review. See `docs/reviews/README.md`.
+- Known open findings with no fix yet: AI-4 (one model request at a time), CODE-1 (typed API models, splitting long files), optimization cancel and best-so-far progress, filters in links, a full Arabic language and screen-reader review. See `docs/reviews/README.md`.
 
 ## 8. How to verify things yourself
 
-- **Tests:** `scripts/test.ps1` (or `python -m pytest tests -q`), 99 tests. On Linux, the Windows-OCR round-trip test skips (98 + 1 skipped).
+- **Tests:** `scripts/test.ps1` (or `python -m pytest tests -q`), See docs/release-verification.md for the fresh release count. Windows OCR may skip when unavailable.
 - **Browser tests:** start the app on port 8001 with `MIZAN_DB` pointing to a fresh file under `work/`, then `node tests/browser-smoke.cjs` (5 checks + English/Arabic parity), `node tests/browser-phase2.cjs` (needs the model), `EDUGATE_FILE=<schedule> node tests/browser-edugate.cjs`.
 - **Demo figures** on a fresh database: baseline 15,000 gap h/week, quality 45, 100% with 2h+ gaps, room use 10%; 15 s optimize ≈ +1,800 h, 225 better off, 0 worse; S001 → Sunday 10:00 = 77 conflicts and 3 alternatives; shortfall C080: 3 needed, 2 covered, 1 uncovered, 36 without a seat of 112.
 - **Recorded results:** `docs/test-log-2026-10-04.txt`.
@@ -92,3 +92,15 @@ These come from two expert reviews and were checked against the code and fresh m
 - PyMuPDF and Arabic: put logical text ("04:30 م - 06:20 م") in a right-to-left box and check glyph order with `get_text('rawdict')`, not by eye; call `doc.subset_fonts()` or PDFs grow to megabytes.
 - Saving the deck with python-pptx drops the `jpg` content-type entry; restore `<Default Extension="jpg" ContentType="image/jpeg"/>` in `[Content_Types].xml` and validate.
 - The coordinator evaluation's middle arm sends the fine-tuned request with every adapter at scale 0 (`training/coordinator/deployed_eval.py`); fine-tuning should only be credited for arm 2 → arm 3.
+
+
+## Three-plan comparison update (4 October 2026)
+
+Implemented deterministic **Compare three plans** on Recommendations and the optimization dialog. Fixed priorities: most time saved, fewest changes (minimum 1% gap improvement), balanced student waiting burden. Latest comparisons persist; no proposal until explicit selection; existing human approval/publication and imported-data guards remain active. Duplicate results and failed searches are disclosed. Details: `docs/three-plan-comparison.md`. API: `backend/plan_routes.py`; objective variants: `backend/solver.py`; UI: `frontend/src/PlanComparison.tsx` and `plans.css`.
+
+Fresh verification: **118 pytest tests passed**, including 19 new comparison checks. `tests/browser-plans.cjs` covers real solver comparison, English/Arabic parity, mobile, selection, approval, publication and staleness. This update's count supersedes historical 99/80-test counts above; existing AI logs were not rerun. Interpreter benchmark integrity now normalizes LF/CRLF before hashing; cases and saved results are unchanged. The 5 October release additionally resolves the reproduced import, redaction and preview defects; see the current release report.
+
+
+## 10. Current handover authority
+
+Read v6, CHANGELOG and release-verification first for the current delivered system. The three-plan comparison is implemented, not deferred. Instructor identities, resource availability, small-room reconciliation, readiness and non-ST redaction were corrected on 5 October. Yellow preview annotations are removed. Tests of real AI inference and the exact presentation laptop remain unverified for this release. The owner pushes the prepared folder; do not infer that it is already on GitHub.

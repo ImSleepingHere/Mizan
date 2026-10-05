@@ -1,0 +1,46 @@
+Three-plan comparison verification — 4 October 2026
+Platform: Windows, Python 3.12, Node 24.15.0; isolated SQLite databases.
+
+Frontend: frozen dependency installation; tsc -b and Vite production build PASS.
+Final UI build: 1601 modules transformed; build completed successfully.
+
+python -m pytest tests -q
+118 passed, 2 dependency deprecation warnings, in 69.20 seconds.
+No failures, no skips. Includes 19 comparison test cases.
+
+tests/browser-plans.cjs PASS, repeated after final UI update.
+Checks: real strategies; no proposal or timetable change on generation;
+displayed metrics agree with API; EN/AR cell parity; all three desktop columns
+fit; mobile table scroll is contained; explicit selection; approval then
+publication; old comparison blocked after publication; no page errors.
+
+First fresh synthetic-baseline browser measurement (5 sections, 5s per plan):
+Most time saved: FEASIBLE; 1800 gap hours recovered; 5 sections moved;
+225 students benefit; 0 worsened.
+Fewest changes: OPTIMAL; 300 gap hours recovered; 1 section moved;
+75 students benefit; 0 worsened.
+Balanced impact: FEASIBLE; 1500 gap hours recovered; 5 sections moved;
+375 students benefit; 0 worsened.
+All candidates independently valid. Three distinct timetables.
+
+tests/browser-smoke.cjs PASS (isolated regression database):
+placement -> approval -> publication;
+conflict preview -> valid alternative;
+shortage -> draft requisition;
+full-scale optimization -> evidence;
+student UI/backend authorization;
+EN/AR overview numbers equal; no page errors/external requests.
+
+tests/browser-edugate.cjs PASS on generated fictional 4-course PDF:
+4 rows read -> reviewed -> imported -> optimized -> PDF export.
+Timing-only change: wait for the actual proposal review dialog before Escape.
+
+Independent visual inspection: English and Arabic comparison screenshots.
+Archive: tested source and built-frontend byte comparison plus ZIP integrity
+check. Temporary databases, generated sample schedule, dependencies and model
+runtime/base weights excluded. Coordinator adapter retained.
+
+Not rerun: live model browser-phase2, deployed AI evaluations, user's real
+schedule/screenshot, actual Zenbook/projector rehearsal.
+
+Pre-existing review defects outside comparison feature remain open.

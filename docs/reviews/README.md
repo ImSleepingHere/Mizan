@@ -1,3 +1,5 @@
+> Release note — 5 October 2026: this document retains earlier review/evidence context. Current delivered behavior and fresh verification are in [release-verification.md](../release-verification.md). Three-plan comparison and subsequent import/privacy/preview fixes are implemented. Historical live-AI results were not rerun.
+
 # Reviews and their status
 
 Three reviews were done on 4 October 2026. This table maps every finding ID to what changed and the test that pins it. "Partly" and "Open" items are listed honestly.
@@ -76,7 +78,7 @@ Tests: `tests/test_ux_review.py` (UX review), `tests/test_review_v2.py` (expert 
 | AI-2 weakest case | Disclosed; the final disposition is computed by code | `deployed_ablation.md`, `agent_engine.run_collaboration` |
 | AI-3 Ask Mizan wording | Fixed: "Draft interpretation"; acceptance report states 7/30 as below usable | `RequestAssistant.tsx`, `acceptance-report.md` |
 | AI-4 shared model lock | Open: do not demo Ask Mizan during an agent run | — |
-| DATA-1 generated headline | Fixed: overview note, demo script, evidence (the deck no longer has demo slides; the presenter says it during the live demo) | `main.tsx`, `evidence.md` |
+| DATA-1 generated headline | Fixed: overview note, deck slide 5, demo script, evidence | `main.tsx`, `evidence.md` |
 | DATA-2 10% room use | Fixed: no comparison with real figures | `evidence.md` |
 | CODE-1 monolithic source | Partly: new modules split out; generated API types still open | `frontend/src/*` |
 | PERF-1 agent polling | Fixed: polls only while a run is queued or running | `AgentWorkspace.tsx` |

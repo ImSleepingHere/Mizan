@@ -1,78 +1,55 @@
 # MIZAN — ميزان
 
-Local-first university scheduling, workforce planning, and recruitment assistance.
+A local-first university scheduling, workforce and recruitment assistant. MIZAN measures student waiting time, compares feasible improvements, shows the trade-offs, and requires human approval before timetable publication. English and Arabic interfaces are included.
 
-## Presenting the demo?
+## Documentation
 
-Start with **[docs/HANDOVER.md](docs/HANDOVER.md)**: install on a new PC, check readiness, run, reset, and the demo itself.
+- [Project documentation v6](docs/MIZAN%20-%20Project%20Documentation%20v6.md): complete system, architecture, roles, APIs and limitations.
+- [Handover and setup](docs/HANDOVER.md).
+- [Three-plan comparison](docs/three-plan-comparison.md).
+- [Release verification](docs/release-verification.md) and [change log](CHANGELOG.md).
+- [Push to GitHub](docs/GITHUB-PUSH.md).
+- [AI briefing](docs/AI-BRIEFING.md) and [evidence](docs/evidence.md).
 
-- **[Project documentation v5 (as built, 4 Oct 2026)](docs/MIZAN%20-%20Project%20Documentation%20v5.md)**: the whole system in one place
-- **[AI briefing](docs/AI-BRIEFING.md)**: context for an AI assistant that only sees this repository (situation, decisions, claim rules, open items)
-- **[Reviews](docs/reviews/README.md)**: three reviews from 4 Oct and the status of every finding
-- [Demo script (7 minutes)](docs/demo-script.md)
-- [Acceptance report: all spec criteria mapped to passing tests](docs/acceptance-report.md)
-- [Original design specification v3 / v3.1](docs/MIZAN%20-%20Project%20Documentation%20v3.md)
-- Design system: [DESIGN.md](DESIGN.md) · product brief: [PRODUCT.md](PRODUCT.md)
+## New in this release
 
-## Current status
+Compare **Most time saved**, **Fewest changes**, and **Balanced impact** against the current timetable. Inspect student benefits and harms, changed sections, campus days and conflict counts. Select a plan to prepare a proposal, then approve and publish through the normal review process. Outdated, duplicate and unsuccessful searches are disclosed. The comparison uses deterministic optimization and works without an AI model.
 
-Ready for the Farq demo (27 September 2026). Six collaborating agents with a fine-tuned local coordinator, OR-Tools optimization with independent validation, change requests, professor requests (Ask Mizan, My classes, request rules, common free-slot finder), workforce evidence and recruitment assistance, in a bilingual "Information System" interface with graded metrics. 99 automated tests and three browser suites pass (log: `docs/test-log-2026-10-04.txt`). The coordinator's evaluation separates the prompt from the fine-tuning (`training/coordinator/deployed_ablation.md`).
+This release also corrects shared imported-instructor identity, numeric student-ID redaction, small-room readiness, availability preservation and interpretation-preview consistency. Temporary yellow demo highlights are removed.
 
-## Architecture
+## Install and run (Windows)
 
-Six logical AI agents: Coordinator, Student Experience, Scheduling & Optimization, Change Impact, Workforce Planning, and Recruitment Assistant. Shared deterministic tools calculate results and enforce rules. Staff approve publication and hiring decisions.
-
-The initial release uses a local database and reproducible synthetic data. Live LinkedIn access and university-system integration depend on separately available access; they are not simulated as working integrations.
-
-## Phase gates
-
-1. Working scheduling application: approved.
-2. Six agents and recruitment: ready for review.
-3. Final verification and delivery: done (acceptance report, demo script, reset script, handover guide).
-
-## Run on this PC
-
-Double-click **Start Mizan.cmd**, then open **http://127.0.0.1:8000**. The server binds to loopback only. **Check Mizan Setup.cmd** reports anything missing; **Reset Mizan Demo.cmd** restores clean demo data (the old database is kept in `data/backups/`).
-
-Demo accounts: `admin`, `registrar`, `chair`, `professor`, `student`, `hiring_manager`. The default demonstration password is `Mizan-demo-2026!`. These are intentionally local demo identities, not institutional authentication. Set `MIZAN_DEMO_PASSWORD` before starting to override the shared demo password.
-
-The initial fixtures contain 1,500 fictional students, 80 courses, 100 sections, 40 rooms, and 50 professors. The baseline, diagnostic, staffing-shortfall and faculty-week scenarios are separate. Your changes are saved in `data/mizan.sqlite3`; restarting does not reset them (use Reset Mizan Demo.cmd).
-
-## Fresh setup
-
-Prerequisites: Python 3.12+ and Node.js 24+ (pnpm is fetched through npx when it is not installed). The setup script accepts explicit `-Python` and `-Pnpm` paths. The fine-tuned coordinator adapter ships in `.models/`; the base model and runtime are downloaded and checksum-verified by `install_model_runtime.py`.
+Install **Python 3.12** and **Node.js 24**. From the project folder:
 
 ```powershell
-./scripts/setup.ps1
-# Optional on a fresh machine: download ~6.7 GB of pinned runtime/model assets.
-./.venv/Scripts/python.exe scripts/install_model_runtime.py
-./scripts/start.ps1
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
+powershell -ExecutionPolicy Bypass -File scripts\start.ps1
 ```
 
-Backend packages are pinned in `requirements.lock.txt`. Frontend versions are pinned by `frontend/pnpm-lock.yaml`. Fonts are served locally; the running application does not need an external font service. Dependency installation requires network access.
+Open http://127.0.0.1:8000. Sign in as Administrator using the pre-filled demo password `Mizan-demo-2026!`. Other demo roles: registrar, chair, professor, student, hiring_manager. This is local demonstration authentication.
 
-## Verification
+For optional Ask Mizan, agent collaboration and CV inference, install the pinned local model/runtime:
 
 ```powershell
-./scripts/test.ps1
+.\.venv\Scripts\python.exe scripts\install_model_runtime.py
 ```
 
-This runs domain and API checks in isolated SQLite databases under `work/`. For browser checks, start a separate server with `MIZAN_DB` pointing to a fresh file under `work/` and port 8001, then run `node tests/browser-smoke.cjs`. The script uses the installed Chrome browser in a new temporary profile. Set `MIZAN_BROWSER=msedge` to use Edge. Do not point the browser test at your main workspace: it creates and publishes test proposals.
+The multi-GB base model and runtime are downloaded separately; the coordinator adapter and its upstream licence are included. AI startup checks and reported benchmark results do not establish model accuracy on real institutional data.
 
-## Structure
+## Verify
 
-- `backend/`: data contracts, fixtures, analysis, optimization, storage, HTTP API.
-- `frontend/`: React/TypeScript application and local fonts.
-- `tests/`: domain, API, and browser checks.
-- `scripts/`: Windows setup, startup, and testing.
-- `docs/`: specifications, environment findings, and phase checkpoints.
-- `data/`: generated local database; excluded from Git.
-- `work/`: screenshots, logs, and test databases; excluded from Git.
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\test.ps1
+```
 
-The local `.venv` was provisioned from the available Python runtime on this PC. A fresh setup uses your explicitly supplied Python installation. No credentials, runtime dependencies, or generated personal records should be committed.
+The GitHub workflow runs the Python suite and a frozen frontend build. Browser tests must use isolated databases: see [release verification](docs/release-verification.md). They create and publish fictional proposals.
 
-## Local model
+## Repository contents
 
-Start Mizan also starts the installed model on loopback port 11435. It uses the llama.cpp server bundled in pinned Ollama 0.34.3; the Ollama daemon is not started. Model and runtime files stay in `.models/` and `.runtime/`. This PC uses CUDA on the RTX 4080 SUPER. The download installer verifies SHA-256 digests. Ordinary inference sends no records to an external provider.
+`backend/`: FastAPI, SQLite, OR-Tools and validation. `frontend/`: React/TypeScript/Vite with local fonts. `tests/`: domain/API/browser regression suites. `scripts/`: setup, launch, model installation and test tools. `docs/`: project specification, handover and recorded evidence. `training/`: synthetic training/evaluation evidence.
 
-See the second checkpoint for model limits and review steps. `tests/browser-phase2.cjs` exercises agents and recruitment against the isolated server on port 8001 and requires the local model. It creates fictional records and must not be pointed at your main database.
+Initial scenarios are fictional. User-reviewed Edugate imports may contain real records and remain in local `data/`. Databases, work files, dependencies, secrets, runtime binaries and the base model are Git-ignored. The delivery ZIP includes a rebuilt website for convenience; Git excludes `frontend/dist/`, which setup recreates.
+
+## Practical limits
+
+Time-limited bounded searches may return no plan; zero student harm is measured, not guaranteed. Imported schedules omit external bookings and unimported students. Actual instructor qualifications, availability and contracts require institutional verification. Windows OCR needs installed English/Arabic language support. AI calls need a separately installed local model, can be slow on CPU, and were not freshly rerun for this handover. Exact demo laptop rehearsal and institutional deployment are separate checks.

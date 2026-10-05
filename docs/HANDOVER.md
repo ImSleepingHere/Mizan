@@ -5,7 +5,7 @@ Setup takes about 30–60 minutes, mostly downloading. Do it the day before, not
 
 ## What you're presenting
 
-Mizan checks a university timetable before it's published. It measures what the timetable costs students (for example, hours lost to gaps between classes), recommends changes, shows the evidence, and a person approves every change. It runs entirely on one PC: a local AI model, no cloud services. All data is synthetic.
+Mizan checks a university timetable before it's published. It measures what the timetable costs students (for example, hours lost to gaps between classes), recommends changes, shows the evidence, and a person approves every change. It runs entirely on one PC: a local AI model, no cloud services. Initial demo data is synthetic. Edugate imports may contain real records and stay in the local database, outside Git.
 
 - Demo script, 7 minutes, word for word: [`docs/demo-script.md`](demo-script.md)
 - Proof that it works, if a judge asks: [`docs/acceptance-report.md`](acceptance-report.md)
@@ -44,12 +44,12 @@ powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
 
 ## 3. Check it's ready
 
-Double-click **`Check Mizan Setup.cmd`** in the Mizan folder. Every line should say `[OK]` and end with "Ready". A `[MISS]` line tells you exactly what to run.
+Double-click **`Check Mizan Setup.cmd`** in the Mizan folder. Required environment and website checks should say `[OK]`. Missing optional AI assets appear as warnings: deterministic scheduling and comparison still work. A `[MISS]` line tells you exactly what to run.
 
 ## 4. Before the demo (10 minutes)
 
 1. Double-click **`Reset Mizan Demo.cmd`**. It gives you clean demo data and keeps a backup of the old data.
-2. Double-click **`Start Mizan.cmd`** and keep that window open. Wait about 1 minute for the AI model to load.
+2. Double-click **`Start Mizan.cmd`** and keep that window open. If AI assets are installed, wait for the local model to load. Otherwise proceed with deterministic scheduling.
 3. Open **http://127.0.0.1:8000** in Chrome at 100% zoom.
 4. Log in: role **Administrator**; the password `Mizan-demo-2026!` is pre-filled.
 5. In **Settings → Environment**, check that "Model service" shows *qwen3-8b · local* and "Coordinator agent" shows *Fine-tuned (LoRA)*.
@@ -87,3 +87,8 @@ Follow [`docs/demo-script.md`](demo-script.md). The essentials:
 | Student | Personal read-only timetable |
 
 These are local demo accounts, not real university logins.
+
+
+## Current release: comparison and setup
+
+Use Python 3.12; setup chooses it with the Windows `py` launcher and pins pnpm 12.9.1. Go to Recommendations → Compare three plans. Generate at 5 seconds per plan, compare the priorities, expand class changes, choose a plan and follow the normal approval/publication flow. These steps work without a model. For the three-person five-minute pitch use [demo-five-minutes.md](demo-five-minutes.md), not the longer historical demo script. Current verification and limits: [release-verification.md](release-verification.md). Full documentation: [v6](MIZAN%20-%20Project%20Documentation%20v6.md).

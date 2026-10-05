@@ -1,7 +1,13 @@
 # MIZAN — project notes for Claude Code
 
 Local-first university scheduling + workforce + recruitment assistant (Farq hackathon, university-operations track).
-Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tools, human approval). As-built documentation: `docs/MIZAN - Project Documentation v5.md` (keep it current when behaviour changes; v4 is history). Briefing for AI assistants that only see GitHub: `docs/AI-BRIEFING.md` (keep it current too). Everything runs locally; no external AI APIs.
+Spec: `docs/MIZAN - Project Documentation v3.md` (six agents, deterministic tools, human approval). As-built documentation: `docs/MIZAN - Project Documentation v6.md` (keep it current when behaviour changes; v4/v5 are history). Release evidence: `docs/release-verification.md`; `CHANGELOG.md`. Briefing for AI assistants that only see GitHub: `docs/AI-BRIEFING.md` (keep it current too). `AGENTS.md` is the short public engineering context. Everything runs locally; no external AI APIs.
+
+## v6.0 (applied 2026-10-05 from `MIZAN-GitHub-ready.zip`)
+- Three-plan comparison: `solver.optimize(strategy=time_saved|fewest_changes|balanced)` (each must save ≥1% of baseline gap minutes; balanced = worst-decile CVaR + squared gaps), `backend/plan_routes.py`, `frontend/src/PlanComparison.tsx` + `plans.css`; tests `tests/test_plan_comparison.py`, `tests/test_release_readiness.py`, `tests/browser-plans.cjs`.
+- Edugate: shared instructor identity (optional explicit IDs, name fallback), availability preserved across imports, assumed capacity reconciled with verified rooms; readiness separates "facts verified" from "conflict-free/publishable". Professor redaction covers non-ST student IDs. Ask Mizan preview rejects invalid baselines.
+- Tooling: `.gitattributes` (py/md LF, cmd/ps1 CRLF), `.github/workflows/verify.yml`, pinned `npx.cmd --yes pnpm@12.9.1 run build`.
+- Why the baseline timetable puts each cohort on two days: `fixtures.generate` uses days `[g%3, g%3+2]` on purpose (deliberately bad baseline); `time_saved` also minimizes campus days, so it keeps classes compact.
 
 ## Layout
 - `backend/` FastAPI app (`backend.main:app`), SQLite in `data/mizan.sqlite3`. Agents: `agent_engine.py`; model client: `local_model.py`; solver: `solver.py` (OR-Tools); metrics/validation: `analysis.py`; recruitment: `recruitment.py`.

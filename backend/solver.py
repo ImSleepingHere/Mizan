@@ -1,7 +1,7 @@
 """CP-SAT candidate search. Independent validation is mandatory before use."""
 from collections import defaultdict
 from time import perf_counter
-from math import lcm
+from math import lcm, ceil
 from ortools.sat.python import cp_model
 from .models import Window, Section
 from .analysis import available, overlaps, indexes, validate, compare, eligible_students, student_metrics
@@ -32,7 +32,7 @@ def options_for(data, section, room_limit=3):
     return options
 
 
-def optimize(data, max_changes=5, seconds=10, movable=None, rules=None):
+def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy=None):
     """movable: optional set of section IDs that may change (e.g. a professor's own sections); all others stay fixed.
     rules: optional RuleSet (spec §18.4) applied as hard constraints to its scope; candidates are re-checked independently."""
     from .rules import option_ok, split_options, needs_split, is_split, add_break_constraints, check_rules, split_reasons
@@ -44,6 +44,8 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None):
     issues = validate(data)
     if issues:
         return dict(status="INVALID_BASELINE", message="Resolve hard violations before optimization", issues=issues[:30])
+    if strategy not in {None, "time_saved", "fewest_changes", "balanced"}:
+        raise ValueError("Unknown optimization strategy")
     model = cp_model.CpModel()
     resource_intervals = defaultdict(list)
     choices, modified, option_counts = {}, [], []
@@ -164,6 +166,44 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None):
                +weights["simplicity"]*(scale//meeting_count)*sum(irregular)
                # Split meeting times are allowed only by rules, and discouraged (twice an irregular meeting).
                +2*weights["simplicity"]*(scale//meeting_count)*sum(split_vars))
+    if strategy is not None:
+        gap_total = sum(v*c for v,c in gaps)
+        day_total = sum(v*c for v,c in days)
+        baseline_gap = sum(s["gap_minutes"] for s in student_metrics(data))
+        # Every alternative is a genuine improvement in aggregate waiting time.
+        # A zero-gap timetable needs no gap-reduction proposal.
+        minimum_saved = max(1, ceil(baseline_gap * .01))
+        model.add(gap_total <= baseline_gap - minimum_saved)
+        if strategy == "fewest_changes":
+            # Lexicographic: one fewer moved section beats ANY possible gap gain.
+            objective = sum(modified)*(7200*population+1) + gap_total
+        elif strategy == "time_saved":
+            # Lexicographic: minimize gaps, then campus days, then disruption.
+            objective = (gap_total*(5*population+1)+day_total)*(len(data.sections)+1)+sum(modified)
+        else:
+            # Exact worst-decile sum using weighted enrollment patterns (CVaR).
+            # The threshold formulation also works when the decile splits a group.
+            tail_count = max(1, ceil(len(data.students)*.1))
+            threshold = model.new_int_var(0,7200,"tail_threshold")
+            excess = []
+            for index,(total,count) in enumerate(gaps):
+                over = model.new_int_var(0,7200,f"tail_excess_{index}")
+                model.add_max_equality(over,[total-threshold,0])
+                excess.append(count*over)
+            tail_sum = tail_count*threshold+sum(excess)
+            tail = model.new_int_var(0,tail_count*7200,"tail_sum")
+            model.add(tail == tail_sum)
+            squares = []
+            for index,(total,count) in enumerate(gaps):
+                square = model.new_int_var(0,7200*7200,f"gap_square_{index}")
+                model.add_multiplication_equality(square,[total,total])
+                squares.append(count*square)
+            # Worst-decile sum first, then squared gaps favor spreading relief
+            # instead of improving just a few identical cohorts. Include overall
+            # gaps and disruption as small secondary costs. Bounded below int64
+            # for the supported 10,000-student / 1,000-section import limits.
+            secondary_bound = population*(7200*7200+60*7200)+len(data.sections)
+            objective = tail*(secondary_bound+1)+sum(squares)+60*gap_total+sum(modified)
     model.minimize(objective)
     solver=cp_model.CpSolver()
     solver.parameters.max_time_in_seconds=seconds
@@ -174,6 +214,9 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None):
                 search_scope="Bounded candidate neighborhood: all approved starts on current days/room plus three alternatives per section; meeting spacing preserved and faculty fixed. Optimal applies only to this neighborhood.",
                 invariant_objectives=["Teaching-load balance and total room utilization are constant in this search because teaching assignments and instructional minutes are fixed."],
                 candidates=sum(option_counts), objective_version="1.0", weights=weights)
+    if strategy is not None:
+        report.update(strategy=strategy, minimum_saved_minutes=minimum_saved,
+                      objective_version="alternatives-1.0")
     if status not in [cp_model.OPTIMAL,cp_model.FEASIBLE]:
         return dict(**report,message="No feasible improvement established; official timetable retained")
     candidate=data.model_copy(deep=True)

@@ -17,7 +17,7 @@ export function Readiness({sid, ar, canEdit, revision, onChanged}:{sid:string, a
     try {
       const lines = text.split('\n').map(l => l.trim()).filter(Boolean).map(l => { const i = l.indexOf(','); return i < 0 ? [l, ''] : [l.slice(0, i).trim(), l.slice(i + 1).trim()]; }).filter(([, v]) => v);
       const body = open === 'rooms' ? {rooms:lines.map(([id, v]) => { const n = Number(v); if (!Number.isInteger(n) || n <= 0) throw new Error(t(`Seats for ${id} must be a whole number.`, `يجب أن يكون عدد مقاعد ${id} رقماً صحيحاً.`)); return {id, capacity:n}; })}
-        : {instructors:lines.map(([section_id, name]) => ({section_id, name}))};
+        : {instructors:lines.map(([section_id, value]) => {const [name, instructor_id] = value.split(',').map(s=>s.trim()); return {section_id, name, ...(instructor_id ? {instructor_id} : {})};})};
       if (!lines.length) throw new Error(t('Add at least one line with a value after the comma.','أضف سطراً واحداً على الأقل بقيمة بعد الفاصلة.'));
       setR(await api(`/edugate/${sid}/verify`, body)); setOpen(''); onChanged();
     } catch (e) { setError((e as Error).message); } finally { setBusy(false); }
@@ -25,6 +25,7 @@ export function Readiness({sid, ar, canEdit, revision, onChanged}:{sid:string, a
   return <div className="readiness">
     <h3>{t('Data readiness','جاهزية البيانات')}</h3>
     <p className="muted">{r.ready_to_publish ? t('Rooms and instructors are verified. This timetable can be published after approval.','القاعات والمحاضرون موثقون. يمكن نشر هذا الجدول بعد الاعتماد.')
+      : r.facts_verified ? t(`Facts are verified, but ${r.conflict_count} conflicts must be resolved before publication.`, `البيانات موثقة، لكن يجب حل ${r.conflict_count} تعارضات قبل النشر.`)
       : t('You can explore and optimize now. Publishing needs verified room capacities and instructors.','يمكنك الاستكشاف والتحسين الآن. النشر يتطلب توثيق سعة القاعات والمحاضرين.')}</p>
     <div className="readiness-grid">
       <div className="ok"><h4><ShieldCheck size={15}/>{t('Verified','موثق')}</h4><ul>
@@ -39,12 +40,13 @@ export function Readiness({sid, ar, canEdit, revision, onChanged}:{sid:string, a
         <li>{t('Other bookings of these rooms','الحجوزات الأخرى لهذه القاعات')}</li><li>{t('Students whose schedules were not imported','الطلاب الذين لم تُستورد جداولهم')}</li></ul></div>
     </div>
     {open && <div className="verify-form">
-      <label>{open === 'rooms' ? t('One room per line: room, seats','قاعة في كل سطر: القاعة، عدد المقاعد') : t('One section per line: section, instructor name','شعبة في كل سطر: الشعبة، اسم المحاضر')}
+      <label>{open === 'rooms' ? t('One room per line: room, seats','قاعة في كل سطر: القاعة، عدد المقاعد') : t('One section per line: section, instructor name, optional instructor ID','شعبة في كل سطر: الشعبة، اسم المحاضر، رقم المحاضر اختياري')}
         <textarea dir="auto" rows={Math.min(8, text.split('\n').length + 1)} value={text} onChange={e => setText(e.target.value)} placeholder={open === 'rooms' ? 'A-01, 45' : 'MKT201-201, Dr. …'}/></label>
       {error && <div role="alert" className="alert error"><TriangleAlert size={16}/><span>{error}</span></div>}
       <div className="ra-actions"><button type="button" className="secondary" onClick={() => setOpen('')}>{t('Cancel','إلغاء')}</button>
         <button type="button" className="primary" disabled={busy} onClick={() => void save()}>{busy ? <LoaderCircle size={16} className="spin"/> : <ShieldCheck size={16}/>}{t('Save verified data','حفظ البيانات الموثقة')}</button></div>
       <small className="muted">{t('Saving creates a new timetable version; earlier proposals become outdated and can be re-run.','الحفظ ينشئ إصداراً جديداً من الجدول؛ تصبح المقترحات السابقة قديمة ويمكن إعادة تشغيلها.')}</small>
+      {open==='instructors' && <small className="muted">{t('Use the same ID for the same instructor across sections. Without an ID, matching names share an instructor; use different IDs for people with the same name. Availability and qualifications still require institutional review.','استخدم نفس الرقم لنفس المحاضر في جميع الشعب. دون رقم، تُربط الأسماء المتطابقة بمحاضر واحد؛ استخدم أرقاماً مختلفة للأشخاص الذين يحملون نفس الاسم. يظل التحقق المؤسسي من التوفر والمؤهلات مطلوباً.')}</small>}
     </div>}
   </div>;
 }
