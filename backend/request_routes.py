@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import Field, ValidationError
 from .models import StrictModel, Window, Semester
 from .main import user, require, scenario
-from .analysis import validate, compare
+from .analysis import validate, compare, condense_issues
 from .store import connect, identifier, now, audit
 from . import local_model, interpreter as it
 
@@ -197,7 +197,7 @@ def preview(data, row, meeting, target):
     diff = compare(data, candidate)
     return dict(**meeting, target=dict(**target, end=target["start"] + duration), feasible=not introduced and not existing,
                 unchanged=(meeting["day"], meeting["start"]) == (target["day"], target["start"]),
-                existing_issue_count=len(existing), blocked_by_existing=bool(existing) and not introduced, new_issues=introduced[:20],
+                existing_issue_count=len(existing), blocked_by_existing=bool(existing) and not introduced, new_issues=condense_issues(introduced, 20),
                 new_issue_count=len(introduced), recovered_hours=diff["recovered_hours"], worsened=diff["worsened"])
 
 

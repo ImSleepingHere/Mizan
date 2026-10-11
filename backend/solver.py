@@ -256,6 +256,9 @@ def optimize(data, max_changes=5, seconds=10, movable=None, rules=None, strategy
     solver.parameters.max_time_in_seconds=seconds
     solver.parameters.num_search_workers=4
     solver.parameters.random_seed=data.seed
+    # Presolve probing took ~7 of 10 s on the baseline (three ~2 s rounds), so a 2-change run often ended
+    # UNKNOWN before search began. Off, it proves the 2-change optimum in ~6 s; other limits are unchanged.
+    solver.parameters.cp_model_probing_level=0
     status=solver.solve(model)
     report=dict(status=solver.status_name(status), runtime=round(perf_counter()-started,3),
                 search_scope="Bounded candidate neighborhood: all approved starts on current days/room plus three alternatives per section; meeting spacing preserved and faculty fixed. Optimal applies only to this neighborhood.",

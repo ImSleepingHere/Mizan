@@ -113,3 +113,8 @@ details.context,details.adverse{margin:14px 0}details.context>summary,details.ad
 @media(max-width:760px){.readiness-grid{grid-template-columns:1fr}}
 .ov-note{margin:6px 0 0;max-width:64ch;font-size:12.5px;line-height:1.45;color:inherit;opacity:.82}
 .tt-legend-item.lunch-key{cursor:help}.tt-legend-item.lunch-key i{display:inline-block;inline-size:12px;block-size:12px;background:repeating-linear-gradient(135deg,var(--line-2) 0 2px,transparent 2px 5px);border:1px solid var(--line-2)}
+
+/* Classes moved by the latest published version (Semester lab). */
+.tt-moved-note{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;margin:0 0 10px;padding:8px 12px;background:var(--blue-bg);color:var(--blue-ink);font-size:13px}
+.tt-block.moved{box-shadow:inset 0 0 0 2px var(--blue)}
+.tt-moved-badge{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.02em;margin-inline-start:6px;padding:0 4px;background:var(--blue);color:#fff}

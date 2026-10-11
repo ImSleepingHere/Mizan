@@ -75,6 +75,29 @@ def validate(data: Semester):
     return issues
 
 
+STUDENT_CODES = {"STUDENT_OVERLAP", "PREREQUISITE"}
+
+
+def condense_issues(issues, limit=None):
+    """One entry per conflict instead of one per student: student-level issues (records = [student, *sections])
+    collapse to their sections with an exact `student_count` of distinct students. Truncating the condensed list
+    keeps every count correct (a raw list cut at 20 rows reported "18 students" for a 75-student clash)."""
+    out, merged = [], {}
+    for issue in issues:
+        if issue["code"] not in STUDENT_CODES:
+            out.append(issue)
+            continue
+        student, sections = issue["records"][0], issue["records"][1:]
+        key = (issue["code"], frozenset(sections))
+        if key not in merged:
+            merged[key] = (dict(code=issue["code"], records=list(sections), detail=issue["detail"], student_count=0), set())
+            out.append(merged[key][0])
+        entry, students = merged[key]
+        students.add(student)
+        entry["student_count"] = len(students)
+    return out if limit is None else out[:limit]
+
+
 def gini(values):
     values = sorted(values)
     total, n = sum(values), len(values)
@@ -147,7 +170,7 @@ def metrics(data, issues=None):
                 workloads=workloads,
                 department_load=[dict(department=dep,gini=gini([p["minutes"] for p in workloads if p["department"]==dep]),
                                       most_burdened_decile_minutes=sorted([p["minutes"] for p in workloads if p["department"]==dep],reverse=True)[:max(1,ceil(sum(p["department"]==dep for p in workloads)*.1))]) for dep in sorted({p["department"] for p in workloads})],
-                issues=issues[:250], issues_truncated=len(issues)>250,
+                issues=condense_issues(issues, 250), issues_truncated=len(condense_issues(issues))>250,
                 metric_version="1.0", score_definition="40% gaps/1200m; 20% longest gap/240m; 15% days/5; 15% span/600m; 5% fragments/10; 5% irregular/10. Each ratio capped at 1.")
 
 

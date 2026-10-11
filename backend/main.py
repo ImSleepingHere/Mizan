@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import Field
 from .models import Semester, StrictModel, Window, Section, Policy
 from .store import connect, init_db, audit, identifier, now, ROOT
-from .analysis import validate, metrics, compare, student_metrics, eligible_students
+from .analysis import validate, metrics, compare, student_metrics, eligible_students, condense_issues
 from .solver import optimize, placement, workforce, options_for
 
 USERS={"admin":dict(role="admin",name="Mizan Administrator"),"registrar":dict(role="registrar",name="Scheduling Committee"),
@@ -89,7 +89,8 @@ def redact(u,obj):
                     out["adverse_count"]=len(v)
                 elif k=="records" and isinstance(v,list):
                     # Validator student issues always put the identity first, regardless of ID format.
-                    student_issue=x.get("code", "").startswith("STUDENT_") or x.get("code")=="PREREQUISITE"
+                    # Condensed issues (analysis.condense_issues) already hold sections only plus student_count.
+                    student_issue=(x.get("code", "").startswith("STUDENT_") or x.get("code")=="PREREQUISITE") and "student_count" not in x
                     out[k]=v[1:] if student_issue else [r for r in v if not str(r).startswith("ST")]
                     hidden=len(v)-len(out[k])
                     if hidden: out["student_count"]=hidden
@@ -109,7 +110,7 @@ def own_sections(u,data):
 def save_proposal(sid,row,data,kind,analysis,u,reason=""):
     pid=identifier()
     issues=validate(data)
-    analysis.update(issues=issues[:250],conflict_count=len(issues))
+    analysis.update(issues=condense_issues(issues,250),conflict_count=len(issues))
     baseline=Semester.model_validate_json(row["data"])
     summary_keys=["gap_hours","average_days","score","long_gap_2h","worst_decile_gap_hours","load_gini","room_utilization"]
     before,after=metrics(baseline),metrics(data,issues)
@@ -215,9 +216,12 @@ def get_scenario(sid:str,u=Depends(user)):
     if u["role"]=="professor":
         sections=[s for s in data.sections if s.professor_id==u["professor_id"]]
         return dict(id=sid,revision=row["revision"],enrollment=enrollment_counts(data,{s.id for s in sections}),
+                    recent_changes=changed_since_previous(sid,row,data,{s.id for s in sections}),
                     **data.model_copy(update=dict(sections=sections,students=[],demands=[],professors=[p for p in data.professors if p.id==u["professor_id"]])).model_dump())
     require(u,STAFF)
-    return dict(id=sid,revision=row["revision"],enrollment=enrollment_counts(data),**data.model_dump())
+    # Sections the latest published version moved, so the Semester lab can show what changed.
+    return dict(id=sid,revision=row["revision"],enrollment=enrollment_counts(data),
+                recent_changes=changed_since_previous(sid,row,data,{s.id for s in data.sections}),**data.model_dump())
 
 
 @app.get("/api/scenarios/{sid}/metrics")
@@ -355,7 +359,7 @@ def preview_change(sid:str,body:PreviewRequest,u=Depends(user)):
     introduced=[i for i in issues if (i["code"],tuple(i["records"])) not in existing]
     diff=compare(data,candidate)
     return redact(u,dict(revision=row["revision"],section_id=body.section_id,meeting_index=body.meeting_index,day=body.day,start=body.start,end=body.start+duration,
-                feasible=not introduced and not existing,new_issues=introduced[:20],new_issue_count=len(introduced),existing_issue_count=len(existing),
+                feasible=not introduced and not existing,new_issues=condense_issues(introduced,20),new_issue_count=len(introduced),existing_issue_count=len(existing),
                 blocked_by_existing=bool(existing) and not introduced,
                 recovered_hours=diff["recovered_hours"],benefiting=diff["benefiting"],worsened=diff["worsened"],
                 worst_increase_minutes=diff["worst_increase_minutes"],

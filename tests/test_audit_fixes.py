@@ -208,3 +208,34 @@ def test_common_slot_room_seats_all_students_of_all_sections():
     # S1 (A B C) + S2 (D E): five students together need the hall, not a 4-seat room sized for the larger section.
     result = common_slots(tiny(), ["S1", "S2"], 60, days=[4], limit=5)
     assert result["group_size"] == 5 and result["slots"][0]["rooms"] == ["R3"]
+
+
+# ---------- 7. a conflict preview counts every student, not just the first 20 rows ----------
+
+def test_preview_counts_every_student_in_a_large_clash(client):
+    # Baseline: S001 and S002 share one 75-student cohort; moving S001 onto S002 = 75 student + instructor + room conflicts.
+    preview = client.post("/api/scenarios/baseline/preview-change", json=dict(section_id="S001", meeting_index=0, day=0, start=600)).json()
+    assert preview["new_issue_count"] == 77
+    students = [i for i in preview["new_issues"] if i["code"] == "STUDENT_OVERLAP"]
+    assert len(students) == 1 and students[0]["student_count"] == 75 and sorted(students[0]["records"]) == ["S001", "S002"]
+    assert {i["code"] for i in preview["new_issues"]} == {"STUDENT_OVERLAP", "PROFESSOR_OVERLAP", "ROOM_OVERLAP"}
+
+
+def test_condensed_issues_count_distinct_students_once():
+    from backend.analysis import condense_issues
+    raw = [dict(code="STUDENT_OVERLAP", records=["ST1", "S1", "S2"], detail="x"), dict(code="STUDENT_OVERLAP", records=["ST1", "S2", "S1"], detail="x"),
+           dict(code="STUDENT_OVERLAP", records=["ST2", "S1", "S2"], detail="x"), dict(code="ROOM_OVERLAP", records=["R1", "S1", "S2"], detail="y")]
+    out = condense_issues(raw)
+    assert out[0]["student_count"] == 2 and len(out) == 2  # same pair on two days counts the student once
+
+
+# ---------- 8. the Semester lab can see what the latest publish moved ----------
+
+def test_staff_see_sections_moved_by_the_latest_version(client):
+    assert client.get("/api/scenarios/baseline").json()["recent_changes"] == []  # version 1: nothing published yet
+    result = client.post("/api/scenarios/baseline/optimize", json=dict(max_changes=2, seconds=10)).json()
+    pid = result["proposal"]["id"]
+    assert client.post(f"/api/proposals/{pid}/approve").status_code == 200 and client.post(f"/api/proposals/{pid}/publish").status_code == 200
+    moved = client.get("/api/scenarios/baseline").json()["recent_changes"]
+    assert {c["section_id"] for c in moved} == {c["section_id"] for c in result["comparison"]["changes"]}
+    assert all(c["before"] and c["before"] != c["after"] for c in moved)

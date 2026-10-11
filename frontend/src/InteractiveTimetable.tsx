@@ -52,6 +52,9 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
   const [cohort, setCohort] = useState<string>(''), [room, setRoom] = useState(''), [prof, setProf] = useState('');
   const [hidden, setHidden] = useState<Set<string>>(new Set()), [query, setQuery] = useState(''), [view, setView] = useState<'week'|'list'>('week');
   const [slotFilter, setSlotFilter] = useState<{day:number, hour:number}|null>(null), [forceDetail, setForceDetail] = useState(false);
+  // Sections the latest published version moved (section id -> previous section), so a publish is visible here.
+  const moved = useMemo(() => new Map<string, R>((data.recent_changes || []).filter((c:R) => c.before).map((c:R) => [c.section_id, c.before])), [data]);
+  const [onlyMoved, setOnlyMoved] = useState(false);
   const [selected, setSelected] = useState<{sectionId:string, mi:number}|null>(null);
   const [drag, setDrag] = useState<Drag|null>(null), [pending, setPending] = useState<Pending|null>(null);
   const [previews, setPreviews] = useState<Record<string, R|'loading'|{error:string}>>({});
@@ -61,7 +64,9 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
   const timer = useRef<number|undefined>(undefined);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { setCohort(cohorts[0] || ''); setSelected(null); setPending(null); setPreviews({}); setSlotFilter(null); setForceDetail(false); }, [sid, data.revision, cohorts.join('|')]);
+  // Open on a cohort the latest version changed (if any), not one nobody touched.
+  const firstChangedCohort = () => (data.students || []).find((s:R) => s.sections.some((id:string) => moved.has(id)))?.cohort;
+  useEffect(() => { setCohort(firstChangedCohort() || cohorts[0] || ''); setOnlyMoved(false); setSelected(null); setPending(null); setPreviews({}); setSlotFilter(null); setForceDetail(false); }, [sid, data.revision, cohorts.join('|')]);
   useEffect(() => { if (focus?.ids.length) { setCohort('all'); setRoom(''); setProf(''); setQuery(focus.ids[0]); setView('week'); setForceDetail(true);
     const s = (data.sections || []).find((x:R) => x.id === focus.ids[0]); if (s) setSelected({sectionId:s.id, mi:0});
     window.setTimeout(() => gridRef.current?.scrollIntoView({behavior:'smooth', block:'start'}), 50); } }, [focus?.n]);
@@ -76,6 +81,7 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
 
   const visible = useMemo(() => {
     let list:R[] = data.sections || [];
+    if (onlyMoved) return list.filter(s => moved.has(s.id));
     if (staff && cohort !== 'all') {
       const ids = new Set<string>();
       (data.students || []).filter((s:R) => !cohort || s.cohort === cohort).forEach((s:R) => s.sections.forEach((id:string) => ids.add(id)));
@@ -86,7 +92,7 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
     list = list.filter(s => !hidden.has(courses[s.course_id]?.department));
     if (slotFilter) list = list.filter(s => s.meetings.some((m:R) => m.day === slotFilter.day && m.start < slotFilter.hour + 60 && m.end > slotFilter.hour));
     return list;
-  }, [data, cohort, room, prof, hidden, staff, courses, slotFilter]);
+  }, [data, cohort, room, prof, hidden, staff, courses, slotFilter, onlyMoved, moved]);
 
   const profName = (id:string) => professors[id]?.name || id;
   const matches = (s:R) => !query || `${s.id} ${s.course_id} ${courseName(s.course_id)} ${s.room_id} ${s.professor_id} ${profName(s.professor_id)}`.toLowerCase().includes(query.toLowerCase());
@@ -185,6 +191,10 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
     </div>
     <div className="tt-legend">{departments.map((d, i) => <button key={d} className={`tt-legend-item d${i % 6} ${hidden.has(d) ? 'off' : ''}`} onClick={() => { const n = new Set(hidden); n.has(d) ? n.delete(d) : n.add(d); setHidden(n); }} aria-pressed={!hidden.has(d)}><span/>{ar ? d.replace('Computing','الحوسبة').replace('Business','الأعمال').replace('Engineering','الهندسة').replace('Design','التصميم') : d}</button>)}<span className="tt-legend-item lunch-key" title={t('Midday break: shown for orientation; classes can still be scheduled here if the timetable allows it.','استراحة منتصف اليوم: للتوضيح فقط، ويمكن جدولة المحاضرات فيها إذا سمح الجدول.')}><i/>{t('Midday break','استراحة منتصف اليوم')}</span><span className="tt-count">{query ? t(`${listed.length} of ${visible.length} sections match`, `${listed.length} من ${visible.length} شعبة مطابقة`) : <>{visible.length} {t('sections','شعبة')} · {visible.reduce((a, s) => a + s.meetings.length, 0)} {t('meetings','محاضرة')}</>}</span>
       {slotFilter && <button type="button" className="tt-filter-chip" onClick={() => setSlotFilter(null)}>{days[slotFilter.day]} <bdi>{time(slotFilter.hour)}</bdi> <X size={12}/></button>}</div>
+    {moved.size > 0 && <div className="tt-moved-note" role="status">
+      <span><b>{t(`Version ${data.revision} moved ${moved.size} ${moved.size === 1 ? 'class' : 'classes'}:`, `الإصدار ${data.revision} نقل ${moved.size} ${moved.size === 1 ? 'شعبة' : 'شعب'}:`)}</b> <bdi>{[...moved.keys()].slice(0, 8).join(', ')}{moved.size > 8 ? '…' : ''}</bdi> · {t('marked “Moved” below','معلَّمة بكلمة «نُقلت» أدناه')}</span>
+      <button type="button" className="text-button" onClick={() => setOnlyMoved(!onlyMoved)}>{onlyMoved ? t('Show the full timetable','عرض الجدول كاملاً') : t('Show only moved classes','عرض الشعب المنقولة فقط')}</button>
+    </div>}
     {query && !listed.length && <div className="tt-empty" role="status">{t(`No classes match “${query}”.`, `لا توجد محاضرات تطابق «${query}».`)} <button type="button" className="text-button" onClick={() => setQuery('')}>{t('Clear search','مسح البحث')}</button></div>}
     {dense && <div className="tt-density" role="region" aria-label={t('Timetable overview','نظرة عامة على الجدول')}>
       <p>{t(`${visible.length} sections are too many to read at once. Each cell shows how many classes run in that hour; choose one to see them, or narrow by cohort, room or instructor.`, `${visible.length} شعبة أكثر من أن تُقرأ دفعة واحدة. كل خانة تبين عدد المحاضرات في تلك الساعة؛ اختر خانة لعرضها، أو صفِّ حسب المجموعة أو القاعة أو المحاضر.`)}</p>
@@ -207,15 +217,15 @@ export function InteractiveTimetable({data, sid, ar, days, role, courseName, onS
             const dim = !matches(s);
             const cap = enrolled[s.id];
             return <button key={s.id + mi} type="button"
-              className={`tt-block d${deptIndex(s) % 6} ${canEdit(s) ? 'draggable' : ''} ${isDragging ? 'lifted' : ''} ${isPending ? 'pending-origin' : ''} ${dim ? 'dim' : ''} ${selected?.sectionId === s.id ? 'selected' : ''} ${(m.end - m.start) * PX < 58 ? 'short' : ''}`}
+              className={`tt-block d${deptIndex(s) % 6} ${canEdit(s) ? 'draggable' : ''} ${isDragging ? 'lifted' : ''} ${isPending ? 'pending-origin' : ''} ${dim ? 'dim' : ''} ${selected?.sectionId === s.id ? 'selected' : ''} ${moved.has(s.id) ? 'moved' : ''} ${(m.end - m.start) * PX < 58 ? 'short' : ''}`}
               style={{top:(m.start-OPEN)*PX + 2, height:(m.end-m.start)*PX - 4, insetInlineStart:`calc(${lane/lanes*100}% + 4px)`, width:`calc(${100/lanes}% - 8px)`, animationDelay:`${Math.min(i, 24) * 22}ms`}}
               onPointerDown={e => onPointerDown(e, s, mi, m)} onPointerMove={onPointerMove} onPointerUp={e => onPointerUp(e, s, mi)} onPointerCancel={() => setDrag(null)}
               onClick={() => { if (!canEdit(s)) setSelected({sectionId:s.id, mi}); }}
               onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected({sectionId:s.id, mi}); } }}
-              title={`${courseName(s.course_id)} · ${s.id} · ${days[m.day]} ${time(m.start)}–${time(m.end)} · ${s.room_id}`}
+              title={`${courseName(s.course_id)} · ${s.id} · ${days[m.day]} ${time(m.start)}–${time(m.end)} · ${s.room_id}${moved.has(s.id) && moved.get(s.id)!.meetings[mi] ? ` · ${t('was','كانت')} ${days[moved.get(s.id)!.meetings[mi].day]} ${time(moved.get(s.id)!.meetings[mi].start)}` : ''}`}
               aria-label={`${courseName(s.course_id)} ${s.id}, ${days[m.day]} ${time(m.start)}–${time(m.end)}, ${s.room_id}`}>
               {canEdit(s) && <GripVertical className="tt-grip" size={13}/>}
-              <strong>{s.course_id}<span>{s.id}</span></strong>
+              <strong>{s.course_id}<span>{s.id}</span>{moved.has(s.id) && <em className="tt-moved-badge">{t('Moved','نُقلت')}</em>}</strong>
               <span className="tt-name">{courseName(s.course_id)}</span>
               <small><bdi>{time(m.start)}–{time(m.end)}</bdi> · {s.room_id}{cap !== undefined ? <> · {cap}/{s.capacity}</> : null}</small>
             </button>;

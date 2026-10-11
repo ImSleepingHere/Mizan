@@ -8,7 +8,10 @@
 - Hiring-criteria filter matches whole words: "Embraces …" is no longer rejected; "Racial …" and "Religious …" are now caught.
 - Edugate import/verify refuse (409) when the timetable changed between reading and writing, instead of a 500.
 - Common time finder: one session for several sections needs a room for every distinct student, not just the largest section.
-- 23 new tests (`tests/test_audit_fixes.py`); 163 passed; browser smoke and plan suites pass.
+- Conflict lists count every student: per-student conflicts collapse to one line per class pair with an exact `student_count` before any truncation (`analysis.condense_issues`). The change preview showed "18 students are enrolled in both" for a 75-student clash because only the first 20 conflict rows were sent.
+- Normal optimization: presolve probing is off in the full model (as in LNS). It used ~7 of 10 s on the baseline, so "Optimize semester" with 2 changes ended `UNKNOWN`; it now proves the 2-change optimum (750 h, 0 worse off) in ~6 s. Other limits and the three plans give the same results.
+- Semester lab shows what the latest publish moved: it opens on a changed cohort, marks moved classes "Moved" (previous time in the tooltip), and offers "Show only moved classes". Staff and professors now receive `recent_changes`.
+- 25 new tests (`tests/test_audit_fixes.py`); 165 passed; browser smoke and plan suites pass.
 
 ## 6.1 — 5 October 2026
 
